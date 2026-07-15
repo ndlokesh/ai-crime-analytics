@@ -1,0 +1,15 @@
+{
+  "public": "client/public",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/client/public/$1" }
+  ],
+  "redirects": [
+    { "source": "/", "destination": "/client/public/index.html", "type": 301 },
+    { "source": "/dashboard.html", "destination": "/client/public/dashboard.html", "type": 301 },
+    { "source": "/geospatial.html", "destination": "/client/public/geospatial.html", "type": 301 },
+    { "source": "/network.html", "destination": "/client/public/network.html", "type": 301 },
+    { "source": "/predictive.html", "destination": "/client/public/predictive.html", "type": 301 },
+    { "source": "/trends.html", "destination": "/client/public/trends.html", "type": 301 },
+    { "source": "/reports.html", "destination": "/client/public/reports.html", "type": 301 }
+  ]
+}

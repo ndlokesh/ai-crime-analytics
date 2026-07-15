@@ -1,0 +1,7 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/css/(.*)", "destination": "/client/public/css/$1" },
+    { "source": "/js/(.*)", "destination": "/client/public/js/$1" }
+  ]
+}

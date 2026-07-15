@@ -15,7 +15,7 @@
       "api_base_url": "http://localhost:3000"
     },
     "production": {
-      "api_base_url": "https://ksp-crime-intelligence.catalystserverless.com/server"
+      "api_base_url": "https://ai-crime-analytics-jkgzcyyg.onslate.in/server"
     }
   }
 }

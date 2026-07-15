@@ -10,17 +10,24 @@
 import { SeededRandom, DISTRICT_COORDS, MONTHS } from './utils.js';
 
 // ─── Config ──────────────────────────────────────────────────
-// Set to your Catalyst project function URL. Leave empty for demo mode.
-const CATALYST_BASE_URL = '';
+// Automatically use OnSlate backend URL when deployed, with fallback to simulation mode
+const CATALYST_BASE_URL = window.location.origin.includes('onslate.in')
+  ? 'https://ai-crime-analytics-jkgzcyyg.onslate.in/server'
+  : '';
 const DEMO_MODE = !CATALYST_BASE_URL;
 
 async function request(path, params = {}) {
   if (DEMO_MODE) return null;
-  const url = new URL(`${CATALYST_BASE_URL}${path}`);
-  Object.entries(params).forEach(([k, v]) => v !== undefined && url.searchParams.set(k, v));
-  const res = await fetch(url.toString(), { headers: { 'Content-Type': 'application/json' }, credentials: 'include' });
-  if (!res.ok) throw new Error(`API error: ${res.status}`);
-  return res.json();
+  try {
+    const url = new URL(`${CATALYST_BASE_URL}${path}`);
+    Object.entries(params).forEach(([k, v]) => v !== undefined && url.searchParams.set(k, v));
+    const res = await fetch(url.toString(), { headers: { 'Content-Type': 'application/json' }, credentials: 'include' });
+    if (!res.ok) throw new Error(`API error: ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.warn(`[KSP API Client] Backend ${path} not reachable (${err.message}). Using local simulation fallback.`);
+    return null;
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -521,7 +528,7 @@ export const api = {
 
   // ── Cases (CaseMaster) ────────────────────────────────────
   async getCases({ district, crimeHead, category, status, limit = 60 } = {}) {
-    if (!DEMO_MODE) return request('/cases-api/', { district, crimeHead, category, status, limit });
+    if (!DEMO_MODE) { const res = await request('/cases-api/', { district, crimeHead, category, status, limit }); if (res !== null) return res; }
     initMockData();
     let result = _cases;
     if (district)   result = result.filter(c => c._DistrictName === district);
@@ -532,7 +539,7 @@ export const api = {
   },
 
   async getHotspots() {
-    if (!DEMO_MODE) return request('/cases-api/hotspots');
+    if (!DEMO_MODE) { const res = await request('/cases-api/hotspots'); if (res !== null) return res; }
     initMockData();
     return _cases.map(c => ({
       lat: c.latitude, lng: c.longitude,
@@ -541,38 +548,38 @@ export const api = {
   },
 
   async getHourlyDistribution() {
-    if (!DEMO_MODE) return request('/cases-api/hourly');
+    if (!DEMO_MODE) { const res = await request('/cases-api/hourly'); if (res !== null) return res; }
     initMockData();
     return genHourly(_cases);
   },
 
   // ── District Analytics ─────────────────────────────────────
   async getDistrictSummary() {
-    if (!DEMO_MODE) return request('/analytics-api/district-summary');
+    if (!DEMO_MODE) { const res = await request('/analytics-api/district-summary'); if (res !== null) return res; }
     initMockData();
     return _districtSummary;
   },
 
   async getMonthlyTrends() {
-    if (!DEMO_MODE) return request('/analytics-api/trends');
+    if (!DEMO_MODE) { const res = await request('/analytics-api/trends'); if (res !== null) return res; }
     initMockData();
     return genMonthlyTrends(_cases);
   },
 
   async getWeeklyZScores() {
-    if (!DEMO_MODE) return request('/analytics-api/zscore');
+    if (!DEMO_MODE) { const res = await request('/analytics-api/zscore'); if (res !== null) return res; }
     initMockData();
     return genWeeklyZScores(_cases);
   },
 
   async getSectionFrequency() {
-    if (!DEMO_MODE) return request('/analytics-api/sections');
+    if (!DEMO_MODE) { const res = await request('/analytics-api/sections'); if (res !== null) return res; }
     initMockData();
     return genSectionFrequency(_cases);
   },
 
   async getCorrelationMatrix() {
-    if (!DEMO_MODE) return request('/analytics-api/correlation');
+    if (!DEMO_MODE) { const res = await request('/analytics-api/correlation'); if (res !== null) return res; }
     const vars = ['Unemployment %', 'Urbanization %', 'Literacy %', 'FIR Rate', 'Heinous Rate'];
     const rng2 = new SeededRandom(77);
     const matrix = vars.map((_, i) => vars.map((__, j) => {
@@ -584,7 +591,7 @@ export const api = {
 
   // ── KPI Summary ─────────────────────────────────────────────
   async getKpiSummary() {
-    if (!DEMO_MODE) return request('/analytics-api/kpi');
+    if (!DEMO_MODE) { const res = await request('/analytics-api/kpi'); if (res !== null) return res; }
     initMockData();
     const distSummary = _districtSummary;
     const hotspots = distSummary.filter(d => d.risk_score >= 70).length;
@@ -607,7 +614,7 @@ export const api = {
 
   // ── Accused & Network ─────────────────────────────────────
   async getAccused({ search, district } = {}) {
-    if (!DEMO_MODE) return request('/accused-api/', { search, district });
+    if (!DEMO_MODE) { const res = await request('/accused-api/', { search, district }); if (res !== null) return res; }
     initMockData();
     let result = _accused;
     if (district) result = result.filter(a => a._DistrictName === district);
@@ -616,14 +623,14 @@ export const api = {
   },
 
   async getNetwork() {
-    if (!DEMO_MODE) return request('/accused-api/network');
+    if (!DEMO_MODE) { const res = await request('/accused-api/network'); if (res !== null) return res; }
     initMockData();
     return _network;
   },
 
   // ── Alerts ────────────────────────────────────────────────
   async getAlerts() {
-    if (!DEMO_MODE) return request('/alerts-api/', { active: true });
+    if (!DEMO_MODE) { const res = await request('/alerts-api/', { active: true }); if (res !== null) return res; }
     initMockData();
     return genAlerts(_districtSummary);
   },

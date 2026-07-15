@@ -1,0 +1,8 @@
+/ /client/public/index.html 301
+/dashboard.html /client/public/dashboard.html 301
+/geospatial.html /client/public/geospatial.html 301
+/network.html /client/public/network.html 301
+/predictive.html /client/public/predictive.html 301
+/trends.html /client/public/trends.html 301
+/reports.html /client/public/reports.html 301
+/* /client/public/:splat 200

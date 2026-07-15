@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KSP Crime Intelligence Platform — Loading Portal</title>
+  <meta http-equiv="refresh" content="0; url=client/public/index.html" />
+  <script>
+    window.location.replace("client/public/index.html");
+  </script>
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #94a3b8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .loader-box {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1.25rem;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #f8fafc;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+    a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="loader-box">
+    <div class="spinner"></div>
+    <div class="title">Karnataka State Police — SCRB Portal</div>
+    <div class="subtitle">Redirecting to Crime Intelligence Platform...</div>
+    <div style="margin-top: 1rem; font-size: 0.8rem;">
+      <a href="client/public/index.html">Click here if you are not redirected automatically</a>
+    </div>
+  </div>
+</body>
+</html>

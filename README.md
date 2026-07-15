@@ -1,6 +1,9 @@
 # 🔰 KSP Crime Intelligence & Analytical Platform
 ### Karnataka State Police — State Crime Records Bureau (SCRB)
-**Built on Zoho Catalyst 2.0**
+**Built on Zoho Catalyst 2.0 & Deployed on OnSlate**
+
+> **🔴 Live Platform URL:** [https://ai-crime-analytics-jkgzcyyg.onslate.in](https://ai-crime-analytics-jkgzcyyg.onslate.in)  
+> *Login credentials for demo access: Badge Number `KSP-DEMO-001` · Password `admin123`*
 
 ---
 

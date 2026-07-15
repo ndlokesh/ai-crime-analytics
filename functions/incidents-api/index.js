@@ -52,7 +52,7 @@ module.exports = async (req, res) => {
     }
 
     // ── GET /incidents ────────────────────────────────────────
-    const { district, type, from, to, limit = 50 } = req.query;
+    const { district, type, from, to, limit = 600 } = req.query;
     let conditions = [];
     if (district)  conditions.push(`district = '${district.replace(/'/g,"''")}'`);
     if (type)      conditions.push(`crime_type = '${type.replace(/'/g,"''")}'`);
@@ -60,7 +60,7 @@ module.exports = async (req, res) => {
     if (to)        conditions.push(`date_time <= '${to}'`);
 
     const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
-    const query = `SELECT * FROM Incidents ${where} ORDER BY date_time DESC LIMIT ${Math.min(parseInt(limit) || 50, 500)}`;
+    const query = `SELECT * FROM Incidents ${where} ORDER BY date_time DESC LIMIT ${Math.min(parseInt(limit) || 600, 1000)}`;
     const rows = await zcql.executeZCQLQuery(query);
     const data = rows.map(r => r.Incidents);
 

@@ -65,31 +65,56 @@ function randInt(min, max) { return Math.floor(rand() * (max - min + 1)) + min; 
 function pick(arr) { return arr[randInt(0, arr.length - 1)]; }
 function randFloat(min, max) { return rand() * (max - min) + min; }
 
-// Generate seed data
+// Generate seed data from crime_records.csv
+const fs = require('fs');
+const path = require('path');
+
 function generateSeedData() {
   const incidents = [];
-  const now = Date.now();
-
-  for (let i = 0; i < 600; i++) {
-    const district = pick(DISTRICTS);
-    const crimeType = pick(CRIME_TYPES);
-    const daysAgo = randInt(0, 365);
-    const date = new Date(now - daysAgo * 864e5);
-    date.setHours(randInt(0, 23));
-
-    incidents.push({
-      incident_id: `KSP-2024-${String(i + 1).padStart(5, '0')}`,
-      district: district.name,
-      police_station: `${district.name} ${pick(STATIONS)}`,
-      ipc_section: IPC_MAP[crimeType],
-      crime_type: crimeType,
-      date_time: date.toISOString(),
-      latitude: district.lat + randFloat(-0.3, 0.3),
-      longitude: district.lng + randFloat(-0.3, 0.3),
-      status: pick(STATUS_LIST),
-      severity: pick(SEVERITY),
+  const csvPath = path.join(__dirname, 'seed-data', 'crime_records.csv');
+  if (fs.existsSync(csvPath)) {
+    const lines = fs.readFileSync(csvPath, 'utf8').trim().split('\n').slice(1);
+    lines.forEach(l => {
+      const parts = l.split(',');
+      if (parts.length >= 10) {
+        const [incident_id, district, police_station, ipc_section, crime_type, date_time, lat, lng, status, severity] = parts;
+        incidents.push({
+          incident_id,
+          district,
+          police_station,
+          ipc_section,
+          crime_type,
+          date_time,
+          latitude: parseFloat(lat) || 15.3173,
+          longitude: parseFloat(lng) || 75.7139,
+          status,
+          severity
+        });
+      }
     });
+  } else {
+    const now = Date.now();
+    for (let i = 0; i < 600; i++) {
+      const district = pick(DISTRICTS);
+      const crimeType = pick(CRIME_TYPES);
+      const daysAgo = randInt(0, 365);
+      const date = new Date(now - daysAgo * 864e5);
+      date.setHours(randInt(0, 23));
+      incidents.push({
+        incident_id: `KSP-2024-${String(i + 1).padStart(5, '0')}`,
+        district: district.name,
+        police_station: `${district.name} ${pick(STATIONS)}`,
+        ipc_section: IPC_MAP[crimeType],
+        crime_type: crimeType,
+        date_time: date.toISOString(),
+        latitude: district.lat + randFloat(-0.3, 0.3),
+        longitude: district.lng + randFloat(-0.3, 0.3),
+        status: pick(STATUS_LIST),
+        severity: pick(SEVERITY),
+      });
+    }
   }
+
 
   const offenders = [];
   for (let i = 0; i < 120; i++) {

@@ -8,6 +8,7 @@
    ============================================================ */
 
 import { SeededRandom, DISTRICT_COORDS, MONTHS } from './utils.js';
+import { CRIME_RECORDS_DATA } from './crime_data.js';
 
 // ─── Config ──────────────────────────────────────────────────
 // Automatically use OnSlate backend URL when deployed, with fallback to simulation mode
@@ -352,41 +353,56 @@ function genChargesheetDetails(cases) {
 // ── Generate District Summary ─────────────────────────────────
 function genDistrictSummary(cases) {
   return KA_DISTRICTS.map(d => {
-    const distCases = cases.filter(c => c._DistrictID === d.DistrictID);
+    const distCases = cases.filter(c => c._DistrictID === d.DistrictID || c._DistrictName === d.DistrictName || c._DistrictID === d.DistrictName || c.district === d.DistrictName);
     const statusBreakdown = {};
     CASE_STATUSES.forEach(s => { statusBreakdown[s.CaseStatusName] = 0; });
+    ['Under Investigation', 'Closed', 'Chargesheeted', 'Open'].forEach(st => { if (statusBreakdown[st] === undefined) statusBreakdown[st] = 0; });
+
     const categoryBreakdown = {};
     CASE_CATEGORIES.forEach(c => { categoryBreakdown[c.LookupValue] = 0; });
+    ['Murder', 'Robbery', 'Assault', 'Cybercrime', 'Burglary', 'Sexual Offence', 'Narcotics', 'Theft', 'Kidnapping', 'Fraud'].forEach(ct => { if (categoryBreakdown[ct] === undefined) categoryBreakdown[ct] = 0; });
+
     const headBreakdown = {};
     CRIME_HEADS.forEach(h => { headBreakdown[h.CrimeGroupName] = 0; });
-    const gravityBreakdown = { Heinous: 0, 'Non-Heinous': 0, Minor: 0 };
+    const gravityBreakdown = { Heinous: 0, 'Non-Heinous': 0, Minor: 0, Critical: 0, High: 0, Medium: 0, Low: 0 };
 
     distCases.forEach(c => {
       if (statusBreakdown[c.CaseStatusName] !== undefined) statusBreakdown[c.CaseStatusName]++;
+      else statusBreakdown[c.CaseStatusName] = 1;
+
       if (categoryBreakdown[c.CaseCategoryName] !== undefined) categoryBreakdown[c.CaseCategoryName]++;
+      else categoryBreakdown[c.CaseCategoryName] = 1;
+
       if (headBreakdown[c.CrimeMajorHeadName] !== undefined) headBreakdown[c.CrimeMajorHeadName]++;
+      else headBreakdown[c.CrimeMajorHeadName] = 1;
+
       if (gravityBreakdown[c.GravityOffenceName] !== undefined) gravityBreakdown[c.GravityOffenceName]++;
+      else gravityBreakdown[c.GravityOffenceName] = 1;
     });
 
-    const underInv = distCases.filter(c => c.CaseStatusName === 'Under Investigation').length;
+    const underInv = distCases.filter(c => c.CaseStatusName === 'Under Investigation' || c.CaseStatusName === 'Open').length;
+    const heinousCount = (gravityBreakdown['Heinous'] || 0) + (gravityBreakdown['Critical'] || 0) + (gravityBreakdown['High'] || 0);
     const riskScore = Math.min(100, Math.round(
-      distCases.length * 0.25 + d.unemployment * 3 + d.urban * 0.15 + gravityBreakdown['Heinous'] * 2
+      distCases.length * 1.5 + d.unemployment * 2 + d.urban * 0.15 + heinousCount * 2.5
     ));
 
     return {
       DistrictID: d.DistrictID,
       district: d.DistrictName,
       total_cases: distCases.length,
-      fir_count: categoryBreakdown['FIR'] || 0,
+      total_incidents: distCases.length,
+      fir_count: distCases.length,
       udr_count: categoryBreakdown['UDR'] || 0,
       par_count: categoryBreakdown['PAR'] || 0,
       zero_fir_count: categoryBreakdown['Zero FIR'] || 0,
       under_investigation: underInv,
-      heinous_cases: gravityBreakdown['Heinous'] || 0,
+      open_cases: underInv,
+      heinous_cases: heinousCount,
       risk_score: riskScore,
       crime_head_breakdown: headBreakdown,
       status_breakdown: statusBreakdown,
       category_breakdown: categoryBreakdown,
+      crime_breakdown: categoryBreakdown,
       gravity_breakdown: gravityBreakdown,
       coordinates: [d.lat, d.lng],
       population: d.pop,
@@ -418,7 +434,10 @@ function genMonthlyTrends(cases) {
 // ── Generate Hourly ───────────────────────────────────────────
 function genHourly(cases) {
   const hourly = Array(24).fill(0);
-  cases.forEach(c => { const h = new Date(c.IncidentFromDate).getHours(); hourly[h]++; });
+  cases.forEach(c => {
+    const hour = new Date(c.IncidentFromDate || c.date_time || c.CrimeRegisteredDate).getHours();
+    if (hour >= 0 && hour < 24) hourly[hour]++;
+  });
   return hourly;
 }
 
@@ -426,7 +445,7 @@ function genHourly(cases) {
 function genSectionFrequency(cases) {
   const freq = {};
   cases.forEach(c => {
-    const key = `${c._ActCode} §${c._SectionCode}`;
+    const key = c.ipc_section || `${c._ActCode || 'IPC'} §${c._SectionCode || '420'}`;
     freq[key] = (freq[key] || 0) + 1;
   });
   return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 15).map(([section, count]) => ({ section, count }));
@@ -434,7 +453,6 @@ function genSectionFrequency(cases) {
 
 // ── Generate Network (Accused associations) ───────────────────
 function genNetwork(accused, cases) {
-  // Group accused by case — those in same case are "associated"
   const caseAccused = {};
   accused.forEach(a => {
     if (!caseAccused[a.CaseMasterID]) caseAccused[a.CaseMasterID] = [];
@@ -454,19 +472,21 @@ function genNetwork(accused, cases) {
     gender: a.GenderID === 1 ? 'Male' : 'Female',
   }));
 
-  // Count repeat appearances
-  const nameCounts = {};
-  accused.forEach(a => { nameCounts[a.AccusedName] = (nameCounts[a.AccusedName] || 0) + 1; });
-  nodes.forEach(n => { n.repeat_count = (nameCounts[n.name] || 1) - 1; });
-
   const links = [];
   Object.values(caseAccused).forEach(group => {
-    if (group.length < 2) return;
-    for (let i = 0; i < group.length - 1; i++) {
-      for (let j = i + 1; j < group.length; j++) {
-        const src = nodes.find(n => n.id === String(group[i].AccusedMasterID));
-        const tgt = nodes.find(n => n.id === String(group[j].AccusedMasterID));
-        if (src && tgt) links.push({ source: src.id, target: tgt.id, strength: 0.8, type: 'co-accused' });
+    if (group.length > 1) {
+      for (let i = 0; i < group.length && i < 5; i++) {
+        for (let j = i + 1; j < group.length && j < 5; j++) {
+          if (nodes.some(n => n.id === String(group[i].AccusedMasterID)) &&
+              nodes.some(n => n.id === String(group[j].AccusedMasterID))) {
+            links.push({
+              source: String(group[i].AccusedMasterID),
+              target: String(group[j].AccusedMasterID),
+              strength: 0.8,
+              type: 'co-accused'
+            });
+          }
+        }
       }
     }
   });
@@ -476,17 +496,32 @@ function genNetwork(accused, cases) {
 
 // ── Generate Alerts ───────────────────────────────────────────
 function genAlerts(districtSummary) {
-  const topDistricts = [...districtSummary].sort((a, b) => b.risk_score - a.risk_score).slice(0, 5);
-  return topDistricts.map((d, i) => ({
-    ROWID: i + 1,
-    district: d.district,
-    crime_type: Object.entries(d.crime_head_breakdown).sort((a, b) => b[1] - a[1])[0][0],
-    alert_level: d.risk_score >= 80 ? 'Critical' : d.risk_score >= 65 ? 'High' : 'Medium',
-    message: `Spike detected: ${Object.entries(d.crime_head_breakdown).sort((a,b)=>b[1]-a[1])[0][0]} in ${d.district} — ${d.heinous_cases} heinous cases this period`,
-    created_at: new Date(Date.now() - rng.int(0, 48) * 3600000).toISOString(),
-    is_active: true,
-    z_score: (rng.float(2.0, 4.5)).toFixed(2),
-  }));
+  const alerts = [];
+  districtSummary.forEach(d => {
+    if (d.risk_score >= 70) {
+      alerts.push({
+        alert_id: `ALT-${d.DistrictID}-1`,
+        district: d.district,
+        alert_type: 'High Heinous Crime Density',
+        severity: d.risk_score >= 85 ? 'Critical' : 'High',
+        message: `${d.district} has recorded ${d.heinous_cases} heinous cases with a Risk Score of ${d.risk_score}/100. Immediate deployment recommended.`,
+        created_at: new Date().toISOString(),
+        status: 'Active',
+      });
+    }
+    if (d.under_investigation > 30) {
+      alerts.push({
+        alert_id: `ALT-${d.DistrictID}-2`,
+        district: d.district,
+        alert_type: 'Investigation Backlog',
+        severity: 'Medium',
+        message: `${d.district} currently has ${d.under_investigation} cases Under Investigation exceeding benchmark threshold.`,
+        created_at: new Date(Date.now() - 3600000).toISOString(),
+        status: 'Active',
+      });
+    }
+  });
+  return alerts;
 }
 
 // ── Generate Weekly Z-Scores ──────────────────────────────────
@@ -512,7 +547,21 @@ function initMockData() {
   if (_cases) return;
   _units       = genUnits();
   _employees   = genEmployees(_units, 200);
-  _cases       = genCaseMaster(_units, _employees, 600);
+  const rawCases = (CRIME_RECORDS_DATA && CRIME_RECORDS_DATA.length > 0) ? CRIME_RECORDS_DATA : ((typeof window !== 'undefined' && window.CRIME_RECORDS_DATA && window.CRIME_RECORDS_DATA.length > 0) ? window.CRIME_RECORDS_DATA : genCaseMaster(_units, _employees, 600));
+  _cases = rawCases.map(c => ({
+    ...c,
+    incident_id: c.CrimeNo || c.CaseNo || c.incident_id,
+    district: c._DistrictName || c.district || c._DistrictID,
+    crime_type: c.CaseCategoryName || c.crime_type || c.CrimeMajorHeadName,
+    ipc_section: c.ipc_section || `${c._SectionCode || '420'} ${c._ActCode || 'IPC'}`.trim(),
+    date_time: c.date_time || c.IncidentFromDate || c.CrimeRegisteredDate,
+    severity: c.severity || c.GravityOffenceName || 'Medium',
+    status: c.status || c.CaseStatusName || 'Under Investigation',
+    _DistrictName: c._DistrictName || c.district || c._DistrictID,
+    CaseCategoryName: c.CaseCategoryName || c.crime_type || c.CrimeMajorHeadName,
+    GravityOffenceName: c.GravityOffenceName || c.severity || 'Medium',
+    CaseStatusName: c.CaseStatusName || c.status || 'Under Investigation',
+  }));
   _accused     = genAccused(_cases);
   _victims     = genVictims(_cases);
   _arrests     = genArrestSurrender(_accused, _cases, _units);
@@ -521,14 +570,15 @@ function initMockData() {
   _network     = genNetwork(_accused, _cases);
 }
 
+
 // ═══════════════════════════════════════════════════════════════
 // PUBLIC API
 // ═══════════════════════════════════════════════════════════════
 export const api = {
 
   // ── Cases (CaseMaster) ────────────────────────────────────
-  async getCases({ district, crimeHead, category, status, limit = 60 } = {}) {
-    if (!DEMO_MODE) { const res = await request('/cases-api/', { district, crimeHead, category, status, limit }); if (res !== null) return res; }
+  async getCases({ district, crimeHead, category, status, limit = 600 } = {}) {
+    if (!DEMO_MODE) { const res = await request('/cases-api/', { district, crimeHead, category, status, limit: 600 }); if (res !== null) return res; }
     initMockData();
     let result = _cases;
     if (district)   result = result.filter(c => c._DistrictName === district);
@@ -538,12 +588,17 @@ export const api = {
     return result.slice(0, limit);
   },
 
+  async getIncidents(params = {}) {
+    return this.getCases({ ...params, limit: params.limit || 600 });
+  },
+
+
   async getHotspots() {
     if (!DEMO_MODE) { const res = await request('/cases-api/hotspots'); if (res !== null) return res; }
     initMockData();
     return _cases.map(c => ({
       lat: c.latitude, lng: c.longitude,
-      intensity: c.GravityOffenceName === 'Heinous' ? 1.0 : c.GravityOffenceName === 'Non-Heinous' ? 0.6 : 0.3
+      intensity: (c.GravityOffenceName === 'Critical' || c.GravityOffenceName === 'Heinous') ? 1.0 : (c.GravityOffenceName === 'High') ? 0.8 : (c.GravityOffenceName === 'Medium' || c.GravityOffenceName === 'Non-Heinous') ? 0.5 : 0.3
     }));
   },
 
@@ -599,10 +654,10 @@ export const api = {
     const alerts = genAlerts(distSummary);
     return {
       total_cases:          _cases.length,
-      fir_count:            _cases.filter(c => c.CaseCategoryName === 'FIR').length,
+      fir_count:            _cases.filter(c => c.CaseCategoryName === 'FIR' || c.CrimeNo.startsWith('KSP')).length,
       under_investigation:  _cases.filter(c => c.CaseStatusName === 'Under Investigation').length,
-      heinous_cases:        _cases.filter(c => c.GravityOffenceName === 'Heinous').length,
-      chargesheeted:        _chargesheets.length,
+      heinous_cases:        _cases.filter(c => ['Heinous', 'Critical', 'High'].includes(c.GravityOffenceName)).length,
+      chargesheeted:        _cases.filter(c => c.CaseStatusName === 'Chargesheeted').length,
       total_accused:        _accused.length,
       total_victims:        _victims.length,
       total_arrests:        _arrests.length,

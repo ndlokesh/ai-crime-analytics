@@ -1,0 +1,601 @@
+incident_id,district,police_station,ipc_section,crime_type,date_time,latitude,longitude,status,severity
+KSP-2024-00001,Raichur,Raichur Market PS,420 IPC,Fraud,2026-04-04T21:56:18.818Z,16.233927,77.439847,Under Investigation,Medium
+KSP-2024-00002,Chitradurga,Chitradurga Market PS,392 IPC,Robbery,2026-01-25T01:11:28.818Z,14.281867,76.259807,Closed,Low
+KSP-2024-00003,Haveri,Haveri East PS,323 IPC,Assault,2025-07-23T17:47:11.818Z,14.783701,75.685198,Under Investigation,Medium
+KSP-2024-00004,Bengaluru Rural,Bengaluru Rural North PS,66 IT Act,Cybercrime,2026-03-12T14:41:11.818Z,13.266659,77.584347,Chargesheeted,Critical
+KSP-2024-00005,Kalaburagi,Kalaburagi West PS,457 IPC,Burglary,2025-08-30T04:02:55.818Z,17.477821,76.722930,Under Investigation,Critical
+KSP-2024-00006,Chitradurga,Chitradurga Cyber Crime PS,376 IPC,Sexual Offence,2026-04-08T06:33:12.818Z,14.264591,76.185601,Under Investigation,Medium
+KSP-2024-00007,Udupi,Udupi North PS,302 IPC,Murder,2026-03-04T18:22:31.818Z,13.543688,75.012926,Chargesheeted,Critical
+KSP-2024-00008,Mysuru,Mysuru West PS,302 IPC,Murder,2025-08-07T12:36:37.818Z,12.081087,76.355285,Chargesheeted,High
+KSP-2024-00009,Chitradurga,Chitradurga Cyber Crime PS,20 NDPS,Narcotics,2026-05-20T12:37:09.818Z,14.220094,76.636289,Under Investigation,Low
+KSP-2024-00010,Chamarajanagar,Chamarajanagar North PS,379 IPC,Theft,2026-03-14T12:27:38.818Z,11.969325,77.046792,Closed,High
+KSP-2024-00011,Bengaluru Urban,Bengaluru Urban Traffic PS,302 IPC,Murder,2026-04-30T21:56:59.818Z,12.741766,77.353884,Open,Medium
+KSP-2024-00012,Chamarajanagar,Chamarajanagar East PS,457 IPC,Burglary,2025-12-25T15:07:26.818Z,11.875836,77.032681,Chargesheeted,Medium
+KSP-2024-00013,Chikkaballapura,Chikkaballapura Traffic PS,379 IPC,Theft,2026-04-14T14:56:41.818Z,13.500528,77.564301,Closed,Critical
+KSP-2024-00014,Raichur,Raichur South PS,376 IPC,Sexual Offence,2026-07-02T12:47:51.818Z,16.125059,77.373257,Chargesheeted,Medium
+KSP-2024-00015,Bengaluru Urban,Bengaluru Urban Traffic PS,392 IPC,Robbery,2026-06-06T19:37:12.818Z,12.780986,77.779812,Chargesheeted,High
+KSP-2024-00016,Davangere,Davangere Market PS,302 IPC,Murder,2026-04-21T07:19:53.818Z,14.700826,76.192964,Open,High
+KSP-2024-00017,Yadgir,Yadgir East PS,363 IPC,Kidnapping,2025-09-29T05:11:15.818Z,16.980808,76.844071,Open,Critical
+KSP-2024-00018,Kalaburagi,Kalaburagi West PS,20 NDPS,Narcotics,2026-05-07T04:39:15.818Z,17.254073,76.876244,Closed,High
+KSP-2024-00019,Mandya,Mandya Traffic PS,457 IPC,Burglary,2026-06-05T02:45:16.818Z,12.281034,76.845653,Chargesheeted,High
+KSP-2024-00020,Dakshina Kannada,Dakshina Kannada East PS,457 IPC,Burglary,2026-03-06T02:07:25.818Z,12.850751,75.486749,Open,Critical
+KSP-2024-00021,Vijayapura,Vijayapura West PS,20 NDPS,Narcotics,2026-07-10T15:03:20.818Z,16.530602,75.966220,Under Investigation,Critical
+KSP-2024-00022,Tumakuru,Tumakuru Central PS,323 IPC,Assault,2026-02-23T03:11:14.818Z,13.092869,77.365948,Under Investigation,Critical
+KSP-2024-00023,Shivamogga,Shivamogga Market PS,420 IPC,Fraud,2026-06-27T21:59:31.818Z,13.938899,75.860401,Open,Low
+KSP-2024-00024,Raichur,Raichur East PS,20 NDPS,Narcotics,2025-12-05T16:00:41.818Z,16.325668,77.555615,Under Investigation,High
+KSP-2024-00025,Vijayapura,Vijayapura Central PS,420 IPC,Fraud,2026-04-03T07:16:37.818Z,16.636900,75.725051,Under Investigation,Medium
+KSP-2024-00026,Ballari,Ballari Central PS,302 IPC,Murder,2025-11-03T23:14:44.818Z,15.401537,76.998279,Chargesheeted,Medium
+KSP-2024-00027,Udupi,Udupi Cyber Crime PS,379 IPC,Theft,2026-02-06T23:06:44.818Z,13.638114,74.977006,Closed,High
+KSP-2024-00028,Udupi,Udupi East PS,376 IPC,Sexual Offence,2026-02-08T21:53:53.818Z,13.304584,74.858385,Under Investigation,Critical
+KSP-2024-00029,Hassan,Hassan Cyber Crime PS,66 IT Act,Cybercrime,2025-11-02T07:35:21.818Z,13.306540,76.280447,Chargesheeted,Low
+KSP-2024-00030,Bengaluru Urban,Bengaluru Urban West PS,302 IPC,Murder,2025-11-27T04:39:39.818Z,13.089467,77.661431,Chargesheeted,Low
+KSP-2024-00031,Hassan,Hassan Market PS,66 IT Act,Cybercrime,2025-09-09T10:53:01.818Z,12.838100,75.913959,Open,Medium
+KSP-2024-00032,Chitradurga,Chitradurga South PS,363 IPC,Kidnapping,2025-11-14T15:42:07.818Z,14.437663,76.535628,Under Investigation,Medium
+KSP-2024-00033,Chikkamagaluru,Chikkamagaluru North PS,66 IT Act,Cybercrime,2025-09-26T04:23:38.818Z,13.455948,75.781402,Under Investigation,Medium
+KSP-2024-00034,Yadgir,Yadgir Traffic PS,66 IT Act,Cybercrime,2025-11-12T21:27:02.818Z,16.653750,76.896797,Chargesheeted,Medium
+KSP-2024-00035,Kolar,Kolar North PS,420 IPC,Fraud,2025-09-06T11:44:27.818Z,12.967028,77.843984,Closed,Medium
+KSP-2024-00036,Chikkamagaluru,Chikkamagaluru West PS,302 IPC,Murder,2026-06-20T07:22:20.818Z,13.382269,75.643107,Closed,High
+KSP-2024-00037,Davangere,Davangere West PS,323 IPC,Assault,2025-11-29T13:34:56.818Z,14.459009,75.961323,Under Investigation,Critical
+KSP-2024-00038,Raichur,Raichur West PS,66 IT Act,Cybercrime,2025-12-08T21:47:46.818Z,16.127176,77.142739,Open,Low
+KSP-2024-00039,Davangere,Davangere North PS,302 IPC,Murder,2025-09-04T02:25:21.818Z,14.214734,75.928549,Chargesheeted,Medium
+KSP-2024-00040,Shivamogga,Shivamogga South PS,302 IPC,Murder,2025-10-09T08:51:05.818Z,14.223782,75.457408,Under Investigation,Medium
+KSP-2024-00041,Bagalkot,Bagalkot South PS,457 IPC,Burglary,2025-12-20T07:35:50.818Z,16.142100,75.515922,Under Investigation,Critical
+KSP-2024-00042,Kalaburagi,Kalaburagi North PS,420 IPC,Fraud,2026-01-20T23:30:46.818Z,17.368171,76.769248,Chargesheeted,Low
+KSP-2024-00043,Bagalkot,Bagalkot Market PS,20 NDPS,Narcotics,2026-01-19T03:07:29.818Z,16.359705,75.932149,Chargesheeted,Medium
+KSP-2024-00044,Kolar,Kolar North PS,376 IPC,Sexual Offence,2025-07-25T02:47:59.818Z,12.966601,77.966858,Open,Critical
+KSP-2024-00045,Mysuru,Mysuru Market PS,323 IPC,Assault,2025-09-27T21:44:38.818Z,12.158214,76.706627,Open,Critical
+KSP-2024-00046,Gadag,Gadag North PS,392 IPC,Robbery,2026-06-14T23:12:23.818Z,15.303177,75.566106,Chargesheeted,High
+KSP-2024-00047,Bengaluru Urban,Bengaluru Urban Traffic PS,20 NDPS,Narcotics,2026-03-20T18:08:45.818Z,12.737760,77.813852,Closed,High
+KSP-2024-00048,Dharwad,Dharwad Traffic PS,420 IPC,Fraud,2026-01-05T14:50:43.818Z,15.190468,75.100673,Open,Medium
+KSP-2024-00049,Bidar,Bidar Central PS,392 IPC,Robbery,2026-05-07T07:59:07.818Z,18.005286,76.886933,Open,Medium
+KSP-2024-00050,Shivamogga,Shivamogga North PS,392 IPC,Robbery,2025-07-14T10:28:06.818Z,14.168821,75.566897,Closed,High
+KSP-2024-00051,Udupi,Udupi North PS,376 IPC,Sexual Offence,2026-05-01T14:26:23.818Z,13.457167,74.717661,Open,Low
+KSP-2024-00052,Dharwad,Dharwad Market PS,20 NDPS,Narcotics,2025-07-22T06:36:02.818Z,15.556235,75.217350,Closed,Medium
+KSP-2024-00053,Ramanagara,Ramanagara East PS,323 IPC,Assault,2026-06-09T02:09:47.818Z,12.539064,77.052425,Open,High
+KSP-2024-00054,Raichur,Raichur South PS,420 IPC,Fraud,2025-09-15T06:56:58.818Z,16.465085,77.386971,Closed,Medium
+KSP-2024-00055,Gadag,Gadag East PS,302 IPC,Murder,2026-03-18T15:04:15.818Z,15.640590,75.778800,Under Investigation,Critical
+KSP-2024-00056,Ballari,Ballari Cyber Crime PS,457 IPC,Burglary,2026-02-24T08:00:59.818Z,14.945593,76.774436,Open,High
+KSP-2024-00057,Mysuru,Mysuru Cyber Crime PS,392 IPC,Robbery,2026-04-06T00:00:34.818Z,12.131033,76.928986,Chargesheeted,High
+KSP-2024-00058,Chikkamagaluru,Chikkamagaluru North PS,323 IPC,Assault,2026-05-28T04:31:24.818Z,13.146007,75.618592,Under Investigation,Low
+KSP-2024-00059,Chikkaballapura,Chikkaballapura North PS,379 IPC,Theft,2025-09-21T21:10:59.818Z,13.576126,77.602256,Chargesheeted,Low
+KSP-2024-00060,Belagavi,Belagavi Central PS,363 IPC,Kidnapping,2025-07-30T15:08:18.818Z,15.860296,74.308398,Open,Low
+KSP-2024-00061,Haveri,Haveri Cyber Crime PS,376 IPC,Sexual Offence,2025-09-01T06:40:17.818Z,14.772435,75.658129,Under Investigation,Critical
+KSP-2024-00062,Raichur,Raichur Central PS,420 IPC,Fraud,2026-06-20T14:44:59.818Z,15.971632,77.493604,Under Investigation,Medium
+KSP-2024-00063,Belagavi,Belagavi Market PS,379 IPC,Theft,2025-11-29T08:04:14.818Z,15.820530,74.354002,Chargesheeted,Medium
+KSP-2024-00064,Gadag,Gadag Cyber Crime PS,420 IPC,Fraud,2026-04-10T18:19:47.818Z,15.334007,75.809904,Closed,Low
+KSP-2024-00065,Bagalkot,Bagalkot West PS,457 IPC,Burglary,2026-03-08T08:29:55.818Z,16.109584,75.721064,Closed,Medium
+KSP-2024-00066,Bagalkot,Bagalkot Traffic PS,66 IT Act,Cybercrime,2025-08-26T11:04:49.818Z,16.423051,75.422126,Chargesheeted,Medium
+KSP-2024-00067,Mandya,Mandya West PS,420 IPC,Fraud,2025-08-07T13:44:01.818Z,12.242769,76.856824,Under Investigation,Medium
+KSP-2024-00068,Bidar,Bidar Cyber Crime PS,323 IPC,Assault,2025-11-05T20:41:04.818Z,17.826576,77.084668,Open,High
+KSP-2024-00069,Vijayapura,Vijayapura Cyber Crime PS,376 IPC,Sexual Offence,2025-11-04T20:08:04.818Z,17.000338,75.622342,Open,Critical
+KSP-2024-00070,Kalaburagi,Kalaburagi South PS,392 IPC,Robbery,2025-11-16T15:40:08.818Z,17.034838,76.523514,Open,Medium
+KSP-2024-00071,Kodagu,Kodagu South PS,376 IPC,Sexual Offence,2026-04-22T20:26:55.818Z,12.671322,75.769174,Under Investigation,Critical
+KSP-2024-00072,Kolar,Kolar North PS,420 IPC,Fraud,2026-04-28T11:31:08.818Z,13.407095,78.062260,Open,Medium
+KSP-2024-00073,Davangere,Davangere Central PS,323 IPC,Assault,2026-05-23T02:39:26.818Z,14.679211,76.012083,Open,Critical
+KSP-2024-00074,Bengaluru Urban,Bengaluru Urban North PS,392 IPC,Robbery,2026-07-05T17:05:35.818Z,13.232719,77.544205,Chargesheeted,Critical
+KSP-2024-00075,Dakshina Kannada,Dakshina Kannada Market PS,376 IPC,Sexual Offence,2025-09-05T21:36:56.818Z,12.593653,75.518586,Under Investigation,Critical
+KSP-2024-00076,Ramanagara,Ramanagara West PS,323 IPC,Assault,2025-09-08T04:16:21.818Z,12.659039,77.536213,Chargesheeted,Low
+KSP-2024-00077,Ballari,Ballari Traffic PS,363 IPC,Kidnapping,2025-12-15T05:36:04.818Z,15.351685,77.023421,Under Investigation,Critical
+KSP-2024-00078,Bengaluru Urban,Bengaluru Urban Cyber Crime PS,363 IPC,Kidnapping,2025-10-16T22:35:14.818Z,12.731695,77.812171,Closed,Medium
+KSP-2024-00079,Shivamogga,Shivamogga Central PS,379 IPC,Theft,2025-09-14T23:57:53.818Z,13.860784,75.523264,Chargesheeted,Low
+KSP-2024-00080,Chamarajanagar,Chamarajanagar Cyber Crime PS,363 IPC,Kidnapping,2026-05-01T07:51:57.818Z,12.183427,76.905060,Open,Critical
+KSP-2024-00081,Chitradurga,Chitradurga West PS,323 IPC,Assault,2026-06-04T21:47:31.818Z,13.953629,76.359598,Under Investigation,High
+KSP-2024-00082,Dharwad,Dharwad East PS,323 IPC,Assault,2026-03-29T18:20:08.818Z,15.371247,75.108013,Closed,High
+KSP-2024-00083,Udupi,Udupi Central PS,66 IT Act,Cybercrime,2026-07-06T22:40:48.818Z,13.099691,74.832276,Chargesheeted,High
+KSP-2024-00084,Tumakuru,Tumakuru North PS,363 IPC,Kidnapping,2026-06-22T19:51:23.818Z,13.615124,77.180014,Chargesheeted,High
+KSP-2024-00085,Udupi,Udupi Central PS,66 IT Act,Cybercrime,2026-02-03T08:02:45.818Z,13.459652,74.728120,Closed,Critical
+KSP-2024-00086,Vijayapura,Vijayapura West PS,379 IPC,Theft,2025-07-16T04:41:07.818Z,16.801842,75.842614,Under Investigation,Low
+KSP-2024-00087,Bengaluru Rural,Bengaluru Rural West PS,302 IPC,Murder,2026-07-01T11:04:46.818Z,13.300748,77.510982,Chargesheeted,Medium
+KSP-2024-00088,Belagavi,Belagavi East PS,20 NDPS,Narcotics,2025-08-07T19:24:48.818Z,15.562512,74.794522,Chargesheeted,High
+KSP-2024-00089,Mandya,Mandya East PS,363 IPC,Kidnapping,2026-03-20T09:50:42.818Z,12.303417,76.635905,Under Investigation,High
+KSP-2024-00090,Kodagu,Kodagu North PS,379 IPC,Theft,2026-05-15T09:50:05.818Z,12.707972,75.789077,Open,High
+KSP-2024-00091,Bengaluru Urban,Bengaluru Urban North PS,323 IPC,Assault,2026-01-18T00:55:07.818Z,13.042746,77.646214,Under Investigation,Critical
+KSP-2024-00092,Shivamogga,Shivamogga West PS,379 IPC,Theft,2025-07-25T07:14:30.818Z,14.043950,75.800922,Closed,Medium
+KSP-2024-00093,Chikkaballapura,Chikkaballapura Traffic PS,363 IPC,Kidnapping,2025-09-07T08:10:19.818Z,13.232547,77.959651,Under Investigation,Medium
+KSP-2024-00094,Uttara Kannada,Uttara Kannada Traffic PS,457 IPC,Burglary,2026-02-07T11:16:08.818Z,14.742145,74.608075,Closed,Medium
+KSP-2024-00095,Kodagu,Kodagu South PS,379 IPC,Theft,2026-02-12T07:34:52.818Z,12.294806,76.020932,Open,Low
+KSP-2024-00096,Kalaburagi,Kalaburagi Cyber Crime PS,376 IPC,Sexual Offence,2025-10-31T14:56:19.818Z,17.404553,76.981517,Open,Low
+KSP-2024-00097,Davangere,Davangere Traffic PS,323 IPC,Assault,2025-11-18T01:41:22.818Z,14.413630,75.687643,Closed,High
+KSP-2024-00098,Ballari,Ballari Traffic PS,420 IPC,Fraud,2026-05-08T05:15:59.818Z,15.125958,76.765935,Under Investigation,Low
+KSP-2024-00099,Raichur,Raichur Central PS,376 IPC,Sexual Offence,2026-06-14T00:24:52.818Z,16.374522,77.473290,Under Investigation,Low
+KSP-2024-00100,Ballari,Ballari North PS,420 IPC,Fraud,2026-02-07T12:24:15.818Z,15.249215,77.156500,Under Investigation,Low
+KSP-2024-00101,Chikkaballapura,Chikkaballapura West PS,66 IT Act,Cybercrime,2026-05-27T02:56:16.818Z,13.404374,77.714533,Open,Low
+KSP-2024-00102,Ballari,Ballari West PS,20 NDPS,Narcotics,2025-10-09T23:24:42.818Z,15.218673,76.946988,Chargesheeted,Critical
+KSP-2024-00103,Uttara Kannada,Uttara Kannada North PS,420 IPC,Fraud,2026-03-06T09:25:00.818Z,14.808746,74.551231,Closed,Critical
+KSP-2024-00104,Chitradurga,Chitradurga East PS,392 IPC,Robbery,2026-03-03T04:18:39.818Z,14.246997,76.461056,Open,Low
+KSP-2024-00105,Chikkaballapura,Chikkaballapura Traffic PS,420 IPC,Fraud,2026-04-03T09:26:54.818Z,13.473012,77.826501,Under Investigation,Medium
+KSP-2024-00106,Koppal,Koppal Market PS,457 IPC,Burglary,2025-08-31T17:23:52.818Z,15.504924,76.369799,Open,High
+KSP-2024-00107,Gadag,Gadag North PS,457 IPC,Burglary,2026-02-02T17:38:32.818Z,15.572752,75.455335,Open,Critical
+KSP-2024-00108,Kodagu,Kodagu East PS,379 IPC,Theft,2025-10-28T16:31:54.818Z,12.333705,75.659158,Closed,Medium
+KSP-2024-00109,Kolar,Kolar North PS,66 IT Act,Cybercrime,2025-09-27T06:49:45.818Z,13.265700,77.902446,Open,Critical
+KSP-2024-00110,Raichur,Raichur East PS,66 IT Act,Cybercrime,2026-03-19T04:44:24.818Z,16.035578,77.386409,Open,Medium
+KSP-2024-00111,Chamarajanagar,Chamarajanagar South PS,66 IT Act,Cybercrime,2025-10-23T14:03:17.818Z,11.904094,77.243245,Open,Critical
+KSP-2024-00112,Ramanagara,Ramanagara Cyber Crime PS,20 NDPS,Narcotics,2026-03-14T07:28:23.818Z,12.705591,77.341186,Under Investigation,High
+KSP-2024-00113,Haveri,Haveri South PS,20 NDPS,Narcotics,2026-01-17T10:17:29.818Z,14.518318,75.278714,Under Investigation,Critical
+KSP-2024-00114,Chamarajanagar,Chamarajanagar South PS,323 IPC,Assault,2026-05-18T17:50:43.818Z,11.991575,77.063819,Chargesheeted,High
+KSP-2024-00115,Bengaluru Rural,Bengaluru Rural Market PS,420 IPC,Fraud,2025-09-14T16:06:13.818Z,13.315691,77.335005,Chargesheeted,Low
+KSP-2024-00116,Kodagu,Kodagu Central PS,20 NDPS,Narcotics,2025-10-01T04:25:11.818Z,12.202291,75.919099,Open,Critical
+KSP-2024-00117,Tumakuru,Tumakuru Traffic PS,363 IPC,Kidnapping,2026-04-27T20:01:16.818Z,13.484920,77.170086,Chargesheeted,Critical
+KSP-2024-00118,Davangere,Davangere South PS,323 IPC,Assault,2025-12-15T10:19:07.818Z,14.407974,75.654728,Chargesheeted,High
+KSP-2024-00119,Gadag,Gadag East PS,66 IT Act,Cybercrime,2026-03-06T10:50:56.818Z,15.650955,75.715216,Closed,Medium
+KSP-2024-00120,Bagalkot,Bagalkot North PS,66 IT Act,Cybercrime,2025-11-18T09:05:44.818Z,16.192533,75.814777,Closed,Critical
+KSP-2024-00121,Belagavi,Belagavi North PS,392 IPC,Robbery,2025-09-30T15:24:29.818Z,15.864326,74.697973,Chargesheeted,Low
+KSP-2024-00122,Dharwad,Dharwad West PS,379 IPC,Theft,2026-02-02T12:30:33.818Z,15.616426,74.735856,Open,Low
+KSP-2024-00123,Vijayapura,Vijayapura South PS,392 IPC,Robbery,2025-10-08T01:18:43.818Z,17.018804,75.722758,Open,High
+KSP-2024-00124,Dakshina Kannada,Dakshina Kannada Market PS,379 IPC,Theft,2025-11-03T19:41:26.818Z,13.166536,75.099160,Under Investigation,Low
+KSP-2024-00125,Chitradurga,Chitradurga South PS,457 IPC,Burglary,2025-11-10T04:18:06.818Z,14.320322,76.658515,Under Investigation,Medium
+KSP-2024-00126,Udupi,Udupi South PS,376 IPC,Sexual Offence,2026-05-19T00:31:52.818Z,13.349209,74.820788,Under Investigation,Low
+KSP-2024-00127,Ballari,Ballari North PS,363 IPC,Kidnapping,2026-03-04T00:56:21.818Z,15.331655,76.651685,Open,Low
+KSP-2024-00128,Dharwad,Dharwad West PS,363 IPC,Kidnapping,2026-06-05T22:32:00.818Z,15.241627,75.289015,Open,Critical
+KSP-2024-00129,Koppal,Koppal West PS,379 IPC,Theft,2026-03-04T07:28:16.818Z,15.314452,76.412427,Under Investigation,Medium
+KSP-2024-00130,Mandya,Mandya Market PS,420 IPC,Fraud,2026-05-18T07:23:32.818Z,12.309733,76.746139,Open,Low
+KSP-2024-00131,Belagavi,Belagavi North PS,323 IPC,Assault,2026-01-17T00:54:54.818Z,16.020259,74.243529,Open,Medium
+KSP-2024-00132,Vijayapura,Vijayapura Central PS,392 IPC,Robbery,2025-08-07T11:21:56.818Z,16.986198,75.905347,Chargesheeted,Low
+KSP-2024-00133,Vijayapura,Vijayapura Central PS,457 IPC,Burglary,2025-10-22T15:55:13.818Z,16.949555,75.870115,Chargesheeted,Medium
+KSP-2024-00134,Chamarajanagar,Chamarajanagar Central PS,379 IPC,Theft,2026-01-22T20:03:26.818Z,11.657553,77.117998,Chargesheeted,High
+KSP-2024-00135,Mysuru,Mysuru North PS,363 IPC,Kidnapping,2026-04-28T02:29:03.818Z,12.246976,76.545527,Open,Critical
+KSP-2024-00136,Kodagu,Kodagu Cyber Crime PS,457 IPC,Burglary,2026-02-02T06:41:25.818Z,12.310233,75.647489,Under Investigation,Low
+KSP-2024-00137,Tumakuru,Tumakuru Market PS,376 IPC,Sexual Offence,2025-09-20T05:09:39.818Z,13.325766,77.077381,Open,High
+KSP-2024-00138,Yadgir,Yadgir Traffic PS,457 IPC,Burglary,2025-08-18T06:17:48.818Z,16.784919,77.330037,Chargesheeted,High
+KSP-2024-00139,Chikkamagaluru,Chikkamagaluru Central PS,457 IPC,Burglary,2026-04-24T23:23:50.818Z,13.545419,75.884911,Under Investigation,Medium
+KSP-2024-00140,Bengaluru Urban,Bengaluru Urban Central PS,20 NDPS,Narcotics,2025-07-25T03:04:39.818Z,12.828129,77.298182,Open,Medium
+KSP-2024-00141,Tumakuru,Tumakuru South PS,66 IT Act,Cybercrime,2025-09-18T08:03:47.818Z,13.102791,76.980343,Closed,Medium
+KSP-2024-00142,Chitradurga,Chitradurga Traffic PS,379 IPC,Theft,2025-08-19T04:55:55.818Z,14.116068,76.545950,Closed,High
+KSP-2024-00143,Udupi,Udupi Market PS,420 IPC,Fraud,2025-11-09T02:03:41.818Z,13.382206,74.467373,Open,Critical
+KSP-2024-00144,Ballari,Ballari North PS,457 IPC,Burglary,2025-12-02T14:02:16.818Z,14.992925,77.188486,Under Investigation,High
+KSP-2024-00145,Mandya,Mandya South PS,379 IPC,Theft,2026-04-26T19:17:02.818Z,12.399809,76.963105,Chargesheeted,High
+KSP-2024-00146,Vijayapura,Vijayapura Market PS,420 IPC,Fraud,2026-05-12T16:38:59.818Z,16.821206,75.756919,Chargesheeted,High
+KSP-2024-00147,Bidar,Bidar West PS,457 IPC,Burglary,2026-04-18T06:50:13.818Z,17.760027,77.004034,Closed,High
+KSP-2024-00148,Chikkaballapura,Chikkaballapura North PS,420 IPC,Fraud,2025-10-21T20:51:20.818Z,13.300285,77.724139,Chargesheeted,Critical
+KSP-2024-00149,Shivamogga,Shivamogga West PS,20 NDPS,Narcotics,2026-04-04T06:15:10.818Z,13.634094,75.315883,Chargesheeted,Medium
+KSP-2024-00150,Kolar,Kolar North PS,323 IPC,Assault,2025-12-31T19:36:59.818Z,12.959490,78.073436,Chargesheeted,Medium
+KSP-2024-00151,Bengaluru Rural,Bengaluru Rural South PS,323 IPC,Assault,2025-12-28T20:21:16.818Z,13.511569,77.631644,Open,Low
+KSP-2024-00152,Kalaburagi,Kalaburagi Cyber Crime PS,379 IPC,Theft,2026-06-12T05:39:18.818Z,17.047740,77.107980,Closed,Medium
+KSP-2024-00153,Hassan,Hassan Market PS,376 IPC,Sexual Offence,2026-01-16T13:58:53.818Z,12.794209,75.896035,Chargesheeted,High
+KSP-2024-00154,Raichur,Raichur Cyber Crime PS,323 IPC,Assault,2025-11-28T15:24:50.818Z,16.253839,77.585725,Closed,High
+KSP-2024-00155,Raichur,Raichur Central PS,376 IPC,Sexual Offence,2025-10-08T08:13:50.818Z,16.214203,77.055240,Open,High
+KSP-2024-00156,Chikkaballapura,Chikkaballapura Market PS,20 NDPS,Narcotics,2026-04-25T16:29:44.818Z,13.311724,77.955087,Chargesheeted,Medium
+KSP-2024-00157,Dharwad,Dharwad Market PS,376 IPC,Sexual Offence,2025-12-16T01:39:36.818Z,15.390682,75.267098,Closed,High
+KSP-2024-00158,Bagalkot,Bagalkot Market PS,20 NDPS,Narcotics,2026-01-30T14:11:00.818Z,16.122204,75.607659,Closed,Low
+KSP-2024-00159,Yadgir,Yadgir West PS,20 NDPS,Narcotics,2026-05-15T12:26:18.818Z,17.004776,76.954875,Closed,Critical
+KSP-2024-00160,Ramanagara,Ramanagara Traffic PS,392 IPC,Robbery,2026-04-14T20:23:32.818Z,13.003231,77.117920,Open,Low
+KSP-2024-00161,Vijayapura,Vijayapura North PS,376 IPC,Sexual Offence,2026-06-08T08:25:53.818Z,16.928694,75.421275,Open,High
+KSP-2024-00162,Chitradurga,Chitradurga Cyber Crime PS,379 IPC,Theft,2025-08-18T14:59:19.818Z,14.499714,76.098928,Closed,High
+KSP-2024-00163,Bengaluru Rural,Bengaluru Rural Market PS,420 IPC,Fraud,2025-11-14T04:47:55.818Z,13.488029,77.534462,Under Investigation,Medium
+KSP-2024-00164,Mandya,Mandya North PS,20 NDPS,Narcotics,2026-04-28T01:20:21.818Z,12.282310,76.598530,Open,High
+KSP-2024-00165,Bengaluru Urban,Bengaluru Urban Market PS,379 IPC,Theft,2025-08-04T23:56:22.818Z,12.756098,77.393584,Open,High
+KSP-2024-00166,Mandya,Mandya South PS,363 IPC,Kidnapping,2025-11-27T15:33:52.818Z,12.699227,77.132754,Chargesheeted,Low
+KSP-2024-00167,Davangere,Davangere South PS,323 IPC,Assault,2025-09-11T06:02:06.818Z,14.340157,76.146943,Under Investigation,Critical
+KSP-2024-00168,Kodagu,Kodagu Market PS,392 IPC,Robbery,2025-09-19T15:55:12.818Z,12.695225,75.441025,Open,Medium
+KSP-2024-00169,Kodagu,Kodagu North PS,20 NDPS,Narcotics,2026-06-30T20:33:41.818Z,12.532909,75.452102,Open,Medium
+KSP-2024-00170,Haveri,Haveri North PS,363 IPC,Kidnapping,2026-06-26T19:15:50.818Z,14.652110,75.264303,Under Investigation,High
+KSP-2024-00171,Haveri,Haveri Central PS,379 IPC,Theft,2025-07-27T12:57:45.818Z,14.702445,75.110706,Closed,Low
+KSP-2024-00172,Vijayapura,Vijayapura Cyber Crime PS,379 IPC,Theft,2025-08-09T10:54:22.818Z,16.624916,75.426749,Chargesheeted,Low
+KSP-2024-00173,Chitradurga,Chitradurga East PS,457 IPC,Burglary,2026-04-18T07:15:28.818Z,14.028469,76.099125,Closed,Critical
+KSP-2024-00174,Ballari,Ballari South PS,379 IPC,Theft,2026-03-20T09:44:56.818Z,15.029081,76.782601,Closed,Medium
+KSP-2024-00175,Udupi,Udupi North PS,420 IPC,Fraud,2025-08-06T12:19:01.818Z,13.454906,75.027597,Open,Medium
+KSP-2024-00176,Ballari,Ballari Cyber Crime PS,379 IPC,Theft,2026-02-27T15:11:16.818Z,15.056969,77.120372,Chargesheeted,Medium
+KSP-2024-00177,Kodagu,Kodagu West PS,376 IPC,Sexual Offence,2026-05-25T07:37:12.818Z,12.193232,75.644069,Open,Medium
+KSP-2024-00178,Chikkaballapura,Chikkaballapura West PS,457 IPC,Burglary,2026-01-29T12:37:58.818Z,13.589015,77.843288,Open,Medium
+KSP-2024-00179,Tumakuru,Tumakuru West PS,66 IT Act,Cybercrime,2026-05-10T20:24:19.818Z,13.183936,77.271422,Chargesheeted,Low
+KSP-2024-00180,Chitradurga,Chitradurga West PS,420 IPC,Fraud,2025-09-07T10:45:56.818Z,14.411231,76.692339,Open,Medium
+KSP-2024-00181,Haveri,Haveri Central PS,379 IPC,Theft,2026-04-28T06:44:01.818Z,14.816078,75.503443,Chargesheeted,Medium
+KSP-2024-00182,Ramanagara,Ramanagara Central PS,302 IPC,Murder,2026-06-16T22:12:19.818Z,13.004075,77.437238,Under Investigation,High
+KSP-2024-00183,Kolar,Kolar East PS,376 IPC,Sexual Offence,2025-08-12T14:51:53.818Z,13.163122,78.352587,Open,Medium
+KSP-2024-00184,Udupi,Udupi Traffic PS,323 IPC,Assault,2025-08-09T08:28:01.818Z,13.049590,74.748985,Chargesheeted,High
+KSP-2024-00185,Ramanagara,Ramanagara South PS,392 IPC,Robbery,2025-10-30T02:21:21.818Z,12.952890,77.441506,Under Investigation,Medium
+KSP-2024-00186,Tumakuru,Tumakuru Market PS,302 IPC,Murder,2026-02-27T02:08:21.818Z,13.547153,77.006054,Open,Critical
+KSP-2024-00187,Dakshina Kannada,Dakshina Kannada East PS,420 IPC,Fraud,2026-02-04T02:30:49.818Z,13.100823,75.166889,Closed,Low
+KSP-2024-00188,Chikkamagaluru,Chikkamagaluru West PS,379 IPC,Theft,2025-12-19T21:09:45.818Z,13.186055,75.498853,Open,Critical
+KSP-2024-00189,Davangere,Davangere North PS,420 IPC,Fraud,2025-07-17T02:03:02.818Z,14.578624,75.797851,Open,Critical
+KSP-2024-00190,Tumakuru,Tumakuru Central PS,302 IPC,Murder,2026-03-28T08:19:27.818Z,13.230482,77.392784,Chargesheeted,Critical
+KSP-2024-00191,Dharwad,Dharwad Market PS,379 IPC,Theft,2026-06-01T06:01:27.818Z,15.253447,74.732489,Chargesheeted,Critical
+KSP-2024-00192,Davangere,Davangere Central PS,379 IPC,Theft,2026-01-01T12:58:05.818Z,14.648243,76.138032,Open,Critical
+KSP-2024-00193,Bengaluru Urban,Bengaluru Urban Traffic PS,379 IPC,Theft,2026-02-03T22:10:30.818Z,13.254274,77.733724,Under Investigation,High
+KSP-2024-00194,Davangere,Davangere Cyber Crime PS,363 IPC,Kidnapping,2026-07-03T16:43:00.818Z,14.705214,76.111667,Closed,Low
+KSP-2024-00195,Hassan,Hassan Cyber Crime PS,376 IPC,Sexual Offence,2026-01-27T08:05:35.818Z,13.098454,76.046989,Closed,Medium
+KSP-2024-00196,Ramanagara,Ramanagara Traffic PS,420 IPC,Fraud,2025-11-09T15:12:59.818Z,12.741413,77.068343,Open,Medium
+KSP-2024-00197,Mandya,Mandya North PS,20 NDPS,Narcotics,2025-08-02T14:37:55.818Z,12.683392,76.997011,Chargesheeted,Critical
+KSP-2024-00198,Mandya,Mandya South PS,363 IPC,Kidnapping,2026-03-14T10:47:09.818Z,12.276614,76.691546,Closed,Critical
+KSP-2024-00199,Bengaluru Urban,Bengaluru Urban West PS,457 IPC,Burglary,2026-03-08T07:37:54.818Z,12.768308,77.555735,Under Investigation,Medium
+KSP-2024-00200,Ballari,Ballari West PS,420 IPC,Fraud,2025-07-17T23:01:44.818Z,14.957067,77.210707,Under Investigation,Medium
+KSP-2024-00201,Chikkamagaluru,Chikkamagaluru Traffic PS,20 NDPS,Narcotics,2025-10-31T08:02:29.818Z,13.253353,75.652221,Open,High
+KSP-2024-00202,Ballari,Ballari North PS,376 IPC,Sexual Offence,2026-04-18T01:26:47.818Z,15.050379,76.658757,Under Investigation,Critical
+KSP-2024-00203,Kodagu,Kodagu Cyber Crime PS,392 IPC,Robbery,2026-03-29T09:27:40.818Z,12.183398,75.547185,Chargesheeted,Medium
+KSP-2024-00204,Koppal,Koppal Cyber Crime PS,363 IPC,Kidnapping,2025-10-01T05:34:29.818Z,15.594346,76.088297,Under Investigation,Critical
+KSP-2024-00205,Haveri,Haveri South PS,323 IPC,Assault,2025-09-10T15:42:25.818Z,15.053117,75.568882,Chargesheeted,Critical
+KSP-2024-00206,Chitradurga,Chitradurga South PS,363 IPC,Kidnapping,2026-05-11T07:12:37.818Z,14.108806,76.488441,Closed,Critical
+KSP-2024-00207,Koppal,Koppal South PS,420 IPC,Fraud,2026-03-16T11:54:21.818Z,15.402060,75.954542,Closed,High
+KSP-2024-00208,Tumakuru,Tumakuru West PS,363 IPC,Kidnapping,2025-12-07T04:48:34.818Z,13.337337,76.877227,Under Investigation,High
+KSP-2024-00209,Shivamogga,Shivamogga Central PS,66 IT Act,Cybercrime,2026-06-25T17:15:01.818Z,13.896393,75.712781,Open,Critical
+KSP-2024-00210,Mysuru,Mysuru Central PS,66 IT Act,Cybercrime,2025-11-28T22:43:29.818Z,12.085253,76.814081,Chargesheeted,Medium
+KSP-2024-00211,Bidar,Bidar North PS,392 IPC,Robbery,2025-08-18T10:50:51.818Z,17.934527,77.043704,Open,Critical
+KSP-2024-00212,Vijayapura,Vijayapura East PS,20 NDPS,Narcotics,2026-01-09T15:42:18.818Z,16.819625,75.947782,Under Investigation,Low
+KSP-2024-00213,Chamarajanagar,Chamarajanagar North PS,363 IPC,Kidnapping,2026-03-29T21:16:10.818Z,12.086148,76.729773,Chargesheeted,Low
+KSP-2024-00214,Mysuru,Mysuru Market PS,392 IPC,Robbery,2025-11-03T10:39:15.818Z,12.332889,76.460009,Closed,Medium
+KSP-2024-00215,Haveri,Haveri North PS,66 IT Act,Cybercrime,2025-08-18T23:45:36.818Z,14.763921,75.405738,Closed,Low
+KSP-2024-00216,Mysuru,Mysuru Central PS,323 IPC,Assault,2025-07-15T10:42:20.818Z,12.593317,76.910722,Closed,Low
+KSP-2024-00217,Chikkaballapura,Chikkaballapura Market PS,457 IPC,Burglary,2026-05-21T20:57:52.818Z,13.622270,77.528479,Under Investigation,High
+KSP-2024-00218,Gadag,Gadag North PS,379 IPC,Theft,2026-02-20T08:52:48.818Z,15.418289,75.535191,Closed,Low
+KSP-2024-00219,Bidar,Bidar Central PS,20 NDPS,Narcotics,2025-12-20T07:00:29.818Z,17.711918,76.883509,Under Investigation,Critical
+KSP-2024-00220,Kodagu,Kodagu North PS,376 IPC,Sexual Offence,2025-12-03T02:43:32.818Z,12.411947,75.548786,Under Investigation,Medium
+KSP-2024-00221,Ballari,Ballari Cyber Crime PS,20 NDPS,Narcotics,2025-12-21T18:43:51.818Z,15.315418,76.632602,Open,High
+KSP-2024-00222,Ballari,Ballari South PS,376 IPC,Sexual Offence,2026-02-10T11:23:14.818Z,15.275271,76.955929,Under Investigation,Medium
+KSP-2024-00223,Raichur,Raichur East PS,376 IPC,Sexual Offence,2026-06-12T09:20:41.818Z,16.494818,77.155590,Closed,High
+KSP-2024-00224,Bagalkot,Bagalkot West PS,392 IPC,Robbery,2026-07-11T19:04:17.818Z,16.394614,75.851521,Open,Medium
+KSP-2024-00225,Bagalkot,Bagalkot Central PS,20 NDPS,Narcotics,2025-08-19T05:28:27.818Z,16.402386,75.849986,Under Investigation,Medium
+KSP-2024-00226,Bagalkot,Bagalkot Cyber Crime PS,392 IPC,Robbery,2025-11-07T20:24:03.818Z,16.448520,75.644896,Under Investigation,Medium
+KSP-2024-00227,Belagavi,Belagavi East PS,392 IPC,Robbery,2026-06-27T11:17:28.818Z,16.030633,74.396079,Closed,High
+KSP-2024-00228,Kolar,Kolar West PS,20 NDPS,Narcotics,2026-05-29T15:48:30.818Z,12.987842,77.940256,Open,High
+KSP-2024-00229,Tumakuru,Tumakuru Market PS,376 IPC,Sexual Offence,2025-11-27T08:26:51.818Z,13.620202,77.035342,Open,Medium
+KSP-2024-00230,Belagavi,Belagavi Cyber Crime PS,363 IPC,Kidnapping,2025-07-30T10:29:58.818Z,16.072813,74.207933,Under Investigation,High
+KSP-2024-00231,Chitradurga,Chitradurga East PS,302 IPC,Murder,2025-07-30T17:01:47.818Z,14.100825,76.123836,Chargesheeted,Medium
+KSP-2024-00232,Chamarajanagar,Chamarajanagar Cyber Crime PS,379 IPC,Theft,2025-12-07T13:45:42.818Z,12.136830,77.071349,Open,Medium
+KSP-2024-00233,Bengaluru Urban,Bengaluru Urban Cyber Crime PS,420 IPC,Fraud,2025-07-14T10:32:02.818Z,13.251686,77.865266,Chargesheeted,High
+KSP-2024-00234,Koppal,Koppal West PS,420 IPC,Fraud,2026-02-11T20:36:47.818Z,15.466881,76.426132,Under Investigation,Critical
+KSP-2024-00235,Kodagu,Kodagu Traffic PS,20 NDPS,Narcotics,2025-11-18T22:54:17.818Z,12.198517,75.661090,Chargesheeted,Critical
+KSP-2024-00236,Chikkaballapura,Chikkaballapura East PS,392 IPC,Robbery,2025-11-29T18:06:10.818Z,13.241973,77.918839,Closed,High
+KSP-2024-00237,Bidar,Bidar South PS,379 IPC,Theft,2025-12-01T17:01:28.818Z,17.796493,77.002077,Under Investigation,High
+KSP-2024-00238,Kodagu,Kodagu South PS,420 IPC,Fraud,2025-09-06T04:43:18.818Z,12.463811,75.471926,Open,Medium
+KSP-2024-00239,Belagavi,Belagavi Traffic PS,376 IPC,Sexual Offence,2026-04-08T01:35:53.818Z,16.006905,74.758109,Closed,Critical
+KSP-2024-00240,Gadag,Gadag Central PS,457 IPC,Burglary,2025-08-18T10:03:44.818Z,15.679717,75.403213,Under Investigation,Medium
+KSP-2024-00241,Raichur,Raichur East PS,302 IPC,Murder,2025-10-28T00:12:34.818Z,16.422573,77.290189,Under Investigation,High
+KSP-2024-00242,Raichur,Raichur East PS,323 IPC,Assault,2025-09-19T07:06:11.818Z,16.119143,77.075225,Open,Medium
+KSP-2024-00243,Dakshina Kannada,Dakshina Kannada West PS,302 IPC,Murder,2026-07-12T14:34:07.818Z,12.901686,75.269290,Open,Medium
+KSP-2024-00244,Bengaluru Urban,Bengaluru Urban Traffic PS,66 IT Act,Cybercrime,2026-01-29T05:19:57.818Z,12.900543,77.327225,Chargesheeted,High
+KSP-2024-00245,Shivamogga,Shivamogga West PS,302 IPC,Murder,2026-01-14T01:29:44.818Z,13.951958,75.492958,Open,High
+KSP-2024-00246,Udupi,Udupi South PS,457 IPC,Burglary,2026-05-26T21:24:33.818Z,13.330267,74.450097,Chargesheeted,Medium
+KSP-2024-00247,Chikkaballapura,Chikkaballapura Cyber Crime PS,363 IPC,Kidnapping,2025-07-22T02:40:48.818Z,13.640148,78.024866,Open,Low
+KSP-2024-00248,Chikkamagaluru,Chikkamagaluru South PS,376 IPC,Sexual Offence,2026-04-11T05:14:37.818Z,13.363828,76.066993,Open,High
+KSP-2024-00249,Davangere,Davangere Traffic PS,363 IPC,Kidnapping,2025-07-15T11:44:58.818Z,14.205922,76.064423,Open,Medium
+KSP-2024-00250,Kolar,Kolar East PS,66 IT Act,Cybercrime,2026-02-25T07:28:15.818Z,13.368740,78.375656,Chargesheeted,Medium
+KSP-2024-00251,Haveri,Haveri Central PS,66 IT Act,Cybercrime,2025-10-13T13:26:00.818Z,14.848216,75.234977,Closed,Critical
+KSP-2024-00252,Gadag,Gadag Central PS,363 IPC,Kidnapping,2026-05-25T13:46:51.818Z,15.263393,75.731185,Chargesheeted,Low
+KSP-2024-00253,Dharwad,Dharwad Market PS,302 IPC,Murder,2026-06-01T12:13:50.818Z,15.646010,75.119352,Open,Medium
+KSP-2024-00254,Gadag,Gadag Traffic PS,323 IPC,Assault,2026-03-14T02:13:25.818Z,15.273776,75.855437,Closed,High
+KSP-2024-00255,Vijayapura,Vijayapura Central PS,363 IPC,Kidnapping,2026-01-05T12:45:01.818Z,16.828415,75.516116,Open,Low
+KSP-2024-00256,Hassan,Hassan Cyber Crime PS,420 IPC,Fraud,2026-03-05T14:43:12.818Z,13.264470,75.960537,Chargesheeted,Medium
+KSP-2024-00257,Bengaluru Rural,Bengaluru Rural Cyber Crime PS,457 IPC,Burglary,2025-07-28T18:07:02.818Z,13.216497,77.322945,Open,Critical
+KSP-2024-00258,Dharwad,Dharwad Cyber Crime PS,302 IPC,Murder,2026-01-15T22:57:47.818Z,15.748895,75.237230,Chargesheeted,Medium
+KSP-2024-00259,Yadgir,Yadgir Traffic PS,457 IPC,Burglary,2025-08-08T23:18:03.818Z,16.952137,76.968280,Closed,Critical
+KSP-2024-00260,Chikkamagaluru,Chikkamagaluru East PS,20 NDPS,Narcotics,2025-10-11T17:00:45.818Z,13.451110,75.709013,Chargesheeted,Low
+KSP-2024-00261,Haveri,Haveri Market PS,20 NDPS,Narcotics,2025-12-21T22:42:56.818Z,14.808369,75.346996,Closed,Critical
+KSP-2024-00262,Gadag,Gadag Cyber Crime PS,363 IPC,Kidnapping,2026-05-30T10:16:36.818Z,15.580297,75.358254,Open,Critical
+KSP-2024-00263,Ballari,Ballari West PS,392 IPC,Robbery,2025-08-09T19:13:44.818Z,14.964876,76.726252,Closed,Medium
+KSP-2024-00264,Shivamogga,Shivamogga Market PS,66 IT Act,Cybercrime,2026-02-01T20:41:42.818Z,14.119260,75.644145,Chargesheeted,Critical
+KSP-2024-00265,Kodagu,Kodagu West PS,457 IPC,Burglary,2025-12-10T03:32:51.818Z,12.659869,75.754443,Open,Critical
+KSP-2024-00266,Uttara Kannada,Uttara Kannada Central PS,420 IPC,Fraud,2025-12-26T09:10:18.818Z,14.849648,74.733837,Chargesheeted,Medium
+KSP-2024-00267,Chikkaballapura,Chikkaballapura Central PS,376 IPC,Sexual Offence,2026-03-25T16:17:44.818Z,13.379621,78.014035,Chargesheeted,High
+KSP-2024-00268,Vijayapura,Vijayapura North PS,323 IPC,Assault,2026-02-12T16:04:15.818Z,16.829628,75.881765,Open,Medium
+KSP-2024-00269,Ballari,Ballari East PS,20 NDPS,Narcotics,2025-10-10T06:10:45.818Z,14.913832,76.729551,Open,Medium
+KSP-2024-00270,Haveri,Haveri Central PS,376 IPC,Sexual Offence,2026-01-21T14:05:18.818Z,14.866235,75.267588,Open,Low
+KSP-2024-00271,Kodagu,Kodagu Traffic PS,420 IPC,Fraud,2025-10-20T22:48:58.818Z,12.432654,75.772072,Closed,Low
+KSP-2024-00272,Udupi,Udupi Cyber Crime PS,379 IPC,Theft,2025-12-27T18:21:49.818Z,13.360374,74.897964,Open,High
+KSP-2024-00273,Koppal,Koppal East PS,66 IT Act,Cybercrime,2025-09-19T15:34:56.818Z,15.389227,76.018316,Open,Critical
+KSP-2024-00274,Koppal,Koppal Traffic PS,457 IPC,Burglary,2025-11-03T16:00:33.818Z,15.640188,75.866721,Under Investigation,Low
+KSP-2024-00275,Ramanagara,Ramanagara Central PS,323 IPC,Assault,2026-02-15T23:31:15.818Z,12.540073,77.247063,Under Investigation,Critical
+KSP-2024-00276,Koppal,Koppal East PS,323 IPC,Assault,2025-09-18T22:14:36.818Z,15.600832,76.204801,Closed,High
+KSP-2024-00277,Ramanagara,Ramanagara Traffic PS,457 IPC,Burglary,2026-01-08T23:51:36.818Z,12.455035,77.176755,Closed,High
+KSP-2024-00278,Dharwad,Dharwad Cyber Crime PS,392 IPC,Robbery,2026-02-12T19:46:31.818Z,15.746717,75.057828,Chargesheeted,Low
+KSP-2024-00279,Chikkamagaluru,Chikkamagaluru East PS,66 IT Act,Cybercrime,2025-10-27T04:27:35.818Z,13.101360,75.643414,Closed,Low
+KSP-2024-00280,Dakshina Kannada,Dakshina Kannada West PS,420 IPC,Fraud,2025-09-17T01:47:15.818Z,12.839706,75.223480,Chargesheeted,Medium
+KSP-2024-00281,Belagavi,Belagavi West PS,20 NDPS,Narcotics,2025-08-24T13:16:40.818Z,16.142095,74.605178,Chargesheeted,Critical
+KSP-2024-00282,Tumakuru,Tumakuru Cyber Crime PS,66 IT Act,Cybercrime,2026-06-23T17:25:04.818Z,13.526575,77.342146,Open,Medium
+KSP-2024-00283,Chikkaballapura,Chikkaballapura Market PS,66 IT Act,Cybercrime,2026-02-07T08:31:55.818Z,13.365723,77.620247,Open,High
+KSP-2024-00284,Haveri,Haveri South PS,323 IPC,Assault,2025-09-17T01:20:08.818Z,14.941858,75.463428,Chargesheeted,High
+KSP-2024-00285,Haveri,Haveri Central PS,66 IT Act,Cybercrime,2025-10-23T03:22:57.818Z,14.947522,75.374378,Open,Low
+KSP-2024-00286,Yadgir,Yadgir Cyber Crime PS,376 IPC,Sexual Offence,2026-03-25T06:04:09.818Z,16.929773,76.996028,Closed,Critical
+KSP-2024-00287,Chikkamagaluru,Chikkamagaluru North PS,392 IPC,Robbery,2026-02-04T19:21:37.818Z,13.407839,75.784980,Under Investigation,High
+KSP-2024-00288,Kodagu,Kodagu Cyber Crime PS,376 IPC,Sexual Offence,2025-08-11T10:14:23.818Z,12.378913,75.617602,Open,Critical
+KSP-2024-00289,Udupi,Udupi Traffic PS,379 IPC,Theft,2026-06-24T10:00:35.818Z,13.433351,74.482865,Open,Medium
+KSP-2024-00290,Kalaburagi,Kalaburagi South PS,302 IPC,Murder,2025-11-25T19:27:23.818Z,17.560977,76.960758,Under Investigation,Low
+KSP-2024-00291,Davangere,Davangere South PS,420 IPC,Fraud,2025-08-07T09:34:39.818Z,14.542216,76.101315,Chargesheeted,High
+KSP-2024-00292,Kolar,Kolar Cyber Crime PS,302 IPC,Murder,2026-05-25T08:42:49.818Z,13.304002,77.976035,Chargesheeted,Low
+KSP-2024-00293,Chikkamagaluru,Chikkamagaluru South PS,457 IPC,Burglary,2026-07-05T11:33:39.818Z,13.369207,75.497369,Open,Critical
+KSP-2024-00294,Vijayapura,Vijayapura North PS,457 IPC,Burglary,2025-10-16T16:40:55.818Z,16.610010,75.978520,Closed,High
+KSP-2024-00295,Hassan,Hassan Cyber Crime PS,363 IPC,Kidnapping,2025-12-01T00:22:25.818Z,13.137408,76.252264,Chargesheeted,Critical
+KSP-2024-00296,Belagavi,Belagavi Market PS,20 NDPS,Narcotics,2026-02-01T22:06:19.818Z,15.586776,74.309660,Open,Critical
+KSP-2024-00297,Dharwad,Dharwad West PS,420 IPC,Fraud,2025-12-15T01:09:58.818Z,15.653239,74.930132,Open,Low
+KSP-2024-00298,Raichur,Raichur Market PS,323 IPC,Assault,2025-12-01T19:11:07.818Z,16.445087,77.324955,Chargesheeted,High
+KSP-2024-00299,Bidar,Bidar Cyber Crime PS,379 IPC,Theft,2026-03-06T14:32:31.818Z,18.175401,76.971213,Open,High
+KSP-2024-00300,Chikkaballapura,Chikkaballapura Traffic PS,66 IT Act,Cybercrime,2026-07-02T07:33:18.818Z,13.260316,77.770737,Open,Low
+KSP-2024-00301,Vijayapura,Vijayapura East PS,302 IPC,Murder,2025-11-13T18:24:41.818Z,16.574142,75.784717,Under Investigation,Critical
+KSP-2024-00302,Tumakuru,Tumakuru South PS,420 IPC,Fraud,2025-07-29T14:29:06.818Z,13.125994,77.266831,Closed,Medium
+KSP-2024-00303,Yadgir,Yadgir Cyber Crime PS,363 IPC,Kidnapping,2026-04-03T03:44:03.818Z,17.003597,76.990383,Under Investigation,Medium
+KSP-2024-00304,Chikkamagaluru,Chikkamagaluru South PS,420 IPC,Fraud,2026-02-07T22:23:21.818Z,13.442348,75.734192,Chargesheeted,High
+KSP-2024-00305,Kolar,Kolar Central PS,302 IPC,Murder,2026-07-06T12:30:11.818Z,13.094485,78.176561,Open,Medium
+KSP-2024-00306,Koppal,Koppal Traffic PS,20 NDPS,Narcotics,2026-02-10T19:50:53.818Z,15.433860,76.235548,Closed,High
+KSP-2024-00307,Belagavi,Belagavi East PS,323 IPC,Assault,2026-03-12T16:04:18.818Z,16.119924,74.309384,Open,Medium
+KSP-2024-00308,Uttara Kannada,Uttara Kannada West PS,323 IPC,Assault,2026-05-31T18:05:11.818Z,14.972617,74.907017,Open,Medium
+KSP-2024-00309,Belagavi,Belagavi Central PS,20 NDPS,Narcotics,2025-10-27T01:41:24.818Z,16.130082,74.793698,Chargesheeted,Critical
+KSP-2024-00310,Bagalkot,Bagalkot Cyber Crime PS,392 IPC,Robbery,2025-09-19T14:58:04.818Z,16.479925,75.668601,Open,Critical
+KSP-2024-00311,Vijayapura,Vijayapura Cyber Crime PS,379 IPC,Theft,2025-10-14T08:06:38.818Z,16.548290,75.874703,Closed,High
+KSP-2024-00312,Bidar,Bidar Cyber Crime PS,379 IPC,Theft,2025-08-08T07:45:32.818Z,17.829910,77.001434,Open,Critical
+KSP-2024-00313,Kolar,Kolar North PS,20 NDPS,Narcotics,2025-08-21T07:40:30.818Z,12.850215,77.833763,Open,Medium
+KSP-2024-00314,Bagalkot,Bagalkot East PS,302 IPC,Murder,2026-05-14T19:51:57.818Z,16.209739,75.972632,Open,High
+KSP-2024-00315,Vijayapura,Vijayapura West PS,420 IPC,Fraud,2025-08-31T00:56:12.818Z,17.020917,75.807448,Closed,High
+KSP-2024-00316,Koppal,Koppal East PS,323 IPC,Assault,2026-04-24T22:02:33.818Z,15.645187,76.383864,Under Investigation,Medium
+KSP-2024-00317,Gadag,Gadag Cyber Crime PS,376 IPC,Sexual Offence,2025-12-01T05:22:30.818Z,15.425451,75.363331,Open,Low
+KSP-2024-00318,Raichur,Raichur Central PS,323 IPC,Assault,2026-02-28T23:33:40.818Z,16.108817,77.492194,Under Investigation,Medium
+KSP-2024-00319,Kodagu,Kodagu North PS,323 IPC,Assault,2026-02-04T17:53:46.818Z,12.195466,75.830868,Chargesheeted,High
+KSP-2024-00320,Bidar,Bidar West PS,376 IPC,Sexual Offence,2025-11-14T18:10:47.818Z,17.801521,76.769914,Under Investigation,Critical
+KSP-2024-00321,Haveri,Haveri Cyber Crime PS,20 NDPS,Narcotics,2025-12-20T12:06:29.818Z,14.957966,75.326480,Chargesheeted,Low
+KSP-2024-00322,Dakshina Kannada,Dakshina Kannada North PS,20 NDPS,Narcotics,2025-10-05T16:09:47.818Z,12.847378,75.551047,Chargesheeted,Low
+KSP-2024-00323,Shivamogga,Shivamogga West PS,363 IPC,Kidnapping,2026-04-24T16:52:33.818Z,14.047791,75.574881,Open,Low
+KSP-2024-00324,Chikkaballapura,Chikkaballapura Central PS,20 NDPS,Narcotics,2026-04-13T08:47:57.818Z,13.477279,77.744315,Under Investigation,High
+KSP-2024-00325,Bengaluru Rural,Bengaluru Rural Market PS,420 IPC,Fraud,2026-07-07T02:55:18.818Z,13.357307,77.613532,Chargesheeted,Critical
+KSP-2024-00326,Dharwad,Dharwad North PS,323 IPC,Assault,2025-07-22T23:06:21.818Z,15.755477,75.064618,Chargesheeted,Critical
+KSP-2024-00327,Raichur,Raichur South PS,20 NDPS,Narcotics,2026-01-25T19:52:05.818Z,16.438738,77.141528,Closed,High
+KSP-2024-00328,Shivamogga,Shivamogga East PS,392 IPC,Robbery,2025-11-12T15:05:06.818Z,14.014175,75.784737,Open,Critical
+KSP-2024-00329,Raichur,Raichur South PS,379 IPC,Theft,2026-01-04T17:03:56.818Z,16.227808,77.448587,Open,Critical
+KSP-2024-00330,Gadag,Gadag South PS,20 NDPS,Narcotics,2025-12-05T17:22:22.818Z,15.581879,75.362045,Closed,High
+KSP-2024-00331,Haveri,Haveri Central PS,376 IPC,Sexual Offence,2025-10-18T15:33:33.818Z,14.945922,75.694388,Chargesheeted,Critical
+KSP-2024-00332,Uttara Kannada,Uttara Kannada South PS,302 IPC,Murder,2026-04-20T15:08:35.818Z,14.770515,74.489194,Closed,Medium
+KSP-2024-00333,Raichur,Raichur Market PS,379 IPC,Theft,2025-08-06T08:20:53.818Z,16.362507,77.484964,Open,High
+KSP-2024-00334,Hassan,Hassan South PS,392 IPC,Robbery,2025-07-28T14:28:12.818Z,12.744680,76.136137,Closed,Critical
+KSP-2024-00335,Kalaburagi,Kalaburagi Cyber Crime PS,66 IT Act,Cybercrime,2026-06-23T09:16:47.818Z,17.465896,76.647565,Chargesheeted,Medium
+KSP-2024-00336,Mysuru,Mysuru East PS,66 IT Act,Cybercrime,2026-06-13T00:06:16.818Z,12.283853,76.361681,Under Investigation,High
+KSP-2024-00337,Hassan,Hassan Cyber Crime PS,302 IPC,Murder,2025-08-01T21:17:28.818Z,13.286755,76.345098,Closed,Medium
+KSP-2024-00338,Tumakuru,Tumakuru Cyber Crime PS,363 IPC,Kidnapping,2025-11-07T06:08:21.818Z,13.550012,76.953959,Closed,Low
+KSP-2024-00339,Belagavi,Belagavi Central PS,20 NDPS,Narcotics,2026-02-24T18:00:13.818Z,15.993348,74.601487,Closed,Critical
+KSP-2024-00340,Chamarajanagar,Chamarajanagar East PS,66 IT Act,Cybercrime,2026-03-29T14:32:47.818Z,11.711195,76.975855,Open,Low
+KSP-2024-00341,Dharwad,Dharwad South PS,420 IPC,Fraud,2026-05-03T18:05:34.818Z,15.305176,75.014293,Closed,Low
+KSP-2024-00342,Belagavi,Belagavi South PS,363 IPC,Kidnapping,2025-08-23T21:07:40.818Z,15.651550,74.367690,Chargesheeted,Critical
+KSP-2024-00343,Kodagu,Kodagu West PS,302 IPC,Murder,2025-09-19T18:53:18.818Z,12.392245,75.640226,Under Investigation,Medium
+KSP-2024-00344,Kalaburagi,Kalaburagi South PS,66 IT Act,Cybercrime,2025-07-21T01:22:43.818Z,17.131572,76.929087,Chargesheeted,Critical
+KSP-2024-00345,Gadag,Gadag North PS,420 IPC,Fraud,2025-12-22T04:39:31.818Z,15.583580,75.676870,Under Investigation,Low
+KSP-2024-00346,Dakshina Kannada,Dakshina Kannada Market PS,20 NDPS,Narcotics,2026-01-30T22:31:57.818Z,13.045949,75.500061,Under Investigation,Critical
+KSP-2024-00347,Uttara Kannada,Uttara Kannada South PS,20 NDPS,Narcotics,2026-05-18T13:18:13.818Z,14.585452,74.633383,Under Investigation,Critical
+KSP-2024-00348,Yadgir,Yadgir Market PS,457 IPC,Burglary,2025-09-29T01:56:58.818Z,16.946996,76.934721,Closed,Low
+KSP-2024-00349,Dharwad,Dharwad Market PS,392 IPC,Robbery,2026-04-13T20:45:00.818Z,15.690167,75.182739,Under Investigation,High
+KSP-2024-00350,Yadgir,Yadgir Market PS,323 IPC,Assault,2026-03-17T06:41:16.818Z,16.564337,77.421803,Closed,Medium
+KSP-2024-00351,Bengaluru Rural,Bengaluru Rural Cyber Crime PS,379 IPC,Theft,2025-10-29T14:49:56.818Z,13.132947,77.871745,Closed,Medium
+KSP-2024-00352,Bengaluru Rural,Bengaluru Rural West PS,323 IPC,Assault,2026-05-05T17:23:51.818Z,13.006344,77.288345,Under Investigation,Medium
+KSP-2024-00353,Belagavi,Belagavi South PS,420 IPC,Fraud,2025-09-16T16:26:04.818Z,16.099735,74.790101,Closed,High
+KSP-2024-00354,Kodagu,Kodagu Market PS,363 IPC,Kidnapping,2026-06-03T17:24:49.818Z,12.408987,75.744536,Open,Critical
+KSP-2024-00355,Vijayapura,Vijayapura Central PS,363 IPC,Kidnapping,2026-04-03T22:32:51.818Z,17.119861,75.703049,Under Investigation,Low
+KSP-2024-00356,Kolar,Kolar North PS,376 IPC,Sexual Offence,2026-01-27T11:10:39.818Z,13.178577,77.979424,Closed,Low
+KSP-2024-00357,Mysuru,Mysuru Traffic PS,66 IT Act,Cybercrime,2026-04-22T01:37:55.818Z,12.533533,76.577530,Closed,Low
+KSP-2024-00358,Chikkaballapura,Chikkaballapura South PS,323 IPC,Assault,2026-04-16T07:52:55.818Z,13.196494,78.019210,Open,High
+KSP-2024-00359,Tumakuru,Tumakuru East PS,392 IPC,Robbery,2025-07-22T16:19:39.818Z,13.048863,76.956776,Open,High
+KSP-2024-00360,Chikkamagaluru,Chikkamagaluru South PS,420 IPC,Fraud,2026-03-17T21:28:32.818Z,13.424327,75.558591,Under Investigation,Critical
+KSP-2024-00361,Belagavi,Belagavi West PS,379 IPC,Theft,2026-02-04T16:29:48.818Z,16.103864,74.467638,Under Investigation,Medium
+KSP-2024-00362,Raichur,Raichur North PS,420 IPC,Fraud,2026-01-01T17:02:29.818Z,16.487581,77.418642,Under Investigation,High
+KSP-2024-00363,Bidar,Bidar South PS,302 IPC,Murder,2026-05-03T11:10:07.818Z,18.130328,76.739401,Chargesheeted,Low
+KSP-2024-00364,Vijayapura,Vijayapura Central PS,302 IPC,Murder,2025-11-15T01:55:03.818Z,16.707482,75.640450,Under Investigation,Critical
+KSP-2024-00365,Gadag,Gadag East PS,420 IPC,Fraud,2026-02-26T17:54:19.818Z,15.500986,75.851958,Chargesheeted,Medium
+KSP-2024-00366,Kalaburagi,Kalaburagi Market PS,457 IPC,Burglary,2025-08-12T17:02:11.818Z,17.314558,76.777061,Closed,Critical
+KSP-2024-00367,Bagalkot,Bagalkot Traffic PS,457 IPC,Burglary,2025-09-30T16:56:56.818Z,16.230491,75.739320,Closed,Low
+KSP-2024-00368,Chikkaballapura,Chikkaballapura West PS,457 IPC,Burglary,2025-10-29T09:44:59.818Z,13.391877,77.437992,Closed,Critical
+KSP-2024-00369,Yadgir,Yadgir North PS,420 IPC,Fraud,2026-05-21T08:14:52.818Z,16.647816,76.941676,Under Investigation,Medium
+KSP-2024-00370,Chamarajanagar,Chamarajanagar East PS,323 IPC,Assault,2025-11-06T03:36:53.818Z,11.703668,76.958180,Under Investigation,Low
+KSP-2024-00371,Shivamogga,Shivamogga South PS,302 IPC,Murder,2026-02-04T20:37:49.818Z,13.659831,75.646881,Under Investigation,Low
+KSP-2024-00372,Kodagu,Kodagu North PS,66 IT Act,Cybercrime,2025-11-25T17:15:47.818Z,12.300041,75.771972,Open,Low
+KSP-2024-00373,Udupi,Udupi North PS,392 IPC,Robbery,2025-10-10T13:00:15.818Z,13.214569,74.473524,Open,Critical
+KSP-2024-00374,Kolar,Kolar Market PS,420 IPC,Fraud,2026-02-03T19:12:23.818Z,13.347227,78.374244,Closed,Critical
+KSP-2024-00375,Hassan,Hassan North PS,363 IPC,Kidnapping,2025-10-29T19:13:34.818Z,13.076207,75.959651,Under Investigation,Medium
+KSP-2024-00376,Raichur,Raichur South PS,302 IPC,Murder,2026-01-16T03:35:01.818Z,16.379200,77.170641,Chargesheeted,Critical
+KSP-2024-00377,Hassan,Hassan West PS,66 IT Act,Cybercrime,2025-08-30T05:31:17.818Z,13.300666,75.829467,Under Investigation,Low
+KSP-2024-00378,Haveri,Haveri Market PS,20 NDPS,Narcotics,2025-11-07T14:50:25.818Z,14.933300,75.593553,Chargesheeted,Medium
+KSP-2024-00379,Chamarajanagar,Chamarajanagar East PS,323 IPC,Assault,2026-04-26T15:10:40.818Z,12.057358,77.189429,Under Investigation,Low
+KSP-2024-00380,Vijayapura,Vijayapura North PS,420 IPC,Fraud,2025-08-31T02:40:57.818Z,17.050178,75.922898,Open,Medium
+KSP-2024-00381,Koppal,Koppal South PS,457 IPC,Burglary,2026-04-03T01:21:17.818Z,15.379917,76.196503,Open,Critical
+KSP-2024-00382,Ballari,Ballari West PS,392 IPC,Robbery,2025-10-15T01:54:21.818Z,15.295634,76.758599,Chargesheeted,High
+KSP-2024-00383,Kodagu,Kodagu East PS,363 IPC,Kidnapping,2025-07-15T01:21:41.818Z,12.463409,75.986147,Open,Medium
+KSP-2024-00384,Chikkaballapura,Chikkaballapura Market PS,420 IPC,Fraud,2025-10-07T13:58:28.818Z,13.156610,77.480445,Open,Critical
+KSP-2024-00385,Hassan,Hassan Central PS,457 IPC,Burglary,2026-05-30T02:08:45.818Z,13.189927,75.942216,Chargesheeted,Medium
+KSP-2024-00386,Yadgir,Yadgir North PS,420 IPC,Fraud,2026-03-04T16:42:05.818Z,16.856665,77.062440,Chargesheeted,Medium
+KSP-2024-00387,Kolar,Kolar Central PS,323 IPC,Assault,2025-08-13T13:18:35.818Z,13.418598,78.170966,Chargesheeted,High
+KSP-2024-00388,Tumakuru,Tumakuru Traffic PS,302 IPC,Murder,2026-01-07T12:47:36.818Z,13.393008,77.253907,Closed,Critical
+KSP-2024-00389,Chitradurga,Chitradurga South PS,457 IPC,Burglary,2026-06-27T21:15:19.818Z,14.181825,76.695585,Under Investigation,Critical
+KSP-2024-00390,Kodagu,Kodagu South PS,302 IPC,Murder,2026-04-12T10:09:12.818Z,12.663633,75.583732,Chargesheeted,High
+KSP-2024-00391,Udupi,Udupi West PS,376 IPC,Sexual Offence,2025-10-15T02:28:41.818Z,13.480652,74.591915,Under Investigation,Medium
+KSP-2024-00392,Chikkamagaluru,Chikkamagaluru Central PS,379 IPC,Theft,2025-10-08T03:53:02.818Z,13.249178,75.786215,Under Investigation,Low
+KSP-2024-00393,Bidar,Bidar Market PS,420 IPC,Fraud,2025-09-29T07:17:09.818Z,17.655767,76.947790,Under Investigation,Low
+KSP-2024-00394,Mysuru,Mysuru Traffic PS,457 IPC,Burglary,2026-02-10T18:11:15.818Z,12.347023,76.581754,Open,Medium
+KSP-2024-00395,Shivamogga,Shivamogga North PS,379 IPC,Theft,2026-03-18T09:12:54.818Z,13.833534,75.507569,Chargesheeted,High
+KSP-2024-00396,Koppal,Koppal South PS,392 IPC,Robbery,2025-09-04T17:32:23.818Z,15.352145,76.311092,Under Investigation,Low
+KSP-2024-00397,Belagavi,Belagavi Market PS,392 IPC,Robbery,2025-07-15T10:22:07.818Z,15.619912,74.761136,Under Investigation,Critical
+KSP-2024-00398,Bengaluru Urban,Bengaluru Urban Market PS,457 IPC,Burglary,2026-07-01T03:30:45.818Z,13.087469,77.722133,Under Investigation,Medium
+KSP-2024-00399,Kalaburagi,Kalaburagi Traffic PS,420 IPC,Fraud,2025-10-10T22:03:23.818Z,17.512094,76.759322,Open,Low
+KSP-2024-00400,Ballari,Ballari West PS,363 IPC,Kidnapping,2026-06-03T22:45:22.818Z,15.268985,76.797961,Under Investigation,High
+KSP-2024-00401,Raichur,Raichur South PS,363 IPC,Kidnapping,2026-05-22T22:46:34.818Z,16.054823,77.406118,Closed,Medium
+KSP-2024-00402,Mandya,Mandya Traffic PS,457 IPC,Burglary,2026-05-24T09:04:18.818Z,12.766328,76.972614,Closed,Low
+KSP-2024-00403,Hassan,Hassan Traffic PS,420 IPC,Fraud,2025-10-20T18:37:49.818Z,13.230234,76.100452,Closed,Low
+KSP-2024-00404,Shivamogga,Shivamogga East PS,323 IPC,Assault,2025-09-10T00:55:40.818Z,14.228603,75.300200,Under Investigation,Medium
+KSP-2024-00405,Chitradurga,Chitradurga North PS,420 IPC,Fraud,2025-08-24T08:14:25.818Z,14.460489,76.625250,Chargesheeted,Critical
+KSP-2024-00406,Dakshina Kannada,Dakshina Kannada Central PS,363 IPC,Kidnapping,2025-12-23T21:07:49.818Z,12.625464,75.208688,Open,Medium
+KSP-2024-00407,Udupi,Udupi North PS,379 IPC,Theft,2026-03-27T13:44:04.818Z,13.041733,74.642923,Chargesheeted,Low
+KSP-2024-00408,Kodagu,Kodagu North PS,363 IPC,Kidnapping,2026-05-26T12:10:36.818Z,12.234778,76.025476,Open,High
+KSP-2024-00409,Uttara Kannada,Uttara Kannada Market PS,420 IPC,Fraud,2026-04-07T15:08:54.818Z,14.809220,74.955994,Under Investigation,Critical
+KSP-2024-00410,Kodagu,Kodagu Central PS,20 NDPS,Narcotics,2025-11-20T14:51:03.818Z,12.707160,75.742205,Open,Low
+KSP-2024-00411,Haveri,Haveri Cyber Crime PS,420 IPC,Fraud,2025-09-26T20:05:43.818Z,14.966038,75.528541,Closed,High
+KSP-2024-00412,Bidar,Bidar South PS,323 IPC,Assault,2025-11-03T02:22:45.818Z,18.004200,76.713772,Open,High
+KSP-2024-00413,Kalaburagi,Kalaburagi Central PS,379 IPC,Theft,2025-12-19T03:21:24.818Z,17.066122,77.030599,Under Investigation,Medium
+KSP-2024-00414,Gadag,Gadag Cyber Crime PS,302 IPC,Murder,2025-07-29T05:59:22.818Z,15.575888,75.602199,Closed,Low
+KSP-2024-00415,Bengaluru Rural,Bengaluru Rural Central PS,420 IPC,Fraud,2025-11-20T05:20:45.818Z,13.364151,77.696487,Under Investigation,High
+KSP-2024-00416,Dharwad,Dharwad East PS,457 IPC,Burglary,2026-04-07T01:16:59.818Z,15.572821,74.925635,Closed,Critical
+KSP-2024-00417,Dharwad,Dharwad Cyber Crime PS,363 IPC,Kidnapping,2025-10-27T03:24:55.818Z,15.632183,75.171484,Closed,Low
+KSP-2024-00418,Belagavi,Belagavi West PS,66 IT Act,Cybercrime,2025-10-16T01:42:05.818Z,15.949551,74.500649,Under Investigation,Medium
+KSP-2024-00419,Udupi,Udupi West PS,66 IT Act,Cybercrime,2026-04-04T04:23:40.818Z,13.437250,74.619555,Chargesheeted,Medium
+KSP-2024-00420,Udupi,Udupi South PS,376 IPC,Sexual Offence,2025-12-22T11:36:39.818Z,13.500458,74.752383,Chargesheeted,Critical
+KSP-2024-00421,Mandya,Mandya South PS,363 IPC,Kidnapping,2025-12-20T00:15:04.818Z,12.248799,77.145590,Open,Critical
+KSP-2024-00422,Bengaluru Urban,Bengaluru Urban West PS,420 IPC,Fraud,2025-07-27T08:04:23.818Z,13.001740,77.687598,Open,Critical
+KSP-2024-00423,Raichur,Raichur West PS,376 IPC,Sexual Offence,2026-02-04T11:20:23.818Z,16.440949,77.616025,Closed,Low
+KSP-2024-00424,Bidar,Bidar Central PS,457 IPC,Burglary,2026-01-20T22:40:00.818Z,17.640248,76.934975,Chargesheeted,Low
+KSP-2024-00425,Bengaluru Rural,Bengaluru Rural North PS,363 IPC,Kidnapping,2026-01-15T18:50:04.818Z,13.028654,77.639323,Chargesheeted,Medium
+KSP-2024-00426,Udupi,Udupi South PS,379 IPC,Theft,2026-03-20T23:24:46.818Z,13.192213,74.728965,Closed,Medium
+KSP-2024-00427,Mandya,Mandya South PS,323 IPC,Assault,2026-01-03T15:23:59.818Z,12.362033,76.603282,Closed,Critical
+KSP-2024-00428,Kodagu,Kodagu Central PS,457 IPC,Burglary,2026-04-15T06:08:57.818Z,12.563111,75.808685,Chargesheeted,High
+KSP-2024-00429,Tumakuru,Tumakuru Market PS,363 IPC,Kidnapping,2025-07-15T08:19:47.818Z,13.304895,77.099114,Chargesheeted,Low
+KSP-2024-00430,Koppal,Koppal Traffic PS,379 IPC,Theft,2026-04-05T00:39:39.818Z,15.193029,76.103660,Open,High
+KSP-2024-00431,Shivamogga,Shivamogga South PS,363 IPC,Kidnapping,2025-09-08T01:35:11.818Z,13.939894,75.719622,Chargesheeted,Medium
+KSP-2024-00432,Chikkaballapura,Chikkaballapura Cyber Crime PS,379 IPC,Theft,2025-10-11T14:55:45.818Z,13.188417,77.639596,Under Investigation,Critical
+KSP-2024-00433,Ballari,Ballari Market PS,363 IPC,Kidnapping,2026-02-17T02:22:43.818Z,14.947308,77.082322,Chargesheeted,High
+KSP-2024-00434,Yadgir,Yadgir Central PS,302 IPC,Murder,2026-03-31T12:28:12.818Z,16.815568,76.870339,Chargesheeted,Low
+KSP-2024-00435,Haveri,Haveri East PS,392 IPC,Robbery,2025-09-20T12:12:50.818Z,14.923592,75.359659,Under Investigation,Critical
+KSP-2024-00436,Gadag,Gadag West PS,363 IPC,Kidnapping,2026-07-10T21:16:12.818Z,15.292005,75.631547,Open,High
+KSP-2024-00437,Bagalkot,Bagalkot East PS,302 IPC,Murder,2025-10-01T21:23:45.818Z,16.013539,75.599303,Chargesheeted,Low
+KSP-2024-00438,Haveri,Haveri North PS,66 IT Act,Cybercrime,2025-12-18T05:40:13.818Z,14.880448,75.403022,Under Investigation,High
+KSP-2024-00439,Vijayapura,Vijayapura Cyber Crime PS,66 IT Act,Cybercrime,2025-12-23T10:17:04.818Z,16.740556,75.862261,Chargesheeted,Low
+KSP-2024-00440,Davangere,Davangere Central PS,379 IPC,Theft,2025-10-22T14:37:35.818Z,14.448364,76.073447,Chargesheeted,Medium
+KSP-2024-00441,Chikkamagaluru,Chikkamagaluru Traffic PS,66 IT Act,Cybercrime,2025-11-18T04:56:56.818Z,13.283669,75.835671,Chargesheeted,Critical
+KSP-2024-00442,Vijayapura,Vijayapura Cyber Crime PS,363 IPC,Kidnapping,2026-05-23T21:16:50.818Z,16.894475,75.480289,Under Investigation,High
+KSP-2024-00443,Chikkaballapura,Chikkaballapura East PS,20 NDPS,Narcotics,2026-01-25T10:30:51.818Z,13.545771,77.773247,Chargesheeted,High
+KSP-2024-00444,Koppal,Koppal Market PS,392 IPC,Robbery,2026-02-23T15:40:22.818Z,15.349804,76.449493,Closed,Medium
+KSP-2024-00445,Hassan,Hassan Central PS,20 NDPS,Narcotics,2026-05-13T06:15:42.818Z,13.243979,76.209581,Under Investigation,Low
+KSP-2024-00446,Tumakuru,Tumakuru East PS,323 IPC,Assault,2026-06-23T15:07:53.818Z,13.068052,76.936998,Under Investigation,Low
+KSP-2024-00447,Davangere,Davangere Market PS,379 IPC,Theft,2025-12-18T18:21:00.818Z,14.536950,76.010353,Closed,Low
+KSP-2024-00448,Kalaburagi,Kalaburagi West PS,420 IPC,Fraud,2026-04-17T00:57:11.818Z,17.264253,76.722013,Closed,High
+KSP-2024-00449,Gadag,Gadag Cyber Crime PS,363 IPC,Kidnapping,2025-10-02T17:31:59.818Z,15.633224,75.676543,Closed,High
+KSP-2024-00450,Davangere,Davangere Central PS,323 IPC,Assault,2025-07-14T02:12:04.818Z,14.245757,75.832528,Chargesheeted,Medium
+KSP-2024-00451,Bengaluru Rural,Bengaluru Rural West PS,457 IPC,Burglary,2025-09-11T17:24:53.818Z,13.257641,77.821013,Open,Critical
+KSP-2024-00452,Dharwad,Dharwad North PS,392 IPC,Robbery,2026-05-30T07:33:54.818Z,15.492687,74.975946,Open,High
+KSP-2024-00453,Chamarajanagar,Chamarajanagar Traffic PS,420 IPC,Fraud,2025-12-11T03:55:30.818Z,12.153244,77.117717,Closed,Medium
+KSP-2024-00454,Dakshina Kannada,Dakshina Kannada North PS,20 NDPS,Narcotics,2025-12-07T11:34:13.818Z,13.108539,75.426693,Open,High
+KSP-2024-00455,Dakshina Kannada,Dakshina Kannada West PS,457 IPC,Burglary,2025-09-25T10:07:34.818Z,12.924075,75.362264,Under Investigation,Low
+KSP-2024-00456,Raichur,Raichur East PS,420 IPC,Fraud,2026-06-12T11:59:47.818Z,15.928432,77.447813,Open,Low
+KSP-2024-00457,Davangere,Davangere Central PS,20 NDPS,Narcotics,2025-08-12T08:09:11.818Z,14.516439,75.719292,Chargesheeted,Medium
+KSP-2024-00458,Belagavi,Belagavi North PS,66 IT Act,Cybercrime,2026-04-06T13:58:28.818Z,15.556532,74.696233,Under Investigation,High
+KSP-2024-00459,Tumakuru,Tumakuru Central PS,66 IT Act,Cybercrime,2026-06-27T02:26:49.818Z,13.415890,77.203106,Chargesheeted,Low
+KSP-2024-00460,Kalaburagi,Kalaburagi Cyber Crime PS,302 IPC,Murder,2026-05-18T19:21:49.818Z,17.324358,76.538267,Chargesheeted,High
+KSP-2024-00461,Uttara Kannada,Uttara Kannada Central PS,392 IPC,Robbery,2025-09-26T05:39:02.818Z,14.954118,74.712180,Closed,Medium
+KSP-2024-00462,Kalaburagi,Kalaburagi West PS,302 IPC,Murder,2026-03-03T09:35:42.818Z,17.516429,76.625921,Chargesheeted,Medium
+KSP-2024-00463,Udupi,Udupi East PS,376 IPC,Sexual Offence,2026-01-10T00:13:32.818Z,13.398455,74.813845,Under Investigation,Critical
+KSP-2024-00464,Yadgir,Yadgir Traffic PS,20 NDPS,Narcotics,2025-10-12T20:15:52.818Z,16.981487,76.924485,Closed,Medium
+KSP-2024-00465,Bidar,Bidar Cyber Crime PS,379 IPC,Theft,2026-03-09T14:37:28.818Z,17.728777,76.959563,Chargesheeted,High
+KSP-2024-00466,Raichur,Raichur West PS,323 IPC,Assault,2025-08-28T20:56:04.818Z,16.225138,77.456608,Chargesheeted,Medium
+KSP-2024-00467,Kalaburagi,Kalaburagi Traffic PS,20 NDPS,Narcotics,2025-12-16T08:58:22.818Z,17.386115,76.672336,Open,Medium
+KSP-2024-00468,Tumakuru,Tumakuru West PS,363 IPC,Kidnapping,2025-12-02T12:59:17.818Z,13.372446,77.172995,Chargesheeted,Low
+KSP-2024-00469,Uttara Kannada,Uttara Kannada South PS,379 IPC,Theft,2026-03-11T06:52:44.818Z,14.989997,74.884291,Closed,Low
+KSP-2024-00470,Bengaluru Rural,Bengaluru Rural Cyber Crime PS,420 IPC,Fraud,2026-06-07T06:30:21.818Z,13.492636,77.755619,Closed,Low
+KSP-2024-00471,Udupi,Udupi North PS,420 IPC,Fraud,2026-01-08T12:55:28.818Z,13.443783,74.557759,Under Investigation,Medium
+KSP-2024-00472,Yadgir,Yadgir North PS,363 IPC,Kidnapping,2026-04-27T22:11:02.818Z,16.934190,77.037581,Under Investigation,Critical
+KSP-2024-00473,Dharwad,Dharwad East PS,66 IT Act,Cybercrime,2026-03-02T19:56:32.818Z,15.682711,74.806890,Under Investigation,High
+KSP-2024-00474,Hassan,Hassan East PS,302 IPC,Murder,2025-07-20T13:23:10.818Z,12.797762,76.300350,Open,Medium
+KSP-2024-00475,Kalaburagi,Kalaburagi North PS,20 NDPS,Narcotics,2025-11-24T14:52:00.818Z,17.483712,76.790649,Closed,Medium
+KSP-2024-00476,Kalaburagi,Kalaburagi Central PS,379 IPC,Theft,2025-07-26T03:45:28.818Z,17.345308,76.578589,Closed,Critical
+KSP-2024-00477,Bagalkot,Bagalkot Traffic PS,323 IPC,Assault,2026-03-07T03:52:47.818Z,16.122658,75.814674,Chargesheeted,Critical
+KSP-2024-00478,Ballari,Ballari East PS,323 IPC,Assault,2025-08-12T23:54:29.818Z,15.249754,77.040162,Closed,Low
+KSP-2024-00479,Gadag,Gadag West PS,323 IPC,Assault,2026-04-10T22:42:26.818Z,15.547457,75.908207,Closed,Low
+KSP-2024-00480,Kalaburagi,Kalaburagi Cyber Crime PS,392 IPC,Robbery,2025-09-05T22:54:19.818Z,17.628257,77.111152,Open,Critical
+KSP-2024-00481,Vijayapura,Vijayapura North PS,392 IPC,Robbery,2026-01-20T02:49:23.818Z,16.923840,75.973403,Under Investigation,Critical
+KSP-2024-00482,Chamarajanagar,Chamarajanagar Cyber Crime PS,376 IPC,Sexual Offence,2026-02-24T14:06:09.818Z,12.011671,77.096018,Closed,High
+KSP-2024-00483,Mysuru,Mysuru East PS,376 IPC,Sexual Offence,2026-02-22T11:29:58.818Z,12.423567,76.560612,Open,High
+KSP-2024-00484,Tumakuru,Tumakuru Traffic PS,323 IPC,Assault,2026-05-23T04:38:39.818Z,13.490232,77.183968,Closed,Critical
+KSP-2024-00485,Udupi,Udupi South PS,420 IPC,Fraud,2025-11-29T06:19:45.818Z,13.302627,74.630712,Under Investigation,Critical
+KSP-2024-00486,Bengaluru Urban,Bengaluru Urban Central PS,66 IT Act,Cybercrime,2025-11-17T22:31:02.818Z,12.972327,77.754180,Closed,Medium
+KSP-2024-00487,Kolar,Kolar South PS,392 IPC,Robbery,2025-11-16T10:12:43.818Z,12.984623,78.215362,Under Investigation,Critical
+KSP-2024-00488,Davangere,Davangere Market PS,457 IPC,Burglary,2026-02-26T21:43:41.818Z,14.622002,75.941945,Chargesheeted,Low
+KSP-2024-00489,Mysuru,Mysuru Market PS,457 IPC,Burglary,2025-08-18T22:47:35.818Z,12.457107,76.652527,Closed,Low
+KSP-2024-00490,Kolar,Kolar North PS,323 IPC,Assault,2026-03-05T03:48:07.818Z,13.056436,78.031392,Open,Low
+KSP-2024-00491,Yadgir,Yadgir Central PS,457 IPC,Burglary,2025-07-30T12:00:16.818Z,16.837547,76.897582,Open,Low
+KSP-2024-00492,Mandya,Mandya East PS,376 IPC,Sexual Offence,2025-09-29T05:22:46.818Z,12.266542,77.107951,Closed,Low
+KSP-2024-00493,Kodagu,Kodagu East PS,457 IPC,Burglary,2026-07-10T10:37:49.818Z,12.223040,75.930100,Closed,Low
+KSP-2024-00494,Gadag,Gadag East PS,66 IT Act,Cybercrime,2025-09-23T05:51:49.818Z,15.326234,75.502474,Chargesheeted,Medium
+KSP-2024-00495,Chitradurga,Chitradurga Central PS,20 NDPS,Narcotics,2025-10-05T20:19:45.818Z,14.339215,76.665191,Chargesheeted,High
+KSP-2024-00496,Dharwad,Dharwad East PS,66 IT Act,Cybercrime,2025-09-12T09:01:58.818Z,15.724183,74.812687,Open,Low
+KSP-2024-00497,Bengaluru Rural,Bengaluru Rural Cyber Crime PS,379 IPC,Theft,2026-03-06T17:08:02.818Z,13.515809,77.389688,Under Investigation,Medium
+KSP-2024-00498,Kolar,Kolar Traffic PS,302 IPC,Murder,2026-05-18T10:42:10.818Z,12.845362,78.319947,Closed,Critical
+KSP-2024-00499,Dharwad,Dharwad West PS,420 IPC,Fraud,2026-04-20T23:02:47.818Z,15.190388,75.027293,Open,High
+KSP-2024-00500,Belagavi,Belagavi East PS,379 IPC,Theft,2026-01-02T09:50:06.818Z,15.848799,74.390101,Open,Medium
+KSP-2024-00501,Kalaburagi,Kalaburagi East PS,376 IPC,Sexual Offence,2026-05-11T16:58:36.818Z,17.458114,77.037797,Open,Low
+KSP-2024-00502,Mandya,Mandya Market PS,66 IT Act,Cybercrime,2026-07-06T01:10:36.818Z,12.339365,76.940130,Open,Medium
+KSP-2024-00503,Mandya,Mandya South PS,20 NDPS,Narcotics,2026-04-04T04:52:49.818Z,12.364496,77.059285,Under Investigation,Critical
+KSP-2024-00504,Raichur,Raichur North PS,323 IPC,Assault,2025-11-07T15:54:59.818Z,16.124964,77.356483,Open,Critical
+KSP-2024-00505,Hassan,Hassan East PS,392 IPC,Robbery,2026-04-28T07:45:20.818Z,12.780021,76.181917,Chargesheeted,High
+KSP-2024-00506,Dakshina Kannada,Dakshina Kannada Traffic PS,66 IT Act,Cybercrime,2025-07-13T23:11:41.818Z,12.924616,75.476210,Chargesheeted,Low
+KSP-2024-00507,Chamarajanagar,Chamarajanagar East PS,420 IPC,Fraud,2025-12-30T01:34:28.818Z,11.839990,76.954527,Under Investigation,Medium
+KSP-2024-00508,Dakshina Kannada,Dakshina Kannada Cyber Crime PS,66 IT Act,Cybercrime,2026-03-14T09:17:25.818Z,13.006404,75.610059,Under Investigation,Critical
+KSP-2024-00509,Mandya,Mandya North PS,457 IPC,Burglary,2025-12-12T07:22:30.818Z,12.709706,76.641579,Chargesheeted,Low
+KSP-2024-00510,Vijayapura,Vijayapura Cyber Crime PS,420 IPC,Fraud,2026-05-17T03:18:54.818Z,17.093497,75.887235,Chargesheeted,Critical
+KSP-2024-00511,Ramanagara,Ramanagara Cyber Crime PS,379 IPC,Theft,2025-10-02T13:22:11.818Z,12.602198,77.470988,Open,Critical
+KSP-2024-00512,Dakshina Kannada,Dakshina Kannada Traffic PS,379 IPC,Theft,2025-08-15T10:17:05.818Z,13.138662,75.524800,Closed,Critical
+KSP-2024-00513,Bengaluru Rural,Bengaluru Rural Traffic PS,457 IPC,Burglary,2025-08-14T22:46:34.818Z,13.188102,77.580050,Open,Low
+KSP-2024-00514,Tumakuru,Tumakuru Market PS,363 IPC,Kidnapping,2025-11-12T05:29:18.818Z,13.469656,77.378732,Chargesheeted,Critical
+KSP-2024-00515,Davangere,Davangere South PS,20 NDPS,Narcotics,2026-06-20T19:12:28.818Z,14.555003,75.810498,Closed,High
+KSP-2024-00516,Hassan,Hassan North PS,379 IPC,Theft,2025-08-10T04:51:23.818Z,12.993404,76.021291,Open,Low
+KSP-2024-00517,Chikkaballapura,Chikkaballapura West PS,363 IPC,Kidnapping,2025-08-31T06:25:39.818Z,13.507285,77.600994,Chargesheeted,Low
+KSP-2024-00518,Chamarajanagar,Chamarajanagar Market PS,376 IPC,Sexual Offence,2025-08-26T02:41:43.818Z,12.000074,77.078595,Under Investigation,Critical
+KSP-2024-00519,Chikkamagaluru,Chikkamagaluru North PS,379 IPC,Theft,2025-08-15T01:11:58.818Z,13.324165,75.700327,Open,Critical
+KSP-2024-00520,Vijayapura,Vijayapura West PS,379 IPC,Theft,2026-04-16T00:33:57.818Z,16.995202,75.807862,Open,Critical
+KSP-2024-00521,Chamarajanagar,Chamarajanagar Central PS,363 IPC,Kidnapping,2025-10-28T13:52:56.818Z,11.837120,77.150532,Chargesheeted,Medium
+KSP-2024-00522,Bengaluru Rural,Bengaluru Rural North PS,302 IPC,Murder,2025-11-11T09:24:47.818Z,13.086357,77.729552,Under Investigation,Critical
+KSP-2024-00523,Kodagu,Kodagu Central PS,20 NDPS,Narcotics,2026-05-22T06:42:34.818Z,12.318621,75.676725,Under Investigation,Low
+KSP-2024-00524,Chikkaballapura,Chikkaballapura Traffic PS,66 IT Act,Cybercrime,2026-04-14T19:52:16.818Z,13.510292,77.852427,Open,Medium
+KSP-2024-00525,Chamarajanagar,Chamarajanagar Cyber Crime PS,323 IPC,Assault,2026-01-26T21:48:25.818Z,11.954895,76.969311,Under Investigation,Medium
+KSP-2024-00526,Belagavi,Belagavi North PS,20 NDPS,Narcotics,2025-09-05T14:22:00.818Z,16.132386,74.588347,Closed,Critical
+KSP-2024-00527,Belagavi,Belagavi West PS,420 IPC,Fraud,2026-04-15T08:00:17.818Z,15.669388,74.576635,Chargesheeted,High
+KSP-2024-00528,Mysuru,Mysuru North PS,457 IPC,Burglary,2026-02-21T05:47:43.818Z,12.474971,76.607638,Closed,Medium
+KSP-2024-00529,Ramanagara,Ramanagara Traffic PS,363 IPC,Kidnapping,2025-10-10T21:39:37.818Z,12.965961,77.121622,Under Investigation,Low
+KSP-2024-00530,Yadgir,Yadgir North PS,323 IPC,Assault,2025-08-10T23:10:35.818Z,16.660042,76.908960,Closed,Medium
+KSP-2024-00531,Bengaluru Urban,Bengaluru Urban Traffic PS,20 NDPS,Narcotics,2026-03-20T02:55:24.818Z,12.756573,77.603814,Open,Medium
+KSP-2024-00532,Bagalkot,Bagalkot Traffic PS,323 IPC,Assault,2026-07-09T21:34:57.818Z,15.972212,75.953297,Closed,Critical
+KSP-2024-00533,Uttara Kannada,Uttara Kannada Market PS,392 IPC,Robbery,2025-12-10T10:45:22.818Z,14.597718,74.394279,Closed,Critical
+KSP-2024-00534,Haveri,Haveri West PS,302 IPC,Murder,2026-01-21T20:09:53.818Z,14.629243,75.303678,Under Investigation,Medium
+KSP-2024-00535,Hassan,Hassan Market PS,363 IPC,Kidnapping,2026-06-27T18:37:19.818Z,13.060252,75.842483,Closed,Medium
+KSP-2024-00536,Kodagu,Kodagu Traffic PS,379 IPC,Theft,2026-02-28T21:36:24.818Z,12.416070,75.525133,Chargesheeted,Medium
+KSP-2024-00537,Ballari,Ballari West PS,457 IPC,Burglary,2026-01-31T05:34:27.818Z,15.220847,77.121196,Closed,Low
+KSP-2024-00538,Bengaluru Urban,Bengaluru Urban Market PS,323 IPC,Assault,2026-07-02T18:18:23.818Z,12.886606,77.745965,Under Investigation,Medium
+KSP-2024-00539,Ramanagara,Ramanagara Cyber Crime PS,323 IPC,Assault,2026-04-22T10:56:55.818Z,12.927009,77.064633,Open,Critical
+KSP-2024-00540,Shivamogga,Shivamogga North PS,323 IPC,Assault,2026-03-30T18:27:18.818Z,14.169360,75.743480,Open,Critical
+KSP-2024-00541,Bidar,Bidar Central PS,457 IPC,Burglary,2025-12-30T15:14:00.818Z,17.772544,76.998775,Chargesheeted,Critical
+KSP-2024-00542,Mandya,Mandya Traffic PS,302 IPC,Murder,2026-05-09T15:40:54.818Z,12.396060,77.186336,Under Investigation,Medium
+KSP-2024-00543,Davangere,Davangere Traffic PS,392 IPC,Robbery,2025-09-29T16:02:34.818Z,14.430774,75.815208,Open,Low
+KSP-2024-00544,Udupi,Udupi Traffic PS,66 IT Act,Cybercrime,2025-08-26T07:32:38.818Z,13.194167,74.931981,Closed,Medium
+KSP-2024-00545,Vijayapura,Vijayapura Traffic PS,392 IPC,Robbery,2026-05-28T05:51:00.818Z,16.622752,75.560346,Under Investigation,Low
+KSP-2024-00546,Dharwad,Dharwad South PS,392 IPC,Robbery,2026-05-23T04:34:17.818Z,15.669949,75.022363,Under Investigation,Low
+KSP-2024-00547,Ballari,Ballari South PS,323 IPC,Assault,2026-03-21T10:32:53.818Z,15.103195,76.684194,Closed,Critical
+KSP-2024-00548,Chikkamagaluru,Chikkamagaluru South PS,392 IPC,Robbery,2026-05-10T16:11:48.818Z,13.120990,75.684937,Chargesheeted,Medium
+KSP-2024-00549,Davangere,Davangere East PS,20 NDPS,Narcotics,2026-04-20T05:56:53.818Z,14.597136,75.954960,Under Investigation,Medium
+KSP-2024-00550,Udupi,Udupi North PS,379 IPC,Theft,2026-03-21T18:43:47.818Z,13.177129,74.654751,Closed,Low
+KSP-2024-00551,Chamarajanagar,Chamarajanagar East PS,20 NDPS,Narcotics,2025-12-27T18:52:04.818Z,11.810943,76.811439,Under Investigation,Critical
+KSP-2024-00552,Ramanagara,Ramanagara Cyber Crime PS,66 IT Act,Cybercrime,2025-10-12T16:54:47.818Z,12.812553,77.372232,Closed,Low
+KSP-2024-00553,Chitradurga,Chitradurga Central PS,457 IPC,Burglary,2026-06-15T01:08:24.818Z,13.986216,76.161288,Under Investigation,High
+KSP-2024-00554,Koppal,Koppal Market PS,363 IPC,Kidnapping,2026-03-24T04:59:54.818Z,15.147302,76.309596,Under Investigation,High
+KSP-2024-00555,Mysuru,Mysuru Central PS,323 IPC,Assault,2026-03-11T18:05:22.818Z,12.517304,76.789327,Chargesheeted,Medium
+KSP-2024-00556,Vijayapura,Vijayapura South PS,20 NDPS,Narcotics,2026-01-02T16:03:31.818Z,16.595014,75.980056,Under Investigation,Medium
+KSP-2024-00557,Chikkamagaluru,Chikkamagaluru West PS,379 IPC,Theft,2026-05-15T05:06:19.818Z,13.463091,75.794729,Open,Critical
+KSP-2024-00558,Dakshina Kannada,Dakshina Kannada South PS,20 NDPS,Narcotics,2025-12-28T08:26:18.818Z,12.572399,75.550948,Open,Medium
+KSP-2024-00559,Koppal,Koppal Traffic PS,420 IPC,Fraud,2026-05-31T18:02:46.818Z,15.239661,76.171828,Closed,Low
+KSP-2024-00560,Bengaluru Rural,Bengaluru Rural Cyber Crime PS,20 NDPS,Narcotics,2026-01-29T20:20:16.818Z,13.211789,77.562547,Closed,Medium
+KSP-2024-00561,Tumakuru,Tumakuru Market PS,457 IPC,Burglary,2025-09-14T06:59:26.818Z,13.608664,77.133264,Closed,High
+KSP-2024-00562,Bidar,Bidar South PS,392 IPC,Robbery,2026-01-26T17:51:18.818Z,18.013052,77.016923,Chargesheeted,High
+KSP-2024-00563,Bagalkot,Bagalkot West PS,379 IPC,Theft,2025-10-27T22:37:22.818Z,16.141404,75.495059,Chargesheeted,High
+KSP-2024-00564,Chikkaballapura,Chikkaballapura Cyber Crime PS,376 IPC,Sexual Offence,2025-10-25T14:56:25.818Z,13.656210,77.974791,Under Investigation,Low
+KSP-2024-00565,Raichur,Raichur South PS,392 IPC,Robbery,2025-12-09T00:11:47.818Z,16.508512,77.598971,Closed,Critical
+KSP-2024-00566,Dharwad,Dharwad East PS,302 IPC,Murder,2025-09-02T12:46:45.818Z,15.519756,75.152163,Under Investigation,Medium
+KSP-2024-00567,Chikkaballapura,Chikkaballapura South PS,376 IPC,Sexual Offence,2026-06-14T12:48:47.818Z,13.453684,77.500173,Closed,Medium
+KSP-2024-00568,Shivamogga,Shivamogga North PS,323 IPC,Assault,2025-11-19T14:50:13.818Z,13.977265,75.288784,Open,Critical
+KSP-2024-00569,Uttara Kannada,Uttara Kannada Cyber Crime PS,457 IPC,Burglary,2025-10-02T02:08:33.818Z,15.084516,74.626843,Open,Critical
+KSP-2024-00570,Uttara Kannada,Uttara Kannada South PS,323 IPC,Assault,2025-07-30T14:57:37.818Z,14.691575,74.845787,Under Investigation,Low
+KSP-2024-00571,Hassan,Hassan East PS,20 NDPS,Narcotics,2025-12-07T03:15:28.818Z,13.085047,76.316697,Closed,Low
+KSP-2024-00572,Udupi,Udupi North PS,302 IPC,Murder,2026-01-05T04:59:54.818Z,13.445018,74.825403,Under Investigation,Medium
+KSP-2024-00573,Chikkaballapura,Chikkaballapura North PS,363 IPC,Kidnapping,2026-06-13T21:18:41.818Z,13.611269,77.844513,Closed,Low
+KSP-2024-00574,Gadag,Gadag South PS,363 IPC,Kidnapping,2026-05-24T07:46:19.818Z,15.366997,75.575157,Chargesheeted,Critical
+KSP-2024-00575,Koppal,Koppal West PS,457 IPC,Burglary,2026-01-11T04:06:59.818Z,15.608361,76.204555,Closed,Low
+KSP-2024-00576,Bengaluru Rural,Bengaluru Rural East PS,302 IPC,Murder,2025-09-06T02:20:35.818Z,13.228351,77.598991,Closed,Medium
+KSP-2024-00577,Davangere,Davangere Central PS,457 IPC,Burglary,2026-05-22T09:40:10.818Z,14.361708,75.890526,Under Investigation,Low
+KSP-2024-00578,Vijayapura,Vijayapura Traffic PS,379 IPC,Theft,2025-12-03T13:41:41.818Z,16.816663,75.726973,Closed,Medium
+KSP-2024-00579,Raichur,Raichur West PS,376 IPC,Sexual Offence,2025-08-10T09:59:34.818Z,16.305267,77.521898,Open,Medium
+KSP-2024-00580,Vijayapura,Vijayapura Central PS,20 NDPS,Narcotics,2026-07-12T18:41:46.818Z,16.902550,75.671500,Under Investigation,Critical
+KSP-2024-00581,Yadgir,Yadgir Cyber Crime PS,323 IPC,Assault,2026-03-14T14:28:48.818Z,16.717368,76.882779,Open,Medium
+KSP-2024-00582,Ballari,Ballari Central PS,379 IPC,Theft,2026-04-20T09:08:16.818Z,15.427014,77.007534,Chargesheeted,High
+KSP-2024-00583,Belagavi,Belagavi Cyber Crime PS,302 IPC,Murder,2025-12-04T07:17:26.818Z,16.041579,74.414056,Under Investigation,Medium
+KSP-2024-00584,Shivamogga,Shivamogga South PS,457 IPC,Burglary,2026-06-12T09:59:21.818Z,13.689350,75.308297,Under Investigation,Medium
+KSP-2024-00585,Ramanagara,Ramanagara Market PS,323 IPC,Assault,2026-05-04T00:52:37.818Z,12.962907,77.061349,Open,High
+KSP-2024-00586,Koppal,Koppal South PS,457 IPC,Burglary,2026-02-22T16:20:12.818Z,15.571850,76.379982,Closed,Low
+KSP-2024-00587,Chamarajanagar,Chamarajanagar South PS,420 IPC,Fraud,2026-06-08T20:41:41.818Z,11.860162,76.995453,Under Investigation,High
+KSP-2024-00588,Kolar,Kolar Cyber Crime PS,379 IPC,Theft,2026-01-09T04:37:23.818Z,13.027488,78.276578,Open,Low
+KSP-2024-00589,Chikkamagaluru,Chikkamagaluru North PS,66 IT Act,Cybercrime,2026-03-08T13:44:20.818Z,13.302913,75.587943,Closed,Critical
+KSP-2024-00590,Chitradurga,Chitradurga North PS,457 IPC,Burglary,2025-11-14T06:46:52.818Z,14.513166,76.148157,Under Investigation,Low
+KSP-2024-00591,Uttara Kannada,Uttara Kannada Cyber Crime PS,302 IPC,Murder,2026-05-15T19:56:55.818Z,15.062799,74.652494,Closed,Medium
+KSP-2024-00592,Ramanagara,Ramanagara Central PS,376 IPC,Sexual Offence,2025-11-08T20:47:10.818Z,12.801451,77.177301,Chargesheeted,High
+KSP-2024-00593,Ramanagara,Ramanagara Market PS,20 NDPS,Narcotics,2025-09-21T02:59:43.818Z,12.848722,77.169986,Open,Critical
+KSP-2024-00594,Dharwad,Dharwad Central PS,457 IPC,Burglary,2025-12-09T23:26:02.818Z,15.284242,75.237191,Under Investigation,Low
+KSP-2024-00595,Gadag,Gadag Central PS,392 IPC,Robbery,2025-12-07T19:34:44.818Z,15.118091,75.406364,Under Investigation,Medium
+KSP-2024-00596,Bidar,Bidar Cyber Crime PS,392 IPC,Robbery,2025-11-05T02:43:13.818Z,17.818491,76.651365,Open,Critical
+KSP-2024-00597,Chikkaballapura,Chikkaballapura North PS,363 IPC,Kidnapping,2025-08-17T20:58:25.818Z,13.295274,77.632380,Under Investigation,Critical
+KSP-2024-00598,Uttara Kannada,Uttara Kannada North PS,379 IPC,Theft,2025-09-02T11:16:18.818Z,14.846561,74.746659,Under Investigation,Medium
+KSP-2024-00599,Uttara Kannada,Uttara Kannada North PS,420 IPC,Fraud,2025-10-15T20:16:41.818Z,14.565298,74.617849,Under Investigation,Low
+KSP-2024-00600,Dharwad,Dharwad Market PS,376 IPC,Sexual Offence,2026-07-03T10:55:20.818Z,15.209683,74.738466,Open,Medium

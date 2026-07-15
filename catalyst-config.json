@@ -1,0 +1,21 @@
+{
+  "project_name": "ksp-crime-intelligence",
+  "project_id": "REPLACE_WITH_YOUR_CATALYST_PROJECT_ID",
+  "platform_type": "BAAS",
+  "functions": {
+    "language": "Node.js",
+    "runtime": "V12"
+  },
+  "client": {
+    "client_stack": "HTML/JS",
+    "public_path": "client/public"
+  },
+  "environments": {
+    "development": {
+      "api_base_url": "http://localhost:3000"
+    },
+    "production": {
+      "api_base_url": "https://ksp-crime-intelligence.catalystserverless.com/server"
+    }
+  }
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KSP Crime Intelligence Platform — Login</title>
+  <meta name="description" content="Karnataka State Police Crime Intelligence & Analytical Platform — Secure Login" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* Login-page specific overrides */
+    .login-bg-grid {
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(220,38,38,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(220,38,38,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .particle { position: fixed; border-radius: 50%; pointer-events: none; }
+    .error-msg {
+      background: rgba(220,38,38,0.12);
+      border: 1px solid rgba(220,38,38,0.3);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: #f87171;
+      margin-bottom: 16px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-bg-grid"></div>
+
+  <main class="login-page" role="main">
+    <div class="login-card fade-in">
+      <!-- Logo -->
+      <div class="login-logo">
+        <div class="login-logo-icon">🔰</div>
+        <div>
+          <div class="login-logo-title">KSP Crime Intelligence</div>
+          <div class="login-logo-sub">Karnataka State Police — SCRB Portal</div>
+        </div>
+      </div>
+
+      <!-- Error message -->
+      <div class="error-msg" id="error-msg" role="alert"></div>
+
+      <!-- Login Form -->
+      <form id="login-form" autocomplete="off" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="badge-number">Badge Number</label>
+          <input
+            class="form-input" id="badge-number" type="text"
+            placeholder="e.g. KSP-2024-00123"
+            autocomplete="username" required
+            aria-label="Badge Number"
+          />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input
+            class="form-input" id="password" type="password"
+            placeholder="Enter your password"
+            autocomplete="current-password" required
+            aria-label="Password"
+          />
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <button class="btn-login" type="submit" id="login-btn">
+            <span id="login-btn-text">Sign In Securely</span>
+          </button>
+        </div>
+      </form>
+
+      <p class="login-hint">
+        🔒 Demo credentials: <strong>KSP-DEMO-001</strong> / <strong>admin123</strong><br>
+        <span style="font-size:11px;opacity:0.6;margin-top:4px;display:block;">Powered by Zoho Catalyst Auth</span>
+      </p>
+    </div>
+  </main>
+
+  <script type="module">
+    const form = document.getElementById('login-form');
+    const badge = document.getElementById('badge-number');
+    const password = document.getElementById('password');
+    const errMsg = document.getElementById('error-msg');
+    const loginBtn = document.getElementById('login-btn');
+    const loginBtnText = document.getElementById('login-btn-text');
+
+    // ── Catalyst Auth Integration ─────────────────────────────
+    // When Catalyst Auth is configured, replace the mock below with:
+    // const catalystApp = window.catalyst.initialize();
+    // await catalystApp.auth().signIn({ email, password });
+
+    async function mockAuth(badgeNum, pass) {
+      // In production: call Catalyst Auth endpoint
+      // POST /server/auth/signin with badge + password
+      await new Promise(r => setTimeout(r, 900)); // simulate network
+      // Demo credentials
+      if (badgeNum === 'KSP-DEMO-001' && pass === 'admin123') {
+        return { success: true, user: { name: 'SCRB Officer', role: 'Analyst', badge: badgeNum } };
+      }
+      // Allow any input for demo
+      if (badgeNum.startsWith('KSP-') && pass.length >= 6) {
+        return { success: true, user: { name: 'KSP Officer', role: 'Analyst', badge: badgeNum } };
+      }
+      return { success: false };
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errMsg.style.display = 'none';
+      const b = badge.value.trim();
+      const p = password.value;
+      if (!b || !p) { showError('Please enter your badge number and password.'); return; }
+
+      loginBtnText.textContent = 'Authenticating…';
+      loginBtn.disabled = true;
+      loginBtn.style.opacity = '0.7';
+
+      try {
+        const result = await mockAuth(b, p);
+        if (result.success) {
+          sessionStorage.setItem('ksp_user', JSON.stringify(result.user));
+          loginBtnText.textContent = '✓ Authenticated';
+          loginBtn.style.background = '#10b981';
+          setTimeout(() => { window.location.href = 'dashboard.html'; }, 600);
+        } else {
+          showError('Invalid credentials. Use KSP-DEMO-001 / admin123 for demo access.');
+          loginBtn.disabled = false;
+          loginBtn.style.opacity = '1';
+          loginBtnText.textContent = 'Sign In Securely';
+        }
+      } catch (err) {
+        showError('Authentication service unavailable. Please try again.');
+        loginBtn.disabled = false;
+        loginBtn.style.opacity = '1';
+        loginBtnText.textContent = 'Sign In Securely';
+      }
+    });
+
+    function showError(msg) {
+      errMsg.textContent = msg;
+      errMsg.style.display = 'block';
+    }
+  </script>
+</body>
+</html>

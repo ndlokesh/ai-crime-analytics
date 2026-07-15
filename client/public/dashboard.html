@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Command Dashboard — KSP Crime Intelligence Platform</title>
+  <meta name="description" content="SCRB Command Overview: real-time KPIs, crime trends, district hotspots and live intelligence alerts for Karnataka State Police." />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+<div class="app-layout">
+
+  <!-- ── Sidebar ─────────────────────────────────────────── -->
+  <aside class="sidebar" role="navigation" aria-label="Main Navigation">
+    <a class="sidebar-logo" href="dashboard.html">
+      <div class="sidebar-logo-icon">🔰</div>
+      <div class="sidebar-logo-text">
+        <div class="sidebar-logo-title">KSP Intelligence</div>
+        <div class="sidebar-logo-sub">SCRB Platform</div>
+      </div>
+    </a>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Analytics</div>
+      <a class="nav-item active" href="dashboard.html" id="nav-dashboard">
+        <i data-lucide="layout-dashboard" width="18" height="18"></i>
+        <span>Command Dashboard</span>
+      </a>
+      <a class="nav-item" href="geospatial.html" id="nav-geo">
+        <i data-lucide="map" width="18" height="18"></i>
+        <span>Geospatial Hotspots</span>
+      </a>
+      <a class="nav-item" href="network.html" id="nav-net">
+        <i data-lucide="share-2" width="18" height="18"></i>
+        <span>Criminal Network</span>
+      </a>
+
+      <div class="nav-section-label">Intelligence</div>
+      <a class="nav-item" href="predictive.html" id="nav-pred">
+        <i data-lucide="brain" width="18" height="18"></i>
+        <span>AI Predictive</span>
+      </a>
+      <a class="nav-item" href="trends.html" id="nav-trends">
+        <i data-lucide="trending-up" width="18" height="18"></i>
+        <span>Trends & Patterns</span>
+      </a>
+      <a class="nav-item" href="reports.html" id="nav-reports">
+        <i data-lucide="file-text" width="18" height="18"></i>
+        <span>Intel Reports</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">SC</div>
+        <div>
+          <div class="user-name" id="user-name">SCRB Officer</div>
+          <div class="user-role">Intelligence Analyst</div>
+        </div>
+      </div>
+      <div class="powered-by" style="margin-top:8px;">
+        <span>⚡</span><strong>Zoho Catalyst</strong>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main Content ──────────────────────────────────────── -->
+  <div class="main-content">
+
+    <!-- Header -->
+    <header class="top-header">
+      <div>
+        <h1 class="page-title">Command Dashboard</h1>
+        <p class="page-subtitle" id="live-time">Karnataka State Crime Records Bureau — Real-time Intelligence</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-ghost btn-sm" id="refresh-btn" aria-label="Refresh data">
+          <i data-lucide="refresh-cw" width="14" height="14"></i> Refresh
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="window.print()">
+          <i data-lucide="download" width="14" height="14"></i> Export
+        </button>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <main class="page-content" id="main-content">
+
+      <!-- Alert Ticker -->
+      <div class="alert-ticker" id="alert-ticker">
+        <div class="alert-ticker-label">
+          <div class="pulse-dot"></div>
+          LIVE ALERTS
+        </div>
+        <div class="ticker-track">
+          <div class="ticker-content" id="ticker-content">
+            <span class="ticker-item"><span class="badge badge-red">CRITICAL</span> Loading intelligence alerts…</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid" id="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(220,38,38,0.15);">🚨</div>
+          <div class="kpi-value" id="kpi-incidents">—</div>
+          <div class="kpi-label">Total Incidents (YTD)</div>
+          <div class="kpi-delta up" id="kpi-incidents-delta">↑ Loading…</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(245,158,11,0.15);">⚡</div>
+          <div class="kpi-value" id="kpi-alerts">—</div>
+          <div class="kpi-label">Active Intelligence Alerts</div>
+          <div class="kpi-delta up" id="kpi-alerts-delta">↑ 3 new today</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(59,130,246,0.15);">🗺️</div>
+          <div class="kpi-value" id="kpi-hotspots">—</div>
+          <div class="kpi-label">High-Risk Districts</div>
+          <div class="kpi-delta up" id="kpi-hotspots-delta">↑ Risk Score &gt;70</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:rgba(139,92,246,0.15);">🤖</div>
+          <div class="kpi-value" id="kpi-risk">—</div>
+          <div class="kpi-label">Avg District Risk Score</div>
+          <div class="kpi-delta" id="kpi-risk-delta">AI Predicted</div>
+        </div>
+      </div>
+
+      <!-- Row 1: Trend + Donut -->
+      <div class="chart-grid chart-grid-2-1 section-gap">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">12-Month Crime Trend</div>
+              <div class="card-subtitle">Rolling monthly incident volume across all IPC categories</div>
+            </div>
+            <select class="select-input" id="trend-filter" aria-label="Filter crime type">
+              <option value="all">All Crime Types</option>
+              <option value="Theft">Theft</option>
+              <option value="Assault">Assault</option>
+              <option value="Cybercrime">Cybercrime</option>
+              <option value="Narcotics">Narcotics</option>
+              <option value="Murder">Murder</option>
+              <option value="Fraud">Fraud</option>
+            </select>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="height:280px">
+              <canvas id="trend-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Crime Type Split</div>
+              <div class="card-subtitle">Distribution by IPC category</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="height:280px">
+              <canvas id="donut-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: District Bar + Severity -->
+      <div class="chart-grid chart-grid-2 section-gap">
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Top Districts by Case Count</div>
+              <div class="card-subtitle">Click a bar to drill into district view</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="height:320px">
+              <canvas id="district-bar"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Gravity Offence Breakdown</div>
+              <div class="card-subtitle">Heinous / Non-Heinous / Minor cases</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="height:320px">
+              <canvas id="severity-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Recent Cases Table -->
+      <div class="card section-gap">
+        <div class="card-header" style="margin-bottom:16px">
+          <div>
+            <div class="card-title">CaseMaster Register (FIR / UDR / PAR)</div>
+            <div class="card-subtitle">Live cases from Karnataka police stations — ZCQL DataStore</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input class="search-input" id="incidents-search" placeholder="Search CrimeNo, District, Act…" aria-label="Search cases" />
+            <a href="geospatial.html" class="btn btn-ghost btn-sm">View Map →</a>
+          </div>
+        </div>
+        <div class="card-body-flush">
+          <div class="table-wrapper">
+            <table id="incidents-table">
+              <thead>
+                <tr>
+                  <th>Crime No.</th>
+                  <th>District</th>
+                  <th>Crime Head</th>
+                  <th>Act & Section</th>
+                  <th>Registered Date</th>
+                  <th>Category / Gravity</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="incidents-tbody">
+                <tr><td colspan="7"><div class="loading-spinner"><div class="spinner"></div>Loading from Catalyst DataStore…</div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script type="module">
+import api from './js/api.js';
+import { animateCount, MONTHS, crimeColor, CHART_DEFAULTS, makeGradient, getRiskLevel, statusColor, categoryBadge, gravityBadge, formatDate, debounce, $ } from './js/utils.js';
+
+// ── Auth Guard ────────────────────────────────────────────────
+const user = JSON.parse(sessionStorage.getItem('ksp_user') || 'null');
+if (!user) { window.location.href = 'index.html'; }
+else {
+  document.getElementById('user-name').textContent = user.name;
+  const initials = user.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('user-avatar').textContent = initials;
+}
+
+// ── Live Clock ────────────────────────────────────────────────
+function updateClock() {
+  document.getElementById('live-time').textContent =
+    new Date().toLocaleString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit' }) + ' IST';
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ── Initialize Lucide Icons ───────────────────────────────────
+lucide.createIcons();
+
+// ── Chart.js Global Defaults ──────────────────────────────────
+Chart.defaults.font.family = 'Inter';
+Chart.defaults.color = '#94a3b8';
+
+let trendChart, donutChart, districtChart, severityChart;
+let allIncidents = [];
+
+// ── Load KPI ─────────────────────────────────────────────────
+async function loadKPIs() {
+  const kpi = await api.getKpiSummary();
+  animateCount($('#kpi-incidents'), kpi.total_incidents, 1500);
+  animateCount($('#kpi-alerts'), kpi.active_alerts, 1200);
+  animateCount($('#kpi-hotspots'), kpi.hotspot_districts, 1000);
+  animateCount($('#kpi-risk'), kpi.avg_risk_score, 1200, '', '/100');
+  const riskEl = $('#kpi-risk-delta');
+  const rl = getRiskLevel(kpi.avg_risk_score);
+  riskEl.textContent = rl.label + ' Risk State';
+  riskEl.className = `kpi-delta ${kpi.avg_risk_score >= 60 ? 'up' : 'down'}`;
+}
+
+// ── Load Alerts Ticker ────────────────────────────────────────
+async function loadAlerts() {
+  const alerts = await api.getAlerts();
+  const ticker = $('#ticker-content');
+  const items = alerts.map(a =>
+    `<span class="ticker-item">
+      <span class="badge badge-${a.alert_level === 'Critical' ? 'red' : a.alert_level === 'High' ? 'amber' : 'blue'}">${a.alert_level}</span>
+      ${a.message} &nbsp;|&nbsp; Z-Score: ${a.z_score}σ &nbsp;&nbsp;•&nbsp;&nbsp;
+    </span>`
+  ).join('');
+  ticker.innerHTML = items + items; // duplicate for infinite scroll
+}
+
+// ── Load Trend Chart ──────────────────────────────────────────
+async function loadTrendChart(filter = 'all') {
+  const monthly = await api.getMonthlyTrends();
+  const labels = Object.keys(monthly).map(k => {
+    const [y, m] = k.split('-');
+    return MONTHS[parseInt(m) - 1] + ' ' + y.slice(2);
+  });
+
+  let datasets;
+  if (filter === 'all') {
+    // Aggregate all types
+    const totals = Object.values(monthly).map(m => Object.values(m).reduce((s, v) => s + v, 0));
+    const ctx = document.getElementById('trend-chart').getContext('2d');
+    const grad = makeGradient(ctx, 'rgba(220,38,38,0.4)', 'rgba(220,38,38,0.02)');
+    datasets = [{
+      label: 'Total Incidents',
+      data: totals,
+      borderColor: '#dc2626',
+      backgroundColor: grad,
+      fill: true, tension: 0.4, pointRadius: 3,
+      pointBackgroundColor: '#dc2626',
+    }];
+  } else {
+    const values = Object.values(monthly).map(m => m[filter] || 0);
+    const ctx = document.getElementById('trend-chart').getContext('2d');
+    const color = crimeColor(filter);
+    const grad = makeGradient(ctx, color + '40', color + '05');
+    datasets = [{
+      label: filter,
+      data: values,
+      borderColor: color,
+      backgroundColor: grad,
+      fill: true, tension: 0.4, pointRadius: 3,
+      pointBackgroundColor: color,
+    }];
+  }
+
+  if (trendChart) trendChart.destroy();
+  trendChart = new Chart(document.getElementById('trend-chart'), {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      ...CHART_DEFAULTS,
+      plugins: { ...CHART_DEFAULTS.plugins, legend: { display: false } },
+      interaction: { mode: 'index', intersect: false },
+    }
+  });
+}
+
+// ── Load Donut Chart ──────────────────────────────────────────
+async function loadDonutChart() {
+  const incidents = await api.getIncidents({ limit: 600 });
+  const counts = {};
+  incidents.forEach(i => { counts[i.crime_type] = (counts[i.crime_type] || 0) + 1; });
+  const labels = Object.keys(counts);
+  const data = Object.values(counts);
+  const colors = labels.map(l => crimeColor(l));
+
+  if (donutChart) donutChart.destroy();
+  donutChart = new Chart(document.getElementById('donut-chart'), {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{ data, backgroundColor: colors.map(c => c + 'cc'), borderColor: colors, borderWidth: 2, hoverOffset: 8 }]
+    },
+    options: {
+      ...CHART_DEFAULTS,
+      cutout: '65%',
+      plugins: {
+        ...CHART_DEFAULTS.plugins,
+        legend: { position: 'right', labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 }, padding: 12, boxWidth: 10, boxHeight: 10 } }
+      }
+    }
+  });
+}
+
+// ── Load District Bar Chart ───────────────────────────────────
+async function loadDistrictChart() {
+  const districts = await api.getDistrictSummary();
+  const sorted = [...districts].sort((a, b) => b.total_incidents - a.total_incidents).slice(0, 12);
+  const labels = sorted.map(d => d.district.replace(' Urban', ' (U)').replace(' Rural', ' (R)'));
+  const data = sorted.map(d => d.total_incidents);
+  const colors = sorted.map(d => {
+    if (d.risk_score >= 80) return 'rgba(220,38,38,0.75)';
+    if (d.risk_score >= 60) return 'rgba(245,158,11,0.75)';
+    return 'rgba(59,130,246,0.75)';
+  });
+
+  if (districtChart) districtChart.destroy();
+  districtChart = new Chart(document.getElementById('district-bar'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Incidents',
+        data,
+        backgroundColor: colors,
+        borderColor: colors.map(c => c.replace('0.75', '1')),
+        borderWidth: 1,
+        borderRadius: 5,
+      }]
+    },
+    options: {
+      ...CHART_DEFAULTS,
+      indexAxis: 'y',
+      plugins: { ...CHART_DEFAULTS.plugins, legend: { display: false } },
+      scales: {
+        x: { ...CHART_DEFAULTS.scales.x, beginAtZero: true },
+        y: { ...CHART_DEFAULTS.scales.y }
+      },
+      onClick: (evt, elements) => {
+        if (elements.length > 0) {
+          const dist = sorted[elements[0].index].district;
+          sessionStorage.setItem('selected_district', dist);
+          window.location.href = 'geospatial.html';
+        }
+      }
+    }
+  });
+}
+
+// ── Load Severity Chart ───────────────────────────────────────
+async function loadSeverityChart() {
+  const incidents = await api.getIncidents({ limit: 600 });
+  const counts = { Critical: 0, High: 0, Medium: 0, Low: 0 };
+  incidents.forEach(i => { counts[i.severity] = (counts[i.severity] || 0) + 1; });
+
+  if (severityChart) severityChart.destroy();
+  severityChart = new Chart(document.getElementById('severity-chart'), {
+    type: 'polarArea',
+    data: {
+      labels: Object.keys(counts),
+      datasets: [{
+        data: Object.values(counts),
+        backgroundColor: ['rgba(220,38,38,0.6)', 'rgba(245,158,11,0.6)', 'rgba(59,130,246,0.6)', 'rgba(16,185,129,0.6)'],
+        borderColor: ['#dc2626', '#f59e0b', '#3b82f6', '#10b981'],
+        borderWidth: 2,
+      }]
+    },
+    options: {
+      ...CHART_DEFAULTS,
+      scales: {
+        r: {
+          ticks: { color: '#475569', font: { size: 10 }, backdropColor: 'transparent' },
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          angleLines: { color: 'rgba(255,255,255,0.05)' }
+        }
+      }
+    }
+  });
+}
+
+// ── Load Incidents Table ──────────────────────────────────────
+async function loadIncidentsTable(search = '') {
+  const tbody = $('#incidents-tbody');
+  tbody.innerHTML = '<tr><td colspan="7"><div class="loading-spinner"><div class="spinner"></div>Querying ZCQL DataStore…</div></td></tr>';
+
+  allIncidents = await api.getIncidents({ limit: 100 });
+  renderTable(allIncidents, search);
+}
+
+function renderTable(incidents, search = '') {
+  const tbody = $('#incidents-tbody');
+  let filtered = incidents;
+  if (search) {
+    const s = search.toLowerCase();
+    filtered = incidents.filter(i =>
+      i.district.toLowerCase().includes(s) ||
+      i.crime_type.toLowerCase().includes(s) ||
+      i.ipc_section.toLowerCase().includes(s) ||
+      i.incident_id.toLowerCase().includes(s)
+    );
+  }
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state">No matching incidents found.</div></td></tr>';
+    return;
+  }
+
+  const severityClass = { Critical: 'badge-red', High: 'badge-amber', Medium: 'badge-blue', Low: 'badge-green' };
+  const statusClass = { Open: 'badge-red', 'Under Investigation': 'badge-amber', Closed: 'badge-green', Chargesheeted: 'badge-blue' };
+
+  tbody.innerHTML = filtered.slice(0, 50).map(i => `
+    <tr>
+      <td><strong style="font-family:monospace;font-size:12px">${i.incident_id}</strong></td>
+      <td>${i.district}</td>
+      <td><span style="color:${crimeColor(i.crime_type)};font-weight:600">${i.crime_type}</span></td>
+      <td><code style="font-size:11px;color:#94a3b8">${i.ipc_section}</code></td>
+      <td>${formatDate(i.date_time)}</td>
+      <td><span class="badge ${severityClass[i.severity] || 'badge-gray'}">${i.severity}</span></td>
+      <td><span class="badge ${statusClass[i.status] || 'badge-gray'}">${i.status}</span></td>
+    </tr>
+  `).join('');
+}
+
+// ── Trend Filter Listener ─────────────────────────────────────
+$('#trend-filter').addEventListener('change', e => loadTrendChart(e.target.value));
+
+// ── Search Debounce ───────────────────────────────────────────
+$('#incidents-search').addEventListener('input', debounce(e => {
+  renderTable(allIncidents, e.target.value);
+}, 250));
+
+// ── Refresh Button ────────────────────────────────────────────
+$('#refresh-btn').addEventListener('click', () => initDashboard());
+
+// ── Init ─────────────────────────────────────────────────────
+async function initDashboard() {
+  await Promise.all([
+    loadKPIs(),
+    loadAlerts(),
+    loadTrendChart(),
+    loadDonutChart(),
+    loadDistrictChart(),
+    loadSeverityChart(),
+    loadIncidentsTable(),
+  ]);
+}
+
+initDashboard();
+</script>
+</body>
+</html>

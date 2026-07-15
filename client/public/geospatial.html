@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geospatial Hotspots — KSP Crime Intelligence Platform</title>
+  <meta name="description" content="Interactive Karnataka district map showing crime hotspots, time-based heatmaps and spatiotemporal clustering for SCRB analysts." />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    #map { height: 100%; width: 100%; min-height: 520px; }
+    .map-panel { height: 600px; }
+    .district-stat-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .district-stat-item:last-child { border-bottom: none; }
+    .risk-bar-wrap { display: flex; align-items: center; gap: 8px; }
+    .hotspot-badge {
+      position: absolute; top: -6px; right: -6px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: #dc2626; color: white;
+      font-size: 9px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      animation: pulse-ring 1.5s infinite;
+    }
+    .leaflet-control-zoom { border: 1px solid rgba(255,255,255,0.1) !important; }
+    .leaflet-control-zoom a { background: rgba(6,15,36,0.9) !important; color: #94a3b8 !important; border-bottom: 1px solid rgba(255,255,255,0.08) !important; }
+  </style>
+</head>
+<body>
+<div class="app-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" role="navigation" aria-label="Main Navigation">
+    <a class="sidebar-logo" href="dashboard.html">
+      <div class="sidebar-logo-icon">🔰</div>
+      <div class="sidebar-logo-text">
+        <div class="sidebar-logo-title">KSP Intelligence</div>
+        <div class="sidebar-logo-sub">SCRB Platform</div>
+      </div>
+    </a>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Analytics</div>
+      <a class="nav-item" href="dashboard.html"><i data-lucide="layout-dashboard" width="18" height="18"></i><span>Command Dashboard</span></a>
+      <a class="nav-item active" href="geospatial.html"><i data-lucide="map" width="18" height="18"></i><span>Geospatial Hotspots</span></a>
+      <a class="nav-item" href="network.html"><i data-lucide="share-2" width="18" height="18"></i><span>Criminal Network</span></a>
+      <div class="nav-section-label">Intelligence</div>
+      <a class="nav-item" href="predictive.html"><i data-lucide="brain" width="18" height="18"></i><span>AI Predictive</span></a>
+      <a class="nav-item" href="trends.html"><i data-lucide="trending-up" width="18" height="18"></i><span>Trends & Patterns</span></a>
+      <a class="nav-item" href="reports.html"><i data-lucide="file-text" width="18" height="18"></i><span>Intel Reports</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">SC</div>
+        <div><div class="user-name" id="user-name">SCRB Officer</div><div class="user-role">Intelligence Analyst</div></div>
+      </div>
+      <div class="powered-by" style="margin-top:8px;"><span>⚡</span><strong>Zoho Catalyst</strong></div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="top-header">
+      <div>
+        <h1 class="page-title">Spatiotemporal Crime Hotspot Map</h1>
+        <p class="page-subtitle">Click districts for drill-down • Drag slider to filter by hour</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-ghost btn-sm" id="reset-map-btn">
+          <i data-lucide="compass" width="14" height="14"></i> Reset View
+        </button>
+      </div>
+    </header>
+
+    <main class="page-content">
+
+      <!-- Filter Bar -->
+      <div class="filter-bar" id="crime-filter-bar">
+        <span style="font-size:12px;color:#475569;font-weight:600;margin-right:4px;">CRIME TYPE:</span>
+        <button class="filter-chip active" data-type="all">All</button>
+        <button class="filter-chip" data-type="Theft">Theft</button>
+        <button class="filter-chip" data-type="Assault">Assault</button>
+        <button class="filter-chip" data-type="Cybercrime">Cybercrime</button>
+        <button class="filter-chip" data-type="Narcotics">Narcotics</button>
+        <button class="filter-chip" data-type="Murder">Murder</button>
+        <button class="filter-chip" data-type="Fraud">Fraud</button>
+        <button class="filter-chip" data-type="Robbery">Robbery</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start">
+
+        <!-- Map Card -->
+        <div class="card">
+          <div class="card-header" style="padding-bottom:16px">
+            <div>
+              <div class="card-title">Karnataka District Crime Density</div>
+              <div class="card-subtitle">Choropleth + heatmap overlay • Catalyst DataStore powered</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-ghost btn-sm" id="toggle-heat-btn">Toggle Heatmap</button>
+              <button class="btn btn-ghost btn-sm" id="toggle-circles-btn">Toggle Circles</button>
+            </div>
+          </div>
+
+          <!-- Time Slider -->
+          <div style="padding:0 24px 16px">
+            <div class="slider-label">
+              <span>Hour Filter: <strong id="hour-display">All Day</strong></span>
+              <span style="color:#475569;font-size:11px">Drag to filter incidents by time-of-day</span>
+            </div>
+            <input type="range" class="range-slider" id="hour-slider" min="0" max="24" value="24" step="1" aria-label="Filter by hour of day" />
+          </div>
+
+          <div class="card-body-flush map-panel">
+            <div id="map"></div>
+          </div>
+
+          <!-- Legend -->
+          <div style="padding:16px 24px">
+            <div class="legend">
+              <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>Critical (≥80)</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>High (60–79)</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Medium (40–59)</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#10b981"></div>Low (&lt;40)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+
+          <!-- District Panel (shown on click) -->
+          <div class="card" id="district-panel">
+            <div class="card-header">
+              <div>
+                <div class="card-title" id="panel-district-name">Select a District</div>
+                <div class="card-subtitle" id="panel-district-sub">Click any district circle on the map</div>
+              </div>
+            </div>
+            <div class="card-body" id="panel-body">
+              <div class="empty-state" style="padding:32px 0">
+                <i data-lucide="map-pin" width="32" height="32" style="opacity:0.3"></i>
+                <span>Click a district to view station-level breakdown</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Hotspots -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">🔥 Top Hotspot Districts</div>
+              <div class="card-subtitle">Ranked by risk score</div>
+            </div>
+            <div class="card-body" id="hotspot-list">
+              <div class="loading-spinner" style="padding:24px"><div class="spinner"></div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script type="module">
+import api from './js/api.js';
+import { getRiskColor, getRiskLevel, crimeColor, $ } from './js/utils.js';
+
+lucide.createIcons();
+
+const user = JSON.parse(sessionStorage.getItem('ksp_user') || 'null');
+if (!user) window.location.href = 'index.html';
+else { document.getElementById('user-name').textContent = user.name; }
+
+// ── Init Leaflet Map ──────────────────────────────────────────
+const map = L.map('map', {
+  center: [14.5, 75.7],
+  zoom: 7,
+  zoomControl: true,
+  attributionControl: false
+});
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  maxZoom: 19,
+  attribution: ''
+}).addTo(map);
+
+document.getElementById('reset-map-btn').addEventListener('click', () => {
+  map.setView([14.5, 75.7], 7);
+});
+
+let districtSummary = [];
+let allIncidents = [];
+let heatLayer = null;
+let circleLayer = L.layerGroup().addTo(map);
+let showHeat = true;
+let showCircles = true;
+let selectedType = 'all';
+let selectedHour = 24; // 24 = all day
+
+// ── Load Data ─────────────────────────────────────────────────
+async function initMap() {
+  [districtSummary, allIncidents] = await Promise.all([
+    api.getDistrictSummary(),
+    api.getIncidents({ limit: 600 })
+  ]);
+  renderCircles();
+  renderHeatmap();
+  renderHotspotList();
+}
+
+// ── Render Circles ────────────────────────────────────────────
+function renderCircles() {
+  circleLayer.clearLayers();
+  if (!showCircles) return;
+
+  districtSummary.forEach(d => {
+    const [lat, lng] = d.coordinates;
+    const color = getRiskColor(d.risk_score);
+    const filtered = filterIncidents(allIncidents, d.district);
+    const radius = Math.max(8000, Math.min(30000, filtered.length * 1200));
+
+    const circle = L.circle([lat, lng], {
+      radius,
+      color,
+      fillColor: color,
+      fillOpacity: 0.2,
+      weight: 2
+    });
+
+    // Pulsing outer ring for critical districts
+    if (d.risk_score >= 80) {
+      L.circle([lat, lng], {
+        radius: radius * 1.3,
+        color, fillColor: 'transparent',
+        fillOpacity: 0, weight: 1.5,
+        className: 'pulse-circle'
+      }).addTo(circleLayer);
+    }
+
+    circle.bindPopup(`
+      <div style="min-width:200px">
+        <div style="font-weight:700;font-size:15px;margin-bottom:8px">${d.district}</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:#94a3b8">
+          <div>🚨 <strong style="color:#f1f5f9">${filtered.length}</strong> Incidents</div>
+          <div>📂 <strong style="color:#f1f5f9">${d.open_cases}</strong> Open</div>
+          <div>⚡ <strong style="color:${color}">${d.risk_score}</strong>/100 Risk</div>
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:#475569">Population: ${(d.population/1e5).toFixed(1)}L</div>
+        <div style="font-size:11px;color:#475569">Urbanization: ${d.urbanization_pct.toFixed(1)}%</div>
+      </div>
+    `, { className: '' });
+
+    circle.on('click', () => showDistrictPanel(d));
+    circle.addTo(circleLayer);
+
+    // District label
+    L.marker([lat, lng], {
+      icon: L.divIcon({
+        className: '',
+        html: `<div style="font-size:10px;font-weight:600;color:${color};text-shadow:0 1px 3px #000;white-space:nowrap;transform:translate(-50%,-50%)">${d.district.split(' ')[0]}</div>`,
+        iconSize: [0, 0]
+      })
+    }).addTo(circleLayer);
+  });
+}
+
+// ── Render Heatmap ────────────────────────────────────────────
+function renderHeatmap() {
+  if (heatLayer) map.removeLayer(heatLayer);
+  if (!showHeat) return;
+
+  const filtered = filterIncidents(allIncidents);
+  const points = filtered.map(i => [
+    i.latitude, i.longitude,
+    i.severity === 'Critical' ? 1.0 : i.severity === 'High' ? 0.7 : 0.4
+  ]);
+
+  heatLayer = L.heatLayer(points, {
+    radius: 28, blur: 20, maxZoom: 12,
+    gradient: { 0.2: '#3b82f6', 0.5: '#f59e0b', 0.8: '#dc2626', 1.0: '#ffffff' }
+  }).addTo(map);
+}
+
+// ── Filter Incidents ──────────────────────────────────────────
+function filterIncidents(incidents, district = null) {
+  let result = incidents;
+  if (district) result = result.filter(i => i.district === district);
+  if (selectedType !== 'all') result = result.filter(i => i.crime_type === selectedType);
+  if (selectedHour < 24) result = result.filter(i => new Date(i.date_time).getHours() === selectedHour);
+  return result;
+}
+
+// ── Show District Panel ───────────────────────────────────────
+function showDistrictPanel(d) {
+  const rl = getRiskLevel(d.risk_score);
+  document.getElementById('panel-district-name').textContent = d.district;
+  document.getElementById('panel-district-sub').textContent = `Risk Score: ${d.risk_score}/100 — ${rl.label}`;
+
+  const top = Object.entries(d.crime_breakdown)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6);
+
+  document.getElementById('panel-body').innerHTML = `
+    <div class="stat-row"><span class="stat-key">Total Incidents</span><span class="stat-val" style="color:${rl.color}">${d.total_incidents}</span></div>
+    <div class="stat-row"><span class="stat-key">Open Cases</span><span class="stat-val">${d.open_cases}</span></div>
+    <div class="stat-row"><span class="stat-key">Critical Incidents</span><span class="stat-val">${d.critical}</span></div>
+    <div class="stat-row"><span class="stat-key">Urbanization</span><span class="stat-val">${d.urbanization_pct.toFixed(1)}%</span></div>
+    <div class="stat-row"><span class="stat-key">Unemployment</span><span class="stat-val">${d.unemployment_pct.toFixed(1)}%</span></div>
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.06);margin:12px 0">
+    <div style="font-size:12px;font-weight:600;color:#475569;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.8px">Crime Breakdown</div>
+    ${top.map(([type, count]) => `
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+          <span style="color:${crimeColor(type)}">${type}</span>
+          <span style="color:#f1f5f9;font-weight:600">${count}</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${Math.round(count/d.total_incidents*100)}%;background:${crimeColor(type)}"></div></div>
+      </div>
+    `).join('')}
+  `;
+}
+
+// ── Render Hotspot List ───────────────────────────────────────
+function renderHotspotList() {
+  const top5 = [...districtSummary].sort((a, b) => b.risk_score - a.risk_score).slice(0, 5);
+  document.getElementById('hotspot-list').innerHTML = top5.map((d, i) => {
+    const rl = getRiskLevel(d.risk_score);
+    return `
+      <div class="district-stat-item" style="cursor:pointer" onclick="window.dispatchEvent(new CustomEvent('selectDistrict',{detail:'${d.district}'}))">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:24px;height:24px;border-radius:50%;background:${rl.color}22;border:1px solid ${rl.color}55;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:${rl.color}">${i+1}</div>
+          <div>
+            <div style="font-size:13px;font-weight:600">${d.district}</div>
+            <div style="font-size:11px;color:#475569">${d.total_incidents} incidents</div>
+          </div>
+        </div>
+        <span class="badge ${rl.badge}">${d.risk_score}/100</span>
+      </div>
+    `;
+  }).join('');
+}
+
+// ── Crime Type Filter ─────────────────────────────────────────
+document.querySelectorAll('[data-type]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-type]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedType = btn.dataset.type;
+    renderCircles();
+    renderHeatmap();
+  });
+});
+
+// ── Hour Slider ───────────────────────────────────────────────
+const hourSlider = document.getElementById('hour-slider');
+const hourDisplay = document.getElementById('hour-display');
+hourSlider.addEventListener('input', () => {
+  selectedHour = parseInt(hourSlider.value);
+  hourDisplay.textContent = selectedHour === 24 ? 'All Day' : `${String(selectedHour).padStart(2,'0')}:00 – ${String(selectedHour+1).padStart(2,'0')}:00`;
+  renderHeatmap();
+  renderCircles();
+});
+
+// ── Toggle Layers ─────────────────────────────────────────────
+document.getElementById('toggle-heat-btn').addEventListener('click', () => {
+  showHeat = !showHeat;
+  renderHeatmap();
+});
+document.getElementById('toggle-circles-btn').addEventListener('click', () => {
+  showCircles = !showCircles;
+  renderCircles();
+});
+
+initMap();
+</script>
+</body>
+</html>

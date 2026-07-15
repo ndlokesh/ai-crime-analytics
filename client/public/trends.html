@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trends & Patterns — KSP Crime Intelligence Platform</title>
+  <meta name="description" content="Pattern and trend discovery for Karnataka police: Z-score spike detection, crime clock, seasonal decomposition, and recidivism analysis." />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+<div class="app-layout">
+
+  <aside class="sidebar" role="navigation" aria-label="Main Navigation">
+    <a class="sidebar-logo" href="dashboard.html">
+      <div class="sidebar-logo-icon">🔰</div>
+      <div class="sidebar-logo-text">
+        <div class="sidebar-logo-title">KSP Intelligence</div>
+        <div class="sidebar-logo-sub">SCRB Platform</div>
+      </div>
+    </a>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Analytics</div>
+      <a class="nav-item" href="dashboard.html"><i data-lucide="layout-dashboard" width="18" height="18"></i><span>Command Dashboard</span></a>
+      <a class="nav-item" href="geospatial.html"><i data-lucide="map" width="18" height="18"></i><span>Geospatial Hotspots</span></a>
+      <a class="nav-item" href="network.html"><i data-lucide="share-2" width="18" height="18"></i><span>Criminal Network</span></a>
+      <div class="nav-section-label">Intelligence</div>
+      <a class="nav-item" href="predictive.html"><i data-lucide="brain" width="18" height="18"></i><span>AI Predictive</span></a>
+      <a class="nav-item active" href="trends.html"><i data-lucide="trending-up" width="18" height="18"></i><span>Trends & Patterns</span></a>
+      <a class="nav-item" href="reports.html"><i data-lucide="file-text" width="18" height="18"></i><span>Intel Reports</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">SC</div>
+        <div><div class="user-name" id="user-name">SCRB Officer</div><div class="user-role">Intelligence Analyst</div></div>
+      </div>
+      <div class="powered-by" style="margin-top:8px;"><span>⚡</span><strong>Zoho Catalyst</strong></div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="top-header">
+      <div>
+        <h1 class="page-title">Pattern & Trend Discovery</h1>
+        <p class="page-subtitle">Statistical spike detection · Crime clock · Seasonal decomposition · Recidivism analysis</p>
+      </div>
+      <div class="header-actions">
+        <select class="select-input" id="trend-crime-type" aria-label="Select crime type">
+          <option value="Theft">Theft</option>
+          <option value="Assault">Assault</option>
+          <option value="Cybercrime">Cybercrime</option>
+          <option value="Narcotics">Narcotics</option>
+          <option value="Murder">Murder</option>
+          <option value="Fraud">Fraud</option>
+        </select>
+      </div>
+    </header>
+
+    <main class="page-content">
+
+      <!-- Row 1: Z-Score Spike Detector + Crime Clock -->
+      <div class="chart-grid chart-grid-2 section-gap">
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Z-Score Spike Detector</div>
+              <div class="card-subtitle">52-week rolling window · Red = anomaly spike (z &gt; 2σ)</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="spike-alerts" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px"></div>
+            <div class="chart-container" style="height:260px">
+              <canvas id="zscore-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Crime Clock</div>
+              <div class="card-subtitle">Incident distribution by hour of day (24h)</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="height:300px">
+              <canvas id="clock-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Seasonal Decomposition + District Race -->
+      <div class="chart-grid chart-grid-2 section-gap">
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Seasonal Decomposition</div>
+              <div class="card-subtitle">Trend + Seasonal + Residual components (STL)</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="height:300px">
+              <canvas id="seasonal-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Top Districts Comparison</div>
+              <div class="card-subtitle">Incident count by district — current year</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="height:300px">
+              <canvas id="race-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Crime Heat Calendar + Recidivism -->
+      <div class="chart-grid chart-grid-2 section-gap">
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Monthly Crime Heatmap</div>
+              <div class="card-subtitle">Crime intensity by month × crime type</div>
+            </div>
+          </div>
+          <div class="card-body" id="heatmap-table-wrap">
+            <div class="loading-spinner" style="padding:32px"><div class="spinner"></div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Recidivism Pattern</div>
+              <div class="card-subtitle">Time between re-offenses by cohort</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="height:260px">
+              <canvas id="recid-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script type="module">
+import api from './js/api.js';
+import { CHART_DEFAULTS, crimeColor, MONTHS, SeededRandom, zScore, makeGradient } from './js/utils.js';
+
+lucide.createIcons();
+
+const user = JSON.parse(sessionStorage.getItem('ksp_user') || 'null');
+if (!user) window.location.href = 'index.html';
+else { document.getElementById('user-name').textContent = user.name; }
+
+Chart.defaults.font.family = 'Inter';
+Chart.defaults.color = '#94a3b8';
+
+const rng = new SeededRandom(555);
+let zScoreChart, clockChart, seasonalChart, raceChart, recidChart;
+let weeklyData = {};
+let hourlyData = [];
+let selectedType = 'Theft';
+
+// ── Z-Score Spike Detector ────────────────────────────────────
+async function renderZScoreChart(type) {
+  if (!Object.keys(weeklyData).length) weeklyData = await api.getWeeklyZScores();
+  const values = weeklyData[type] || weeklyData['Theft'];
+  const weeks = values.length;
+  const zScores = zScore(values);
+  const mean = values.reduce((s, v) => s + v, 0) / weeks;
+  const std = Math.sqrt(values.reduce((s, v) => s + Math.pow(v - mean, 2), 0) / weeks);
+  const threshold = mean + 2 * std;
+
+  const labels = Array.from({length: weeks}, (_, i) => `W${i + 1}`);
+  const barColors = values.map(v => v > threshold ? 'rgba(220,38,38,0.85)' : 'rgba(59,130,246,0.55)');
+
+  // Count spikes
+  const spikes = values.filter(v => v > threshold).length;
+  const spikeWeeks = values.map((v, i) => v > threshold ? i + 1 : null).filter(Boolean);
+
+  document.getElementById('spike-alerts').innerHTML = [
+    `<span class="badge badge-red">⚠️ ${spikes} spikes detected</span>`,
+    ...spikeWeeks.slice(0, 4).map(w => `<span class="badge badge-amber">Week ${w}</span>`)
+  ].join('');
+
+  if (zScoreChart) zScoreChart.destroy();
+  zScoreChart = new Chart(document.getElementById('zscore-chart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: type + ' Incidents',
+          data: values,
+          backgroundColor: barColors,
+          borderColor: barColors.map(c => c.replace('0.85', '1').replace('0.55', '1')),
+          borderWidth: 1,
+          borderRadius: 3,
+          order: 2
+        },
+        {
+          label: 'Spike Threshold (2σ)',
+          data: Array(weeks).fill(threshold),
+          type: 'line',
+          borderColor: 'rgba(245,158,11,0.8)',
+          borderDash: [5, 3],
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: false,
+          order: 1
+        },
+        {
+          label: 'Baseline Mean',
+          data: Array(weeks).fill(mean),
+          type: 'line',
+          borderColor: 'rgba(255,255,255,0.2)',
+          borderDash: [2, 4],
+          borderWidth: 1,
+          pointRadius: 0,
+          fill: false,
+          order: 1
+        }
+      ]
+    },
+    options: { ...CHART_DEFAULTS, plugins: { ...CHART_DEFAULTS.plugins } }
+  });
+}
+
+// ── Crime Clock (Polar) ───────────────────────────────────────
+async function renderClock() {
+  if (!hourlyData.length) hourlyData = await api.getHourlyDistribution();
+  const labels = Array.from({length: 24}, (_, i) => `${String(i).padStart(2,'0')}:00`);
+  const colors = hourlyData.map((v, i) => {
+    if (i >= 22 || i <= 4) return 'rgba(220,38,38,0.7)';
+    if (i >= 5 && i <= 8) return 'rgba(245,158,11,0.7)';
+    if (i >= 18 && i <= 21) return 'rgba(245,158,11,0.7)';
+    return 'rgba(59,130,246,0.6)';
+  });
+
+  if (clockChart) clockChart.destroy();
+  clockChart = new Chart(document.getElementById('clock-chart'), {
+    type: 'polarArea',
+    data: {
+      labels,
+      datasets: [{
+        data: hourlyData,
+        backgroundColor: colors,
+        borderColor: 'rgba(255,255,255,0.1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      ...CHART_DEFAULTS,
+      scales: {
+        r: {
+          ticks: { backdropColor: 'transparent', color: '#475569', font: { size: 9 } },
+          grid: { color: 'rgba(255,255,255,0.05)' },
+          angleLines: { color: 'rgba(255,255,255,0.05)' }
+        }
+      },
+      plugins: {
+        ...CHART_DEFAULTS.plugins,
+        legend: { display: false },
+        tooltip: {
+          ...CHART_DEFAULTS.plugins.tooltip,
+          callbacks: { label: ctx => ` ${ctx.raw} incidents at ${ctx.label}` }
+        }
+      }
+    }
+  });
+}
+
+// ── Seasonal Decomposition ────────────────────────────────────
+async function renderSeasonal() {
+  const monthly = await api.getMonthlyTrends();
+  const entries = Object.entries(monthly);
+  const labels = entries.map(([k]) => { const [y,m] = k.split('-'); return MONTHS[parseInt(m)-1]+'\''+y.slice(2); });
+  const totals = entries.map(([, v]) => Object.values(v).reduce((s, n) => s + n, 0));
+
+  // Synthetic decomposition
+  const trend = totals.map((_, i) => {
+    const slice = totals.slice(Math.max(0, i - 2), Math.min(totals.length, i + 3));
+    return slice.reduce((s, v) => s + v, 0) / slice.length;
+  });
+  const seasonal = totals.map((v, i) => {
+    const month = parseInt(entries[i][0].split('-')[1]);
+    return [0, 8, 12, 6, -3, -8, -5, 2, 10, 14, 8, 4][month - 1] || 0;
+  });
+  const residual = totals.map((v, i) => v - trend[i] - seasonal[i]);
+
+  if (seasonalChart) seasonalChart.destroy();
+  seasonalChart = new Chart(document.getElementById('seasonal-chart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Actual',   data: totals,   borderColor: '#94a3b8', borderWidth: 1.5, pointRadius: 2, fill: false, tension: 0.3 },
+        { label: 'Trend',    data: trend,    borderColor: '#f59e0b', borderWidth: 2.5, pointRadius: 0, fill: false, tension: 0.5 },
+        { label: 'Seasonal', data: seasonal, borderColor: '#3b82f6', borderWidth: 1.5, borderDash: [4,2], pointRadius: 0, fill: false, tension: 0.4 },
+        { label: 'Residual', data: residual, borderColor: '#dc2626', borderWidth: 1, borderDash: [2,3], pointRadius: 0, fill: false, tension: 0.2 },
+      ]
+    },
+    options: { ...CHART_DEFAULTS, interaction: { mode: 'index', intersect: false } }
+  });
+}
+
+// ── District Race ─────────────────────────────────────────────
+async function renderRace() {
+  const districts = await api.getDistrictSummary();
+  const top10 = [...districts].sort((a, b) => b.total_incidents - a.total_incidents).slice(0, 10);
+  const labels = top10.map(d => d.district.split(' ')[0]);
+  const data = top10.map(d => d.total_incidents);
+  const ctx = document.getElementById('race-chart').getContext('2d');
+
+  if (raceChart) raceChart.destroy();
+  raceChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Incidents',
+        data,
+        backgroundColor: data.map((_, i) => `hsla(${(i * 36) % 360},70%,55%,0.7)`),
+        borderColor: data.map((_, i) => `hsl(${(i * 36) % 360},70%,55%)`),
+        borderWidth: 1,
+        borderRadius: 6
+      }]
+    },
+    options: {
+      ...CHART_DEFAULTS,
+      plugins: { ...CHART_DEFAULTS.plugins, legend: { display: false } },
+      scales: {
+        y: { ...CHART_DEFAULTS.scales.y, beginAtZero: true },
+        x: { ...CHART_DEFAULTS.scales.x }
+      }
+    }
+  });
+}
+
+// ── Monthly Heatmap Table ─────────────────────────────────────
+async function renderHeatmapTable() {
+  const monthly = await api.getMonthlyTrends();
+  const crimeTypes = ['Theft', 'Assault', 'Cybercrime', 'Narcotics', 'Murder', 'Fraud', 'Robbery'];
+  const months = Object.keys(monthly).map(k => { const [y,m] = k.split('-'); return MONTHS[parseInt(m)-1]; });
+  const data = monthly;
+
+  const maxVal = Math.max(...crimeTypes.flatMap(t => Object.values(data).map(m => m[t] || 0)));
+
+  const getCellBg = (v) => {
+    const intensity = v / maxVal;
+    return `rgba(220,38,38,${(intensity * 0.8 + 0.05).toFixed(2)})`;
+  };
+
+  const header = `<tr><th style="color:#475569;font-size:10px;text-align:left;padding:6px 10px">Crime Type</th>${months.map(m => `<th style="color:#475569;font-size:10px;text-align:center;padding:6px 6px;white-space:nowrap">${m}</th>`).join('')}</tr>`;
+  const rows = crimeTypes.map(type => `
+    <tr>
+      <td style="font-size:12px;font-weight:600;color:${crimeColor(type)};white-space:nowrap;padding:6px 10px">${type}</td>
+      ${Object.values(data).map(m => {
+        const v = m[type] || 0;
+        return `<td style="text-align:center;padding:4px">
+          <div style="background:${getCellBg(v)};border-radius:4px;padding:5px 4px;font-size:11px;font-weight:600;color:${v > maxVal * 0.6 ? '#fff' : '#94a3b8'}">${v}</div>
+        </td>`;
+      }).join('')}
+    </tr>
+  `).join('');
+
+  document.getElementById('heatmap-table-wrap').innerHTML = `
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse"><thead>${header}</thead><tbody>${rows}</tbody></table>
+    </div>
+  `;
+}
+
+// ── Recidivism Chart ──────────────────────────────────────────
+function renderRecidivism() {
+  const labels = ['<30 days', '30–90', '91–180', '181–365', '>1 year'];
+  const cohorts = {
+    '1st Offense': [8, 22, 18, 14, 38],
+    '2nd Offense': [15, 28, 24, 20, 13],
+    '3rd+ Offense': [32, 35, 18, 10, 5],
+  };
+  const colors = ['#3b82f6', '#f59e0b', '#dc2626'];
+
+  if (recidChart) recidChart.destroy();
+  recidChart = new Chart(document.getElementById('recid-chart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: Object.entries(cohorts).map(([label, data], i) => ({
+        label, data,
+        backgroundColor: colors[i] + '88',
+        borderColor: colors[i],
+        borderWidth: 1,
+        borderRadius: 4,
+      }))
+    },
+    options: {
+      ...CHART_DEFAULTS,
+      scales: {
+        x: { ...CHART_DEFAULTS.scales.x, stacked: false },
+        y: { ...CHART_DEFAULTS.scales.y, title: { display: true, text: 'Offender Count (%)', color: '#475569' } }
+      }
+    }
+  });
+}
+
+// ── Crime Type Change ─────────────────────────────────────────
+document.getElementById('trend-crime-type').addEventListener('change', e => {
+  selectedType = e.target.value;
+  renderZScoreChart(selectedType);
+});
+
+// ── Init ─────────────────────────────────────────────────────
+async function init() {
+  await Promise.all([
+    renderZScoreChart(selectedType),
+    renderClock(),
+    renderSeasonal(),
+    renderRace(),
+    renderHeatmapTable(),
+  ]);
+  renderRecidivism();
+}
+
+init();
+</script>
+</body>
+</html>

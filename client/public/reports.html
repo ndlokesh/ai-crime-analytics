@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intelligence Reports — KSP Crime Intelligence Platform</title>
+  <meta name="description" content="Auto-generated district intelligence briefs, case linkage summaries and printable reports for Karnataka State Police SCRB." />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @media print {
+      .sidebar, .top-header, .header-actions, .filter-bar, .no-print { display: none !important; }
+      .main-content { margin-left: 0 !important; }
+      .report-card { break-inside: avoid; border: 1px solid #ccc !important; }
+      body { background: white !important; color: black !important; }
+      .card { background: white !important; border: 1px solid #eee !important; }
+    }
+    .report-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin-bottom: 20px;
+      transition: all var(--transition-base);
+    }
+    .report-card:hover { border-color: rgba(220,38,38,0.2); box-shadow: 0 8px 40px rgba(0,0,0,0.2); }
+    .report-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+    .report-district-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(220,38,38,0.1); border: 1px solid rgba(220,38,38,0.2);
+      border-radius: var(--radius-sm); padding: 4px 12px;
+      font-size: 12px; font-weight: 600; color: #f87171;
+    }
+    .report-section { margin-top: 20px; }
+    .report-section-title { font-size: 12px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .report-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .report-kpi { background: rgba(255,255,255,0.04); border-radius: var(--radius-sm); padding: 12px 16px; }
+    .report-kpi-val { font-size: 24px; font-weight: 800; }
+    .report-kpi-key { font-size: 11px; color: #475569; margin-top: 2px; }
+  </style>
+</head>
+<body>
+<div class="app-layout">
+
+  <aside class="sidebar" role="navigation" aria-label="Main Navigation">
+    <a class="sidebar-logo" href="dashboard.html">
+      <div class="sidebar-logo-icon">🔰</div>
+      <div class="sidebar-logo-text">
+        <div class="sidebar-logo-title">KSP Intelligence</div>
+        <div class="sidebar-logo-sub">SCRB Platform</div>
+      </div>
+    </a>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Analytics</div>
+      <a class="nav-item" href="dashboard.html"><i data-lucide="layout-dashboard" width="18" height="18"></i><span>Command Dashboard</span></a>
+      <a class="nav-item" href="geospatial.html"><i data-lucide="map" width="18" height="18"></i><span>Geospatial Hotspots</span></a>
+      <a class="nav-item" href="network.html"><i data-lucide="share-2" width="18" height="18"></i><span>Criminal Network</span></a>
+      <div class="nav-section-label">Intelligence</div>
+      <a class="nav-item" href="predictive.html"><i data-lucide="brain" width="18" height="18"></i><span>AI Predictive</span></a>
+      <a class="nav-item" href="trends.html"><i data-lucide="trending-up" width="18" height="18"></i><span>Trends & Patterns</span></a>
+      <a class="nav-item active" href="reports.html"><i data-lucide="file-text" width="18" height="18"></i><span>Intel Reports</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">SC</div>
+        <div><div class="user-name" id="user-name">SCRB Officer</div><div class="user-role">Intelligence Analyst</div></div>
+      </div>
+      <div class="powered-by" style="margin-top:8px;"><span>⚡</span><strong>Zoho Catalyst</strong></div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="top-header">
+      <div>
+        <h1 class="page-title">District Intelligence Reports</h1>
+        <p class="page-subtitle">Auto-generated from Catalyst DataStore ZCQL queries · <span id="report-date"></span></p>
+      </div>
+      <div class="header-actions no-print">
+        <button class="btn btn-ghost btn-sm" id="print-btn">
+          <i data-lucide="printer" width="14" height="14"></i> Print / PDF
+        </button>
+      </div>
+    </header>
+
+    <main class="page-content">
+
+      <!-- Filters -->
+      <div class="filter-bar no-print" style="margin-bottom:20px">
+        <input class="search-input" id="district-search" placeholder="Search district…" aria-label="Search district" />
+        <span style="font-size:12px;color:#475569;font-weight:600;margin:0 4px">RISK:</span>
+        <button class="filter-chip active" data-risk="all">All</button>
+        <button class="filter-chip" data-risk="critical">Critical</button>
+        <button class="filter-chip" data-risk="high">High</button>
+        <button class="filter-chip" data-risk="medium">Medium</button>
+        <button class="filter-chip" data-risk="low">Low</button>
+      </div>
+
+      <!-- State Summary Card -->
+      <div class="card" style="margin-bottom:24px" id="state-summary">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Karnataka State Crime Intelligence Summary</div>
+            <div class="card-subtitle">SCRB Annual Overview Report · Catalyst ZCQL DataStore</div>
+          </div>
+          <span class="badge badge-red">CONFIDENTIAL</span>
+        </div>
+        <div class="card-body">
+          <div id="state-kpis" style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px">
+            <div class="loading-spinner" style="grid-column:1/-1;padding:20px"><div class="spinner"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- District Reports -->
+      <div id="reports-container">
+        <div class="loading-spinner" style="padding:60px"><div class="spinner"></div>Generating intelligence reports from Catalyst DataStore…</div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script type="module">
+import api from './js/api.js';
+import { getRiskLevel, getRiskColor, crimeColor, formatDate, debounce } from './js/utils.js';
+
+lucide.createIcons();
+
+const user = JSON.parse(sessionStorage.getItem('ksp_user') || 'null');
+if (!user) window.location.href = 'index.html';
+else { document.getElementById('user-name').textContent = user.name; }
+
+document.getElementById('report-date').textContent = new Date().toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+document.getElementById('print-btn').addEventListener('click', () => window.print());
+
+let allDistricts = [];
+let selectedRisk = 'all';
+let searchQuery = '';
+
+// ── Render State Summary ──────────────────────────────────────
+async function renderStateSummary(districts) {
+  const kpi = await api.getKpiSummary();
+  const topDistrict = [...districts].sort((a, b) => b.risk_score - a.risk_score)[0];
+  const mostCommonType = (() => {
+    const counts = {};
+    districts.forEach(d => Object.entries(d.crime_breakdown).forEach(([t, c]) => { counts[t] = (counts[t] || 0) + c; }));
+    return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+  })();
+
+  document.getElementById('state-kpis').innerHTML = [
+    { val: kpi.total_incidents.toLocaleString('en-IN'), key: 'Total Incidents', color: '#dc2626' },
+    { val: kpi.active_alerts, key: 'Active Alerts', color: '#f59e0b' },
+    { val: kpi.hotspot_districts, key: 'Critical Districts', color: '#dc2626' },
+    { val: kpi.avg_risk_score + '/100', key: 'Avg Risk Score', color: '#f59e0b' },
+    { val: topDistrict.district.split(' ')[0], key: 'Highest Risk', color: '#dc2626' },
+    { val: mostCommonType, key: 'Top Crime Type', color: '#8b5cf6' },
+  ].map(k => `
+    <div class="report-kpi">
+      <div class="report-kpi-val" style="color:${k.color}">${k.val}</div>
+      <div class="report-kpi-key">${k.key}</div>
+    </div>
+  `).join('');
+}
+
+// ── Render District Reports ───────────────────────────────────
+function renderReports(districts) {
+  let filtered = districts;
+
+  if (searchQuery) {
+    filtered = filtered.filter(d => d.district.toLowerCase().includes(searchQuery));
+  }
+  if (selectedRisk !== 'all') {
+    const thresholds = { critical: 85, high: 70, medium: 40, low: 0 };
+    const maxes = { critical: 100, high: 84, medium: 69, low: 39 };
+    filtered = filtered.filter(d => d.risk_score >= thresholds[selectedRisk] && d.risk_score <= maxes[selectedRisk]);
+  }
+
+  // Sort by risk desc
+  filtered = [...filtered].sort((a, b) => b.risk_score - a.risk_score);
+
+  if (filtered.length === 0) {
+    document.getElementById('reports-container').innerHTML = '<div class="empty-state" style="padding:60px">No districts match the selected filter.</div>';
+    return;
+  }
+
+  document.getElementById('reports-container').innerHTML = filtered.map((d, index) => {
+    const rl = getRiskLevel(d.risk_score);
+    const topTypes = Object.entries(d.crime_breakdown).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    const totalForPct = d.total_incidents || 1;
+    const openRate = ((d.open_cases / totalForPct) * 100).toFixed(0);
+
+    return `
+      <div class="report-card fade-in" style="animation-delay:${index * 0.05}s">
+        <!-- Report Header -->
+        <div class="report-header">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+              <div class="report-district-badge">District ${String(index + 1).padStart(2, '0')}</div>
+              <span class="badge ${rl.badge}">${rl.label} Risk</span>
+              ${d.risk_score >= 80 ? '<span class="badge badge-red" style="animation:pulse-badge 1.5s infinite">🔴 ALERT</span>' : ''}
+            </div>
+            <h2 style="font-size:22px;font-weight:800;margin-bottom:4px">${d.district}</h2>
+            <p style="font-size:13px;color:#475569">Karnataka State Police — District Intelligence Brief</p>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:40px;font-weight:900;color:${rl.color};line-height:1">${d.risk_score}</div>
+            <div style="font-size:11px;color:#475569;margin-top:2px">AI RISK SCORE</div>
+            <div style="font-size:10px;color:#475569">Powered by QuickML</div>
+          </div>
+        </div>
+
+        <!-- KPI Grid -->
+        <div class="report-grid" style="margin-bottom:20px">
+          <div class="report-kpi"><div class="report-kpi-val" style="color:${rl.color}">${d.total_incidents}</div><div class="report-kpi-key">Total Incidents</div></div>
+          <div class="report-kpi"><div class="report-kpi-val" style="color:#f87171">${d.open_cases}</div><div class="report-kpi-key">Open Cases</div></div>
+          <div class="report-kpi"><div class="report-kpi-val" style="color:#f59e0b">${d.critical}</div><div class="report-kpi-key">Critical Severity</div></div>
+          <div class="report-kpi"><div class="report-kpi-val">${openRate}%</div><div class="report-kpi-key">Case Open Rate</div></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+
+          <!-- Crime Breakdown -->
+          <div class="report-section">
+            <div class="report-section-title">Crime Breakdown</div>
+            ${topTypes.map(([type, count]) => `
+              <div style="margin-bottom:10px">
+                <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+                  <span style="color:${crimeColor(type)};font-weight:600">${type}</span>
+                  <span style="color:#94a3b8">${count} incidents (${Math.round(count/totalForPct*100)}%)</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width:${Math.round(count/totalForPct*100)}%;background:${crimeColor(type)}"></div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <!-- Socio-Economic -->
+          <div class="report-section">
+            <div class="report-section-title">Socio-Economic Profile</div>
+            <div class="stat-row"><span class="stat-key">Population</span><span class="stat-val">${(d.population/1e5).toFixed(1)}L</span></div>
+            <div class="stat-row"><span class="stat-key">Urbanization</span><span class="stat-val">${d.urbanization_pct.toFixed(1)}%</span></div>
+            <div class="stat-row"><span class="stat-key">Literacy Rate</span><span class="stat-val">${d.literacy_pct.toFixed(1)}%</span></div>
+            <div class="stat-row"><span class="stat-key">Unemployment</span><span class="stat-val" style="color:${d.unemployment_pct > 10 ? '#f87171' : '#94a3b8'}">${d.unemployment_pct.toFixed(1)}%</span></div>
+            <div class="stat-row">
+              <span class="stat-key">Coordinates</span>
+              <span class="stat-val" style="font-family:monospace;font-size:11px">${d.coordinates[0].toFixed(2)}°N, ${d.coordinates[1].toFixed(2)}°E</span>
+            </div>
+
+            <!-- Risk Gauge visual -->
+            <div style="margin-top:16px">
+              <div style="display:flex;justify-content:space-between;font-size:11px;color:#475569;margin-bottom:6px">
+                <span>Risk Score</span><span>${d.risk_score}/100</span>
+              </div>
+              <div class="progress-bar" style="height:8px">
+                <div class="progress-fill" style="width:${d.risk_score}%;background:${rl.color}"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Intelligence Note -->
+        <div style="margin-top:20px;padding:14px 18px;background:rgba(255,255,255,0.03);border-left:3px solid ${rl.color};border-radius:0 var(--radius-sm) var(--radius-sm) 0">
+          <div style="font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px">Intelligence Assessment</div>
+          <p style="font-size:13px;color:#94a3b8;line-height:1.6">
+            ${d.district} district records <strong style="color:#f1f5f9">${d.total_incidents} incidents</strong> with a QuickML risk score of <strong style="color:${rl.color}">${d.risk_score}/100 (${rl.label})</strong>.
+            Primary crime vector: <strong style="color:${crimeColor(topTypes[0][0])}">${topTypes[0][0]}</strong> (${topTypes[0][1]} cases, ${Math.round(topTypes[0][1]/totalForPct*100)}%).
+            ${d.unemployment_pct > 10 ? `High unemployment (${d.unemployment_pct.toFixed(1)}%) is a significant socio-economic driver. ` : ''}
+            ${d.open_cases > d.total_incidents * 0.4 ? `⚠️ Open case backlog (${openRate}%) requires immediate investigative resources.` : `Case resolution rate is within acceptable range (${100 - parseInt(openRate)}% closed).`}
+          </p>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ── Filter Controls ───────────────────────────────────────────
+document.querySelectorAll('[data-risk]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-risk]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedRisk = btn.dataset.risk;
+    renderReports(allDistricts);
+  });
+});
+
+document.getElementById('district-search').addEventListener('input', debounce(e => {
+  searchQuery = e.target.value.toLowerCase();
+  renderReports(allDistricts);
+}, 250));
+
+// ── Init ─────────────────────────────────────────────────────
+async function init() {
+  allDistricts = await api.getDistrictSummary();
+  await renderStateSummary(allDistricts);
+  renderReports(allDistricts);
+}
+
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+{ "name": "analytics-api", "version": "1.0.0", "description": "KSP Crime Analytics — Analytics Serverless API", "main": "index.js", "dependencies": { "zcatalyst-sdk-node": "^1.0.0" } }

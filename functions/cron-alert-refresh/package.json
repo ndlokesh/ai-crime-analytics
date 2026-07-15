@@ -1,0 +1,1 @@
+{ "name": "cron-alert-refresh", "version": "1.0.0", "description": "KSP Crime Analytics — Daily Alert Refresh Cron", "main": "index.js", "dependencies": { "zcatalyst-sdk-node": "^1.0.0" } }

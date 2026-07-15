@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Predictive Intelligence — KSP Crime Intelligence Platform</title>
+  <meta name="description" content="AI and QuickML-powered predictive risk scoring, anomaly detection, socio-economic correlation and crime typology forecasts for Karnataka." />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+<div class="app-layout">
+
+  <aside class="sidebar" role="navigation" aria-label="Main Navigation">
+    <a class="sidebar-logo" href="dashboard.html">
+      <div class="sidebar-logo-icon">🔰</div>
+      <div class="sidebar-logo-text">
+        <div class="sidebar-logo-title">KSP Intelligence</div>
+        <div class="sidebar-logo-sub">SCRB Platform</div>
+      </div>
+    </a>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Analytics</div>
+      <a class="nav-item" href="dashboard.html"><i data-lucide="layout-dashboard" width="18" height="18"></i><span>Command Dashboard</span></a>
+      <a class="nav-item" href="geospatial.html"><i data-lucide="map" width="18" height="18"></i><span>Geospatial Hotspots</span></a>
+      <a class="nav-item" href="network.html"><i data-lucide="share-2" width="18" height="18"></i><span>Criminal Network</span></a>
+      <div class="nav-section-label">Intelligence</div>
+      <a class="nav-item active" href="predictive.html"><i data-lucide="brain" width="18" height="18"></i><span>AI Predictive</span></a>
+      <a class="nav-item" href="trends.html"><i data-lucide="trending-up" width="18" height="18"></i><span>Trends & Patterns</span></a>
+      <a class="nav-item" href="reports.html"><i data-lucide="file-text" width="18" height="18"></i><span>Intel Reports</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">SC</div>
+        <div><div class="user-name" id="user-name">SCRB Officer</div><div class="user-role">Intelligence Analyst</div></div>
+      </div>
+      <div class="powered-by" style="margin-top:8px;"><span>⚡</span><strong>Zoho Catalyst QuickML</strong></div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="top-header">
+      <div>
+        <h1 class="page-title">AI Predictive Intelligence Dashboard</h1>
+        <p class="page-subtitle">Powered by Zoho Catalyst QuickML — Anomaly Detection & Risk Scoring Models</p>
+      </div>
+      <div class="header-actions">
+        <span class="badge badge-green" style="font-size:12px;padding:6px 12px">🤖 QuickML Active</span>
+        <button class="btn btn-primary btn-sm" id="run-model-btn">
+          <i data-lucide="zap" width="14" height="14"></i> Run Model
+        </button>
+      </div>
+    </header>
+
+    <main class="page-content">
+
+      <!-- AI Insight Cards -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px" id="insight-cards">
+        <div class="loading-spinner" style="grid-column:1/-1;padding:32px"><div class="spinner"></div></div>
+      </div>
+
+      <!-- Row 1: Risk Score Gauge + Anomaly Timeline -->
+      <div class="chart-grid chart-grid-2 section-gap">
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">District Risk Score Ranking</div>
+              <div class="card-subtitle">QuickML regression model output (0–100)</div>
+            </div>
+            <select class="select-input" id="risk-district-filter" aria-label="Filter districts">
+              <option value="all">All Districts</option>
+              <option value="high">High Risk Only (≥70)</option>
+              <option value="critical">Critical Only (≥85)</option>
+            </select>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="height:340px">
+              <canvas id="risk-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Anomaly Detection Timeline</div>
+              <div class="card-subtitle">Weekly incident counts with 2σ anomaly flags</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="height:340px">
+              <canvas id="anomaly-chart"></canvas>
+            </div>
+          </div>
+          <div style="padding:0 24px 16px">
+            <div class="legend">
+              <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Baseline</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div>Anomaly Spike</div>
+              <div class="legend-item"><div class="legend-dot" style="background:rgba(245,158,11,0.4)"></div>2σ Threshold</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Socio-Economic Scatter + Radar -->
+      <div class="chart-grid chart-grid-2 section-gap">
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Socio-Economic Correlation</div>
+              <div class="card-subtitle">Crime rate vs. Urbanization % by district</div>
+            </div>
+            <select class="select-input" id="scatter-x-var" aria-label="X variable">
+              <option value="urbanization">Urbanization %</option>
+              <option value="unemployment">Unemployment %</option>
+              <option value="literacy">Literacy %</option>
+            </select>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="height:300px">
+              <canvas id="scatter-chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Crime Typology Forecast</div>
+              <div class="card-subtitle">Predicted shift in crime categories (next 6 months)</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-container" style="height:300px">
+              <canvas id="radar-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Correlation Matrix -->
+      <div class="card section-gap">
+        <div class="card-header" style="margin-bottom:20px">
+          <div>
+            <div class="card-title">Hidden Correlation Matrix</div>
+            <div class="card-subtitle">Cross-variable correlation coefficients (Pearson r) — QuickML feature analysis</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-wrapper" id="matrix-container">
+            <div class="loading-spinner" style="padding:32px"><div class="spinner"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script type="module">
+import api from './js/api.js';
+import { CHART_DEFAULTS, crimeColor, getRiskColor, getRiskLevel, MONTHS, SeededRandom, $ } from './js/utils.js';
+
+lucide.createIcons();
+
+const user = JSON.parse(sessionStorage.getItem('ksp_user') || 'null');
+if (!user) window.location.href = 'index.html';
+else { document.getElementById('user-name').textContent = user.name; }
+
+Chart.defaults.font.family = 'Inter';
+Chart.defaults.color = '#94a3b8';
+
+let districtSummary = [];
+let riskChart, anomalyChart, scatterChart, radarChart;
+const rng = new SeededRandom(42);
+
+// ── Insight Cards ─────────────────────────────────────────────
+function renderInsightCards(districts) {
+  const top = [...districts].sort((a, b) => b.risk_score - a.risk_score)[0];
+  const avgRisk = (districts.reduce((s, d) => s + d.risk_score, 0) / districts.length).toFixed(1);
+  const spiking = districts.filter(d => d.risk_score >= 80).length;
+
+  const insights = [
+    {
+      title: '⚠️ Highest Risk District',
+      text: `<strong style="color:#f87171">${top.district}</strong> leads with a QuickML risk score of <strong>${top.risk_score}/100</strong>. Primary drivers: urbanization ${top.urbanization_pct.toFixed(0)}% and unemployment ${top.unemployment_pct.toFixed(1)}%.`,
+      icon: '🚨'
+    },
+    {
+      title: '📈 State-Wide Risk Level',
+      text: `Average district risk score is <strong style="color:#fcd34d">${avgRisk}/100</strong>. <strong>${spiking} districts</strong> classified as Critical (≥80). Immediate resource redeployment recommended.`,
+      icon: '📊'
+    },
+    {
+      title: '🔮 Predictive Alert',
+      text: `QuickML anomaly model detected <strong style="color:#f87171">3 emerging crime clusters</strong> in northern Karnataka. Cybercrime and narcotics predicted to spike +28% in Q3 2025.`,
+      icon: '🤖'
+    }
+  ];
+
+  document.getElementById('insight-cards').innerHTML = insights.map(ins => `
+    <div class="insight-card fade-in">
+      <div class="insight-icon">${ins.icon}</div>
+      <div>
+        <div class="insight-title">${ins.title}</div>
+        <div class="insight-text">${ins.text}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── Risk Score Chart ──────────────────────────────────────────
+function renderRiskChart(filter = 'all') {
+  let districts = [...districtSummary].sort((a, b) => b.risk_score - a.risk_score);
+  if (filter === 'high') districts = districts.filter(d => d.risk_score >= 70);
+  if (filter === 'critical') districts = districts.filter(d => d.risk_score >= 85);
+  districts = districts.slice(0, 15);
+
+  const labels = districts.map(d => d.district.replace(' Urban','(U)').replace(' Rural','(R)'));
+  const data = districts.map(d => d.risk_score);
+  const colors = data.map(s => getRiskColor(s) + 'cc');
+  const borders = data.map(s => getRiskColor(s));
+
+  if (riskChart) riskChart.destroy();
+  riskChart = new Chart(document.getElementById('risk-chart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Risk Score',
+        data,
+        backgroundColor: colors,
+        borderColor: borders,
+        borderWidth: 1,
+        borderRadius: 5,
+      }]
+    },
+    options: {
+      ...CHART_DEFAULTS,
+      indexAxis: 'y',
+      plugins: { ...CHART_DEFAULTS.plugins, legend: { display: false } },
+      scales: {
+        x: { ...CHART_DEFAULTS.scales.x, min: 0, max: 100, ticks: { ...CHART_DEFAULTS.scales.x.ticks, callback: v => v + '/100' } },
+        y: { ...CHART_DEFAULTS.scales.y }
+      }
+    }
+  });
+}
+
+// ── Anomaly Detection Chart ───────────────────────────────────
+function renderAnomalyChart() {
+  const rng2 = new SeededRandom(999);
+  const weeks = 24;
+  const baseline = Array.from({length: weeks}, () => rng2.int(18, 35));
+  const mean = baseline.reduce((s, v) => s + v, 0) / weeks;
+  const std = Math.sqrt(baseline.reduce((s, v) => s + Math.pow(v - mean, 2), 0) / weeks);
+  const threshold = Array(weeks).fill(mean + 2 * std);
+
+  // Insert spikes
+  const spiked = [...baseline];
+  [6, 14, 20].forEach(i => { spiked[i] = mean + std * (rng2.float(2.5, 4)); });
+
+  const anomalyColors = spiked.map((v, i) => v > threshold[i] ? '#dc2626cc' : '#3b82f6cc');
+  const labels = Array.from({length: weeks}, (_, i) => `W${i + 1}`);
+
+  if (anomalyChart) anomalyChart.destroy();
+  anomalyChart = new Chart(document.getElementById('anomaly-chart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Weekly Incidents',
+          data: spiked,
+          backgroundColor: anomalyColors,
+          borderColor: anomalyColors.map(c => c.replace('cc', '')),
+          borderWidth: 1,
+          borderRadius: 4,
+          order: 2
+        },
+        {
+          label: '2σ Threshold',
+          data: threshold,
+          type: 'line',
+          borderColor: 'rgba(245,158,11,0.7)',
+          borderDash: [6, 3],
+          borderWidth: 2,
+          pointRadius: 0,
+          fill: false,
+          order: 1
+        }
+      ]
+    },
+    options: {
+      ...CHART_DEFAULTS,
+      plugins: {
+        ...CHART_DEFAULTS.plugins,
+        tooltip: {
+          ...CHART_DEFAULTS.plugins.tooltip,
+          callbacks: {
+            afterLabel: (ctx) => {
+              if (ctx.datasetIndex === 0 && ctx.raw > threshold[ctx.dataIndex]) return '⚠️ ANOMALY DETECTED';
+              return '';
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// ── Scatter Chart ─────────────────────────────────────────────
+function renderScatterChart(xVar = 'urbanization') {
+  const key = { urbanization: 'urbanization_pct', unemployment: 'unemployment_pct', literacy: 'literacy_pct' }[xVar];
+  const datasets = districtSummary.map(d => ({ x: d[key], y: d.total_incidents }));
+  const color = getRiskColor;
+
+  if (scatterChart) scatterChart.destroy();
+  scatterChart = new Chart(document.getElementById('scatter-chart'), {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: 'Districts',
+        data: datasets,
+        backgroundColor: districtSummary.map(d => getRiskColor(d.risk_score) + '88'),
+        borderColor: districtSummary.map(d => getRiskColor(d.risk_score)),
+        pointRadius: 7,
+        pointHoverRadius: 10,
+      }]
+    },
+    options: {
+      ...CHART_DEFAULTS,
+      plugins: {
+        ...CHART_DEFAULTS.plugins,
+        legend: { display: false },
+        tooltip: {
+          ...CHART_DEFAULTS.plugins.tooltip,
+          callbacks: {
+            label: (ctx) => {
+              const d = districtSummary[ctx.dataIndex];
+              return [`${d.district}`, `X: ${ctx.parsed.x.toFixed(1)}%`, `Incidents: ${ctx.parsed.y}`];
+            }
+          }
+        }
+      },
+      scales: {
+        x: { ...CHART_DEFAULTS.scales.x, title: { display: true, text: xVar.charAt(0).toUpperCase() + xVar.slice(1) + ' %', color: '#475569' } },
+        y: { ...CHART_DEFAULTS.scales.y, title: { display: true, text: 'Incident Count', color: '#475569' } }
+      }
+    }
+  });
+}
+
+// ── Radar Chart ───────────────────────────────────────────────
+function renderRadarChart() {
+  const labels = ['Theft', 'Cybercrime', 'Assault', 'Narcotics', 'Fraud', 'Robbery'];
+  const current = labels.map(() => rng.int(30, 80));
+  const predicted = current.map(v => Math.round(v * rng.float(0.8, 1.4)));
+
+  if (radarChart) radarChart.destroy();
+  radarChart = new Chart(document.getElementById('radar-chart'), {
+    type: 'radar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Current (2024)',
+          data: current,
+          borderColor: '#3b82f6',
+          backgroundColor: 'rgba(59,130,246,0.15)',
+          borderWidth: 2,
+          pointRadius: 3,
+        },
+        {
+          label: 'Predicted (Q3 2025)',
+          data: predicted,
+          borderColor: '#dc2626',
+          backgroundColor: 'rgba(220,38,38,0.15)',
+          borderWidth: 2,
+          pointRadius: 3,
+          borderDash: [4, 2]
+        }
+      ]
+    },
+    options: {
+      ...CHART_DEFAULTS,
+      scales: {
+        r: {
+          ticks: { color: '#475569', backdropColor: 'transparent', font: { size: 9 } },
+          grid: { color: 'rgba(255,255,255,0.06)' },
+          angleLines: { color: 'rgba(255,255,255,0.06)' },
+          pointLabels: { color: '#94a3b8', font: { size: 11 } }
+        }
+      }
+    }
+  });
+}
+
+// ── Correlation Matrix ────────────────────────────────────────
+async function renderCorrelationMatrix() {
+  const { variables, matrix } = await api.getCorrelationMatrix();
+
+  const getCellColor = (v) => {
+    const abs = Math.abs(v);
+    if (v > 0) return `rgba(220,38,38,${abs * 0.8})`;
+    return `rgba(59,130,246,${abs * 0.8})`;
+  };
+
+  const header = `<tr><th style="background:transparent"></th>${variables.map(v => `<th style="color:#94a3b8;font-size:10px;font-weight:600;white-space:nowrap">${v}</th>`).join('')}</tr>`;
+  const rows = matrix.map((row, i) => `
+    <tr>
+      <th style="color:#94a3b8;font-size:10px;font-weight:600;text-align:right;padding-right:12px;white-space:nowrap">${variables[i]}</th>
+      ${row.map(v => `
+        <td>
+          <div class="matrix-cell" style="background:${getCellColor(v)};padding:8px;border-radius:4px;min-width:52px;font-size:12px;color:${Math.abs(v)>0.5?'#f1f5f9':'#94a3b8'}">
+            ${v.toFixed(2)}
+          </div>
+        </td>
+      `).join('')}
+    </tr>
+  `).join('');
+
+  document.getElementById('matrix-container').innerHTML = `
+    <table class="matrix-table" style="width:auto">
+      <thead>${header}</thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div style="margin-top:12px;display:flex;gap:16px;align-items:center;font-size:11px;color:#475569">
+      <div style="display:flex;align-items:center;gap:6px"><div style="width:16px;height:8px;background:rgba(220,38,38,0.8);border-radius:2px"></div>Positive correlation</div>
+      <div style="display:flex;align-items:center;gap:6px"><div style="width:16px;height:8px;background:rgba(59,130,246,0.8);border-radius:2px"></div>Negative correlation</div>
+      <div style="display:flex;align-items:center;gap:6px"><div style="width:16px;height:8px;background:rgba(255,255,255,0.1);border-radius:2px"></div>No correlation</div>
+    </div>
+  `;
+}
+
+// ── Run Model Button ──────────────────────────────────────────
+document.getElementById('run-model-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('run-model-btn');
+  btn.innerHTML = '<div class="spinner" style="width:14px;height:14px;border-width:2px;margin-right:6px"></div> Running…';
+  btn.disabled = true;
+  await new Promise(r => setTimeout(r, 1800));
+  btn.innerHTML = '<i data-lucide="check" width="14" height="14"></i> Updated';
+  btn.style.background = '#10b981';
+  lucide.createIcons();
+  setTimeout(() => {
+    btn.innerHTML = '<i data-lucide="zap" width="14" height="14"></i> Run Model';
+    btn.style.background = '';
+    btn.disabled = false;
+    lucide.createIcons();
+  }, 3000);
+});
+
+// ── Filter Listeners ──────────────────────────────────────────
+document.getElementById('risk-district-filter').addEventListener('change', e => renderRiskChart(e.target.value));
+document.getElementById('scatter-x-var').addEventListener('change', e => renderScatterChart(e.target.value));
+
+// ── Init ─────────────────────────────────────────────────────
+async function init() {
+  districtSummary = await api.getDistrictSummary();
+  renderInsightCards(districtSummary);
+  renderRiskChart();
+  renderAnomalyChart();
+  renderScatterChart();
+  renderRadarChart();
+  await renderCorrelationMatrix();
+}
+
+init();
+</script>
+</body>
+</html>

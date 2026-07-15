@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Criminal Network Analysis — KSP Crime Intelligence Platform</title>
+  <meta name="description" content="D3.js force-directed criminal network graph revealing suspect associations, repeat offenders and MO clustering for Karnataka State Police." />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .network-wrap {
+      position: relative;
+      background: radial-gradient(ellipse at center, rgba(59,130,246,0.04) 0%, transparent 70%);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    #network-svg { display: block; cursor: grab; }
+    #network-svg:active { cursor: grabbing; }
+    .node-label { font-size: 9px; fill: #94a3b8; pointer-events: none; }
+    .link-line { stroke-opacity: 0.35; }
+    .link-line:hover { stroke-opacity: 0.8; }
+    .node-circle { cursor: pointer; transition: stroke-width 0.15s; }
+    .node-circle:hover { stroke-width: 4; }
+    .type-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  </style>
+</head>
+<body>
+<div class="app-layout">
+
+  <aside class="sidebar" role="navigation" aria-label="Main Navigation">
+    <a class="sidebar-logo" href="dashboard.html">
+      <div class="sidebar-logo-icon">🔰</div>
+      <div class="sidebar-logo-text">
+        <div class="sidebar-logo-title">KSP Intelligence</div>
+        <div class="sidebar-logo-sub">SCRB Platform</div>
+      </div>
+    </a>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Analytics</div>
+      <a class="nav-item" href="dashboard.html"><i data-lucide="layout-dashboard" width="18" height="18"></i><span>Command Dashboard</span></a>
+      <a class="nav-item" href="geospatial.html"><i data-lucide="map" width="18" height="18"></i><span>Geospatial Hotspots</span></a>
+      <a class="nav-item active" href="network.html"><i data-lucide="share-2" width="18" height="18"></i><span>Criminal Network</span></a>
+      <div class="nav-section-label">Intelligence</div>
+      <a class="nav-item" href="predictive.html"><i data-lucide="brain" width="18" height="18"></i><span>AI Predictive</span></a>
+      <a class="nav-item" href="trends.html"><i data-lucide="trending-up" width="18" height="18"></i><span>Trends & Patterns</span></a>
+      <a class="nav-item" href="reports.html"><i data-lucide="file-text" width="18" height="18"></i><span>Intel Reports</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">SC</div>
+        <div><div class="user-name" id="user-name">SCRB Officer</div><div class="user-role">Intelligence Analyst</div></div>
+      </div>
+      <div class="powered-by" style="margin-top:8px;"><span>⚡</span><strong>Zoho Catalyst</strong></div>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="top-header">
+      <div>
+        <h1 class="page-title">Criminal Network & Link Analysis</h1>
+        <p class="page-subtitle">D3 force-directed graph • Drag to explore • Click nodes for profiles</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-ghost btn-sm" id="reset-graph-btn">
+          <i data-lucide="maximize-2" width="14" height="14"></i> Reset
+        </button>
+        <button class="btn btn-ghost btn-sm" id="pause-btn">
+          <i data-lucide="pause" width="14" height="14"></i> Pause
+        </button>
+      </div>
+    </header>
+
+    <main class="page-content">
+
+      <!-- Filter Bar -->
+      <div class="filter-bar" style="margin-bottom:16px">
+        <input class="search-input" id="net-search" placeholder="Search offender name…" style="min-width:200px" aria-label="Search offender" />
+        <span style="font-size:12px;color:#475569;font-weight:600;margin:0 4px;">MO FILTER:</span>
+        <button class="filter-chip active" data-mo="all">All</button>
+        <button class="filter-chip" data-mo="Snatch & Flee">Snatch & Flee</button>
+        <button class="filter-chip" data-mo="Online Scam">Online Scam</button>
+        <button class="filter-chip" data-mo="Drug Peddling">Drug Peddling</button>
+        <button class="filter-chip" data-mo="Gang Attack">Gang Attack</button>
+        <button class="filter-chip" data-mo="Vehicle Theft">Vehicle Theft</button>
+        <button class="filter-chip" data-mo="Organized Network">Organized Network</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start">
+
+        <!-- Network Graph -->
+        <div class="card" style="overflow:hidden">
+          <div class="card-header" style="padding-bottom:16px">
+            <div>
+              <div class="card-title">Offender Association Graph</div>
+              <div class="card-subtitle" id="node-count">Loading network from Catalyst DataStore…</div>
+            </div>
+            <div class="legend" style="gap:16px">
+              <div class="legend-item"><span class="type-dot" style="background:#dc2626"></span> Suspect</div>
+              <div class="legend-item"><span class="type-dot" style="background:#3b82f6"></span> Victim</div>
+              <div class="legend-item"><span class="type-dot" style="background:#f59e0b"></span> Location</div>
+              <div class="legend-item"><span class="type-dot" style="background:#8b5cf6"></span> High-risk</div>
+            </div>
+          </div>
+          <div class="network-wrap" id="network-wrap">
+            <svg id="network-svg"></svg>
+          </div>
+        </div>
+
+        <!-- Offender Profile Panel -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+
+          <div class="info-panel" id="profile-panel">
+            <div class="info-panel-header">
+              <div style="font-size:12px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px">Offender Profile</div>
+              <div id="profile-avatar-wrap">
+                <div class="empty-state" style="padding:24px 0">
+                  <i data-lucide="user" width="32" height="32" style="opacity:0.3"></i>
+                  <span style="font-size:12px">Click any node to view profile</span>
+                </div>
+              </div>
+            </div>
+            <div class="info-panel-body" id="profile-body"></div>
+          </div>
+
+          <!-- Top Repeat Offenders -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">🔁 Repeat Offenders</div>
+              <div class="card-subtitle">Highest recidivism rate</div>
+            </div>
+            <div class="card-body" id="repeat-list">
+              <div class="loading-spinner" style="padding:20px"><div class="spinner"></div></div>
+            </div>
+          </div>
+
+          <!-- Network Stats -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Network Statistics</div>
+            </div>
+            <div class="card-body">
+              <div class="stat-row"><span class="stat-key">Total Nodes</span><span class="stat-val" id="stat-nodes">—</span></div>
+              <div class="stat-row"><span class="stat-key">Associations</span><span class="stat-val" id="stat-edges">—</span></div>
+              <div class="stat-row"><span class="stat-key">Active Suspects</span><span class="stat-val" id="stat-active">—</span></div>
+              <div class="stat-row"><span class="stat-key">Avg Connections</span><span class="stat-val" id="stat-avg">—</span></div>
+              <div class="stat-row"><span class="stat-key">Organized Networks</span><span class="stat-val" id="stat-orgs">—</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- D3 Tooltip -->
+<div class="tooltip" id="net-tooltip" style="display:none;position:fixed"></div>
+
+<script type="module">
+import api from './js/api.js';
+import { getRiskColor, getRiskLevel, debounce, crimeColor, $ } from './js/utils.js';
+
+lucide.createIcons();
+
+const user = JSON.parse(sessionStorage.getItem('ksp_user') || 'null');
+if (!user) window.location.href = 'index.html';
+else { document.getElementById('user-name').textContent = user.name; }
+
+const tooltip = document.getElementById('net-tooltip');
+let simulation, allNodes = [], allLinks = [], filteredNodes = [], filteredLinks = [];
+let svgEl, gMain;
+let isPaused = false;
+
+// ── Load Network ──────────────────────────────────────────────
+async function initNetwork() {
+  const data = await api.getNetwork();
+  allNodes = data.nodes.slice(0, 80); // limit for performance
+  allLinks = data.links.filter(l =>
+    allNodes.find(n => n.id === l.source) && allNodes.find(n => n.id === l.target)
+  );
+
+  document.getElementById('stat-nodes').textContent = allNodes.length;
+  document.getElementById('stat-edges').textContent = allLinks.length;
+  document.getElementById('stat-active').textContent = allNodes.filter(n => n.active).length;
+  document.getElementById('stat-avg').textContent = (allLinks.length * 2 / allNodes.length).toFixed(1);
+  document.getElementById('stat-orgs').textContent = allNodes.filter(n => n.mo && n.mo.includes('Organized Network')).length;
+
+  renderRepeatOffenders();
+  renderGraph(allNodes, allLinks);
+}
+
+// ── Render Repeat Offenders ───────────────────────────────────
+function renderRepeatOffenders() {
+  const top = [...allNodes].sort((a, b) => b.repeat_count - a.repeat_count).slice(0, 5);
+  document.getElementById('repeat-list').innerHTML = top.map((o, i) => `
+    <div class="district-stat-item" style="cursor:pointer" onclick="selectNode('${o.id}')">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:22px;height:22px;border-radius:50%;background:rgba(220,38,38,0.2);font-size:10px;font-weight:700;color:#dc2626;display:flex;align-items:center;justify-content:center">${i+1}</div>
+        <div>
+          <div style="font-size:13px;font-weight:600">${o.name}</div>
+          <div style="font-size:11px;color:#475569">${o.district}</div>
+        </div>
+      </div>
+      <span class="badge badge-red">${o.repeat_count}x</span>
+    </div>
+  `).join('');
+}
+
+// ── Render D3 Graph ───────────────────────────────────────────
+function renderGraph(nodes, links) {
+  const wrap = document.getElementById('network-wrap');
+  const W = wrap.clientWidth || 700;
+  const H = 540;
+
+  d3.select('#network-svg').selectAll('*').remove();
+  svgEl = d3.select('#network-svg').attr('width', W).attr('height', H);
+
+  document.getElementById('node-count').textContent = `${nodes.length} suspects · ${links.length} associations`;
+
+  // Zoom
+  const zoom = d3.zoom().scaleExtent([0.3, 3]).on('zoom', e => gMain.attr('transform', e.transform));
+  svgEl.call(zoom);
+  gMain = svgEl.append('g');
+
+  // Arrow defs
+  svgEl.append('defs').append('marker')
+    .attr('id', 'arrow').attr('viewBox', '0 -5 10 10').attr('refX', 20).attr('refY', 0)
+    .attr('markerWidth', 6).attr('markerHeight', 6).attr('orient', 'auto')
+    .append('path').attr('d', 'M0,-5L10,0L0,5').attr('fill', 'rgba(255,255,255,0.2)');
+
+  // Simulation
+  simulation = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(links).id(d => d.id).distance(80).strength(0.4))
+    .force('charge', d3.forceManyBody().strength(-180))
+    .force('center', d3.forceCenter(W / 2, H / 2))
+    .force('collision', d3.forceCollide(18));
+
+  // Links
+  const link = gMain.append('g').selectAll('line')
+    .data(links).join('line')
+    .attr('class', 'link-line')
+    .attr('stroke', d => d.type === 'co-accused' ? '#dc2626' : d.type === 'associate' ? '#f59e0b' : '#3b82f6')
+    .attr('stroke-width', d => Math.max(1, d.strength * 3))
+    .attr('stroke-opacity', 0.35)
+    .attr('marker-end', 'url(#arrow)');
+
+  // Node Groups
+  const node = gMain.append('g').selectAll('g')
+    .data(nodes).join('g')
+    .call(d3.drag()
+      .on('start', (event, d) => { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
+      .on('end', (event, d) => { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; })
+    );
+
+  node.append('circle')
+    .attr('class', 'node-circle')
+    .attr('r', d => d.repeat_count > 5 ? 14 : d.repeat_count > 2 ? 11 : 8)
+    .attr('fill', d => {
+      if (d.repeat_count >= 8) return '#991b1b';
+      if (d.active) return '#dc2626';
+      return '#3b82f6';
+    })
+    .attr('stroke', d => d.repeat_count >= 5 ? '#fbbf24' : 'rgba(255,255,255,0.2)')
+    .attr('stroke-width', 2)
+    .on('mouseover', (event, d) => {
+      tooltip.style.display = 'block';
+      tooltip.innerHTML = `
+        <div class="tooltip-title">${d.name}</div>
+        <div class="tooltip-row"><span>ID</span><strong style="color:#f1f5f9;font-family:monospace">${d.id}</strong></div>
+        <div class="tooltip-row"><span>District</span><span>${d.district}</span></div>
+        <div class="tooltip-row"><span>Prior offenses</span><strong style="color:#f87171">${d.repeat_count}</strong></div>
+        <div class="tooltip-row"><span>Status</span><span style="color:${d.active?'#f87171':'#34d399'}">${d.active?'ACTIVE':'Inactive'}</span></div>
+      `;
+    })
+    .on('mousemove', event => {
+      tooltip.style.left = (event.clientX + 14) + 'px';
+      tooltip.style.top  = (event.clientY - 10) + 'px';
+    })
+    .on('mouseout', () => { tooltip.style.display = 'none'; })
+    .on('click', (event, d) => { event.stopPropagation(); showProfile(d); });
+
+  // Labels
+  node.append('text')
+    .attr('class', 'node-label')
+    .attr('text-anchor', 'middle')
+    .attr('dy', 22)
+    .text(d => d.name.split(' ')[0]);
+
+  simulation.on('tick', () => {
+    link
+      .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+      .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+    node.attr('transform', d => `translate(${d.x},${d.y})`);
+  });
+
+  // Click background to deselect
+  svgEl.on('click', () => hideProfile());
+}
+
+// ── Show Profile Panel ────────────────────────────────────────
+function showProfile(d) {
+  document.getElementById('profile-avatar-wrap').innerHTML = `
+    <div class="profile-avatar">${d.name.split(' ').map(n=>n[0]).join('').slice(0,2)}</div>
+    <div class="profile-name">${d.name}</div>
+    <div class="profile-id">${d.id} · Age ${d.age}</div>
+    <div style="margin-top:8px">
+      <span class="badge ${d.active ? 'badge-red' : 'badge-gray'}">${d.active ? '🔴 ACTIVE' : 'Inactive'}</span>
+    </div>
+  `;
+
+  document.getElementById('profile-body').innerHTML = `
+    <div class="profile-stat-row">
+      <div class="profile-stat"><div class="profile-stat-val" style="color:#dc2626">${d.repeat_count}</div><div class="profile-stat-key">Prior Offenses</div></div>
+      <div class="profile-stat"><div class="profile-stat-val">${d.district.split(' ')[0]}</div><div class="profile-stat-key">Home District</div></div>
+    </div>
+    <div style="margin-top:14px">
+      <div style="font-size:11px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px">Modus Operandi</div>
+      <div class="mo-tags">${(d.mo || []).map(m => `<span class="mo-tag">${m}</span>`).join('')}</div>
+    </div>
+    <div style="margin-top:14px">
+      <div style="font-size:11px;font-weight:600;color:#475569;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px">Associations</div>
+      ${allLinks.filter(l => (l.source.id || l.source) === d.id || (l.target.id || l.target) === d.id)
+        .slice(0, 4).map(l => {
+          const peer = (l.source.id || l.source) === d.id ? (l.target.name || l.target) : (l.source.name || l.source);
+          return `<div class="district-stat-item"><span style="font-size:12px">${peer}</span><span class="badge badge-purple">${l.type}</span></div>`;
+        }).join('') || '<div style="font-size:12px;color:#475569">No associations recorded</div>'}
+    </div>
+  `;
+}
+
+function hideProfile() {
+  document.getElementById('profile-avatar-wrap').innerHTML = `
+    <div class="empty-state" style="padding:24px 0">
+      <i data-lucide="user" width="32" height="32" style="opacity:0.3"></i>
+      <span style="font-size:12px">Click any node to view profile</span>
+    </div>
+  `;
+  document.getElementById('profile-body').innerHTML = '';
+  lucide.createIcons();
+}
+
+// Expose for repeat list click
+window.selectNode = (id) => {
+  const node = allNodes.find(n => n.id === id);
+  if (node) showProfile(node);
+};
+
+// ── Search ────────────────────────────────────────────────────
+document.getElementById('net-search').addEventListener('input', debounce(e => {
+  const s = e.target.value.toLowerCase();
+  if (!s) { renderGraph(allNodes, allLinks); return; }
+  const filtered = allNodes.filter(n => n.name.toLowerCase().includes(s));
+  const ids = new Set(filtered.map(n => n.id));
+  const filteredLinks = allLinks.filter(l => ids.has(l.source.id || l.source) && ids.has(l.target.id || l.target));
+  renderGraph(filtered, filteredLinks);
+}, 300));
+
+// ── MO Filter ─────────────────────────────────────────────────
+document.querySelectorAll('[data-mo]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-mo]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const mo = btn.dataset.mo;
+    if (mo === 'all') { renderGraph(allNodes, allLinks); return; }
+    const filtered = allNodes.filter(n => n.mo && n.mo.includes(mo));
+    const ids = new Set(filtered.map(n => n.id));
+    const filteredLinks = allLinks.filter(l => ids.has(l.source.id || l.source) && ids.has(l.target.id || l.target));
+    renderGraph(filtered, filteredLinks);
+  });
+});
+
+// ── Pause/Resume ──────────────────────────────────────────────
+document.getElementById('pause-btn').addEventListener('click', function() {
+  isPaused = !isPaused;
+  if (isPaused) { simulation && simulation.stop(); this.innerHTML = '<i data-lucide="play" width="14" height="14"></i> Resume'; }
+  else { simulation && simulation.restart(); this.innerHTML = '<i data-lucide="pause" width="14" height="14"></i> Pause'; }
+  lucide.createIcons();
+});
+
+// ── Reset ─────────────────────────────────────────────────────
+document.getElementById('reset-graph-btn').addEventListener('click', () => {
+  renderGraph(allNodes, allLinks);
+});
+
+initNetwork();
+</script>
+</body>
+</html>

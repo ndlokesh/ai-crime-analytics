@@ -1,0 +1,15 @@
+{
+  "functions": {
+    "targets": [
+      "alerts-api",
+      "analytics-api",
+      "incidents-api",
+      "offenders-api",
+      "cron-alert-refresh"
+    ]
+  },
+  "client": {
+    "stack": "HTML",
+    "public_path": "client/public"
+  }
+}

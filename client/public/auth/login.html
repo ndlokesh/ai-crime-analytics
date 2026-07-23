@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KSP Crime Intelligence Platform — Login</title>
+  <meta name="description" content="Karnataka State Police Crime Intelligence & Analytical Platform — Secure Officer Login" />
+  <script src="https://static.zohocdn.com/catalyst/sdk/js/4.6.2/catalystWebSDK.js"></script>
+  <script src="/__catalyst/sdk/init.js"></script>
+</head>
+<body>
+
+  <!-- Zoho Catalyst renders the login form inside this div -->
+  <div id="loginDivElementId"></div>
+
+  <script>
+    const config = {};
+    /* config is optional
+    {
+      css_url : "/css/embeddediframe.css", // Provide your custom CSS file path here. If no path is provided default css will be rendered
+      service_url : "/app/index.html", // This value is optional. You can provide your redirect URL here.
+      is_customize_forgot_password : true, // Default value is false. Keep this value as true, if you wish to customize Forgot Password page
+      forgot_password_id : "forgotPasswordDivElementId", // The Element id in which forgot password page should be loaded,If no value is provided, it will be rendered in the "loginDivElementId" by default
+      forgot_password_css_url : "/css/forgotPwd.css" // Provide your custom CSS file path for the Forgot Password page.If no path is provided,then the default CSS will be rendered.
+    } */
+    catalyst.auth.signIn("loginDivElementId", config);
+  </script>
+
+</body>
+</html>

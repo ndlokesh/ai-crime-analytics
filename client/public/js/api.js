@@ -665,6 +665,7 @@ export const api = {
     const alerts = genAlerts(distSummary);
     return {
       total_cases:          _cases.length,
+      total_incidents:      _cases.length,
       fir_count:            _cases.filter(c => c.CaseCategoryName === 'FIR' || c.CrimeNo.startsWith('KSP')).length,
       under_investigation:  _cases.filter(c => c.CaseStatusName === 'Under Investigation').length,
       heinous_cases:        _cases.filter(c => ['Heinous', 'Critical', 'High'].includes(c.GravityOffenceName)).length,

@@ -180,7 +180,7 @@ let selectedType = 'Theft';
 // ── Z-Score Spike Detector ────────────────────────────────────
 async function renderZScoreChart(type) {
   if (!Object.keys(weeklyData).length) weeklyData = await api.getWeeklyZScores();
-  const values = weeklyData[type] || weeklyData['Theft'];
+  const values = weeklyData[type] || weeklyData['Crimes Against Property'] || Object.values(weeklyData)[0] || Array(52).fill(0);
   const weeks = values.length;
   const zScores = zScore(values);
   const mean = values.reduce((s, v) => s + v, 0) / weeks;

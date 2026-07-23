@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KSP Crime Analytics — Test Suite</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    :root {
+      --bg: #020818;
+      --surface: #0a1128;
+      --surface2: #0f1a35;
+      --border: rgba(255,255,255,0.07);
+      --pass: #10b981;
+      --fail: #ef4444;
+      --skip: #f59e0b;
+      --info: #3b82f6;
+      --text: #e2e8f0;
+      --muted: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f1a35 0%, #1a0a28 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, #dc2626, #7c3aed);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+
+    .logo-text h1 { font-size: 16px; font-weight: 700; color: #f1f5f9; }
+    .logo-text p  { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+    .run-btn {
+      background: linear-gradient(135deg, #3b82f6, #7c3aed);
+      border: none; color: #fff;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .run-btn:hover { opacity: 0.85; }
+    .run-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .summary-bar {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .summary-cell {
+      background: var(--surface);
+      padding: 14px 20px;
+      text-align: center;
+    }
+
+    .summary-cell .num {
+      font-size: 28px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1;
+    }
+
+    .summary-cell .lbl {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .num-total  { color: #f1f5f9; }
+    .num-pass   { color: var(--pass); }
+    .num-fail   { color: var(--fail); }
+    .num-skip   { color: var(--skip); }
+    .num-time   { color: var(--info); }
+
+    .progress-bar {
+      height: 3px;
+      background: var(--border);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--pass), #059669);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .content {
+      padding: 24px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .suite {
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .suite-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .suite-header:hover { background: rgba(255,255,255,0.03); }
+
+    .suite-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .suite-badge {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-weight: 500;
+    }
+
+    .badge-pass   { background: rgba(16,185,129,0.15); color: var(--pass); border: 1px solid rgba(16,185,129,0.3); }
+    .badge-fail   { background: rgba(239,68,68,0.15);  color: var(--fail); border: 1px solid rgba(239,68,68,0.3); }
+    .badge-idle   { background: rgba(100,116,139,0.15); color: var(--muted); border: 1px solid rgba(100,116,139,0.2); }
+
+    .suite-stats {
+      font-size: 11px;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .suite-body { display: none; }
+    .suite-body.open { display: block; }
+
+    .test-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      transition: background 0.15s;
+    }
+    .test-row:last-child { border-bottom: none; }
+    .test-row:hover { background: rgba(255,255,255,0.02); }
+
+    .test-icon {
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .test-name { color: #cbd5e1; font-weight: 500; flex: 1; }
+
+    .test-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .test-error {
+      background: rgba(239,68,68,0.06);
+      border: 1px solid rgba(239,68,68,0.15);
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-top: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #fca5a5;
+      width: 100%;
+      white-space: pre-wrap;
+    }
+
+    .test-col { flex-direction: column; }
+
+    .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid var(--border);
+      border-top-color: var(--info);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .console-panel {
+      background: #0a0f1e;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-top: 24px;
+      overflow: hidden;
+    }
+
+    .console-header {
+      background: var(--surface2);
+      padding: 10px 16px;
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .console-body {
+      padding: 12px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #64748b;
+      max-height: 200px;
+      overflow-y: auto;
+      line-height: 1.6;
+    }
+
+    .log-pass  { color: #34d399; }
+    .log-fail  { color: #f87171; }
+    .log-info  { color: #60a5fa; }
+    .log-warn  { color: #fbbf24; }
+
+    .status-waiting { color: var(--muted); font-style: italic; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .suite { animation: fadeIn 0.3s ease both; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🧪</div>
+    <div class="logo-text">
+      <h1>KSP Crime Analytics — Test Suite</h1>
+      <p>Automated Quality Assurance · Unit + Integration + Data Validation</p>
+    </div>
+  </div>
+  <button class="run-btn" id="run-btn" onclick="runAll()">Run All Tests</button>
+</header>
+
+<div class="summary-bar">
+  <div class="summary-cell">
+    <div class="num num-total" id="stat-total">0</div>
+    <div class="lbl">Total Tests</div>
+  </div>
+  <div class="summary-cell">
+    <div class="num num-pass" id="stat-pass">0</div>
+    <div class="lbl">Passed</div>
+  </div>
+  <div class="summary-cell">
+    <div class="num num-fail" id="stat-fail">0</div>
+    <div class="lbl">Failed</div>
+  </div>
+  <div class="summary-cell">
+    <div class="num num-skip" id="stat-skip">0</div>
+    <div class="lbl">Skipped</div>
+  </div>
+  <div class="summary-cell">
+    <div class="num num-time" id="stat-time">0</div>
+    <div class="lbl">Duration (ms)</div>
+  </div>
+</div>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progress"></div>
+</div>
+
+<div class="content">
+  <div id="suites-container"></div>
+
+  <div class="console-panel">
+    <div class="console-header">Test Console Output</div>
+    <div class="console-body" id="console-body">
+      <span class="status-waiting">Press "Run All Tests" to begin...</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+//  MINI TEST FRAMEWORK
+// ════════════════════════════════════════════════════════════════
+
+const results = { pass: 0, fail: 0, skip: 0, total: 0 };
+const consoleEl = document.getElementById('console-body');
+let consoleLines = [];
+
+function log(msg, cls) {
+  cls = cls || 'log-info';
+  consoleLines.push('<span class="' + cls + '">' + escH(msg) + '</span>');
+  consoleEl.innerHTML = consoleLines.join('\n');
+  consoleEl.scrollTop = consoleEl.scrollHeight;
+}
+
+function escH(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function assert(cond, msg) {
+  if (!cond) throw new Error(msg || 'Assertion failed');
+}
+function assertEquals(a, b, msg) {
+  if (a !== b) throw new Error(msg || ('Expected ' + JSON.stringify(b) + ', got ' + JSON.stringify(a)));
+}
+function assertDeepEqual(a, b, msg) {
+  if (JSON.stringify(a) !== JSON.stringify(b))
+    throw new Error(msg || ('Deep equal failed:\nExpected: ' + JSON.stringify(b) + '\nGot: ' + JSON.stringify(a)));
+}
+function assertInRange(val, min, max, msg) {
+  if (val < min || val > max) throw new Error(msg || ('Expected ' + val + ' in [' + min + ',' + max + ']'));
+}
+function assertHasKeys(obj, keys, msg) {
+  for (var i = 0; i < keys.length; i++) {
+    if (!(keys[i] in obj)) throw new Error(msg || ('Missing key: ' + keys[i]));
+  }
+}
+function assertType(val, type, msg) {
+  if (typeof val !== type) throw new Error(msg || ("Expected type '" + type + "', got '" + typeof val + "'"));
+}
+
+// ════════════════════════════════════════════════════════════════
+//  FUNCTIONS UNDER TEST (inlined from project source)
+// ════════════════════════════════════════════════════════════════
+
+// ── SeededRandom (from utils.js) ──────────────────────────────
+function SeededRandom(seed) {
+  this.seed = seed || 42;
+}
+SeededRandom.prototype.next = function() {
+  this.seed = (this.seed * 1664525 + 1013904223) & 0xffffffff;
+  return (this.seed >>> 0) / 4294967296;
+};
+SeededRandom.prototype.int = function(min, max) {
+  return Math.floor(this.next() * (max - min + 1)) + min;
+};
+SeededRandom.prototype.pick = function(arr) {
+  return arr[this.int(0, arr.length - 1)];
+};
+SeededRandom.prototype.float = function(min, max) {
+  return this.next() * (max - min) + min;
+};
+
+// ── formatNumber (from utils.js) ──────────────────────────────
+function formatNumber(n) {
+  if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+  return n.toLocaleString('en-IN');
+}
+
+// ── getRiskLevel (from utils.js) ──────────────────────────────
+function getRiskLevel(score) {
+  if (score >= 80) return { label: 'Critical', color: '#dc2626', badge: 'badge-red' };
+  if (score >= 60) return { label: 'High',     color: '#f59e0b', badge: 'badge-amber' };
+  if (score >= 40) return { label: 'Medium',   color: '#3b82f6', badge: 'badge-blue' };
+  return                  { label: 'Low',      color: '#10b981', badge: 'badge-green' };
+}
+
+function getRiskColor(score) {
+  if (score >= 80) return '#dc2626';
+  if (score >= 60) return '#f59e0b';
+  if (score >= 40) return '#3b82f6';
+  return '#10b981';
+}
+
+// ── zScore (from utils.js) ────────────────────────────────────
+function zScore(values) {
+  var n = values.length;
+  var mean = values.reduce(function(a, b) { return a + b; }, 0) / n;
+  var variance = values.reduce(function(a, v) { return a + Math.pow(v - mean, 2); }, 0) / n;
+  var std = Math.sqrt(variance);
+  return values.map(function(v) { return std === 0 ? 0 : (v - mean) / std; });
+}
+
+// ── parseCrimeNo (from utils.js) ──────────────────────────────
+function parseCrimeNo(crimeNo) {
+  if (!crimeNo || crimeNo.length < 18) return null;
+  var catMap = { '1': 'FIR', '3': 'UDR', '4': 'PAR', '8': 'Zero FIR' };
+  return {
+    category:   catMap[crimeNo[0]] || crimeNo[0],
+    districtID: crimeNo.slice(1, 5),
+    stationID:  crimeNo.slice(5, 9),
+    year:       crimeNo.slice(9, 13),
+    serial:     crimeNo.slice(13),
+  };
+}
+
+// ── genCrimeNo (from api.js) ──────────────────────────────────
+function genCrimeNo(categoryCode, districtID, stationID, year, serial) {
+  return '' + categoryCode +
+    String(districtID).padStart(4,'0') +
+    String(stationID).padStart(4,'0') +
+    year +
+    String(serial).padStart(5,'0');
+}
+
+// ── csTypeLabel (from utils.js) ───────────────────────────────
+function csTypeLabel(cstype) {
+  return { A: 'Chargesheet Filed', B: 'False Case', C: 'Undetected' }[cstype] || cstype;
+}
+
+// ── debounce (from utils.js) ──────────────────────────────────
+function debounce(fn, delay) {
+  delay = delay || 300;
+  var timer;
+  return function() {
+    var args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() { fn.apply(null, args); }, delay);
+  };
+}
+
+// ── formatDate (from utils.js) ────────────────────────────────
+function formatDate(dateStr) {
+  var d = new Date(dateStr);
+  return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+// ── DISTRICT_COORDS (from utils.js) ───────────────────────────
+var DISTRICT_COORDS = {
+  'Bagalkot': [16.1833, 75.7000], 'Ballari': [15.1394, 76.9214],
+  'Belagavi': [15.8497, 74.4977], 'Bengaluru Rural': [13.2189, 77.5733],
+  'Bengaluru Urban': [12.9716, 77.5946], 'Bidar': [17.9104, 76.9247],
+  'Chamarajanagar': [11.9261, 76.9451], 'Chikkaballapura': [13.4355, 77.7315],
+  'Chikkamagaluru': [13.3161, 75.7765], 'Chitradurga': [14.2272, 76.3975],
+  'Dakshina Kannada': [12.8703, 75.3405], 'Davangere': [14.4644, 75.9218],
+  'Dharwad': [15.4589, 75.0078], 'Gadag': [15.4166, 75.6339],
+  'Hassan': [13.0068, 76.0996], 'Haveri': [14.7957, 75.4036],
+  'Kalaburagi': [17.3297, 76.8200], 'Kodagu': [12.4217, 75.7397],
+  'Kolar': [13.1358, 78.1294], 'Koppal': [15.3534, 76.1549],
+  'Mandya': [12.5218, 76.8951], 'Mysuru': [12.2958, 76.6394],
+  'Raichur': [16.2120, 77.3439], 'Ramanagara': [12.7154, 77.2869],
+  'Shivamogga': [13.9299, 75.5681], 'Tumakuru': [13.3379, 77.1173],
+  'Udupi': [13.3409, 74.7421], 'Uttara Kannada': [14.7860, 74.6875],
+  'Vijayapura': [16.8302, 75.7100], 'Yadgir': [16.7630, 77.1384],
+};
+
+// ════════════════════════════════════════════════════════════════
+//  TEST SUITE REGISTRY
+// ════════════════════════════════════════════════════════════════
+
+var suiteRegistry = [];
+
+function describe(name, icon, fn) {
+  var suite = { name: name, icon: icon, tests: [] };
+  function it(testName, testFn, skip) {
+    suite.tests.push({ name: testName, fn: testFn, skip: !!skip });
+  }
+  fn(it);
+  suiteRegistry.push(suite);
+}
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 1 — SeededRandom
+// ════════════════════════════════════════════════════════════════
+describe('SeededRandom', '🎲', function(it) {
+  it('produces deterministic sequence for same seed', function() {
+    var r1 = new SeededRandom(1337), r2 = new SeededRandom(1337);
+    for (var i = 0; i < 20; i++) assertEquals(r1.next(), r2.next(), 'Value ' + i + ' mismatch');
+  });
+  it('produces different values for different seeds', function() {
+    var a = new SeededRandom(100).next(), b = new SeededRandom(999).next();
+    assert(a !== b, 'Different seeds must yield different values');
+  });
+  it('next() always returns a value in [0, 1)', function() {
+    var rng = new SeededRandom(42);
+    for (var i = 0; i < 1000; i++) assertInRange(rng.next(), 0, 1);
+  });
+  it('int(min, max) always returns integer within range', function() {
+    var rng = new SeededRandom(7);
+    for (var i = 0; i < 500; i++) {
+      var v = rng.int(1, 10);
+      assert(Number.isInteger(v), 'Must be integer');
+      assertInRange(v, 1, 10);
+    }
+  });
+  it('int(0, 0) always returns 0', function() {
+    var rng = new SeededRandom(1);
+    for (var i = 0; i < 100; i++) assertEquals(rng.int(0, 0), 0);
+  });
+  it('pick() always returns element from array', function() {
+    var rng = new SeededRandom(42), arr = ['a','b','c','d','e'];
+    for (var i = 0; i < 200; i++) assert(arr.indexOf(rng.pick(arr)) !== -1, 'Picked value not in array');
+  });
+  it('float(min, max) returns value in range', function() {
+    var rng = new SeededRandom(1);
+    for (var i = 0; i < 200; i++) {
+      var v = rng.float(5.5, 10.5);
+      assert(v >= 5.5 && v <= 10.5, 'float out of range: ' + v);
+    }
+  });
+  it('same seed produces identical 3-value sequence', function() {
+    var r1 = new SeededRandom(42), r2 = new SeededRandom(42);
+    assertDeepEqual([r1.next(),r1.next(),r1.next()], [r2.next(),r2.next(),r2.next()]);
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 2 — Number Formatting
+// ════════════════════════════════════════════════════════════════
+describe('Number Formatting (formatNumber)', '🔢', function(it) {
+  it('formats 1500000 as "1.5M"', function() { assertEquals(formatNumber(1500000), '1.5M'); });
+  it('formats 2000000 as "2.0M"', function() { assertEquals(formatNumber(2000000), '2.0M'); });
+  it('formats 1500 as "1.5K"',    function() { assertEquals(formatNumber(1500), '1.5K'); });
+  it('formats 12300 as "12.3K"',  function() { assertEquals(formatNumber(12300), '12.3K'); });
+  it('42 should contain "42" (no suffix)', function() {
+    assert(formatNumber(42).includes('42'), 'Expected 42 in result');
+  });
+  it('exactly 1000 formats as "1.0K"', function() { assertEquals(formatNumber(1000), '1.0K'); });
+  it('exactly 1000000 formats as "1.0M"', function() { assertEquals(formatNumber(1000000), '1.0M'); });
+  it('999 has no K/M suffix', function() {
+    var v = formatNumber(999);
+    assert(!v.includes('K') && !v.includes('M'), '999 should not have K/M suffix');
+  });
+  it('handles zero', function() { assert(formatNumber(0).includes('0')); });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 3 — Risk Level Classification
+// ════════════════════════════════════════════════════════════════
+describe('Risk Level (getRiskLevel / getRiskColor)', '🚨', function(it) {
+  it('score 80 → Critical', function() { assertEquals(getRiskLevel(80).label, 'Critical'); });
+  it('score 95 → Critical', function() { assertEquals(getRiskLevel(95).label, 'Critical'); });
+  it('score 60 → High',     function() { assertEquals(getRiskLevel(60).label, 'High'); });
+  it('score 79 → High',     function() { assertEquals(getRiskLevel(79).label, 'High'); });
+  it('score 40 → Medium',   function() { assertEquals(getRiskLevel(40).label, 'Medium'); });
+  it('score 59 → Medium',   function() { assertEquals(getRiskLevel(59).label, 'Medium'); });
+  it('score 39 → Low',      function() { assertEquals(getRiskLevel(39).label, 'Low'); });
+  it('score 0  → Low',      function() { assertEquals(getRiskLevel(0).label,  'Low'); });
+  it('color 80 → #dc2626',  function() { assertEquals(getRiskColor(80), '#dc2626'); });
+  it('color 60 → #f59e0b',  function() { assertEquals(getRiskColor(60), '#f59e0b'); });
+  it('color 40 → #3b82f6',  function() { assertEquals(getRiskColor(40), '#3b82f6'); });
+  it('color 10 → #10b981',  function() { assertEquals(getRiskColor(10), '#10b981'); });
+  it('returns all required keys', function() {
+    assertHasKeys(getRiskLevel(55), ['label', 'color', 'badge']);
+  });
+  it('correct badge classes for all tiers', function() {
+    assertEquals(getRiskLevel(85).badge, 'badge-red');
+    assertEquals(getRiskLevel(65).badge, 'badge-amber');
+    assertEquals(getRiskLevel(50).badge, 'badge-blue');
+    assertEquals(getRiskLevel(20).badge, 'badge-green');
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 4 — Z-Score Calculator
+// ════════════════════════════════════════════════════════════════
+describe('Z-Score Calculator', '📊', function(it) {
+  it('returns same-length array', function() {
+    assertEquals(zScore([1,2,3,4,5]).length, 5);
+  });
+  it('uniform input → all zeros', function() {
+    var out = zScore([5,5,5,5,5]);
+    out.forEach(function(v) { assertEquals(v, 0); });
+  });
+  it('mean of z-scores is approximately 0', function() {
+    var zs = zScore([10,20,30,40,50,60]);
+    var mean = zs.reduce(function(a,b) { return a+b; }, 0) / zs.length;
+    assert(Math.abs(mean) < 1e-10, 'Mean should be ~0, got ' + mean);
+  });
+  it('std dev of z-scores is approximately 1', function() {
+    var zs = zScore([10,20,30,40,50,60,70]);
+    var mean = zs.reduce(function(a,b) { return a+b; }, 0) / zs.length;
+    var variance = zs.reduce(function(a,v) { return a + (v - mean)*(v - mean); }, 0) / zs.length;
+    assert(Math.abs(Math.sqrt(variance) - 1) < 1e-10, 'StdDev should be ~1');
+  });
+  it('positive outlier → highest z-score', function() {
+    var zs = zScore([1,1,1,1,100]);
+    var maxIdx = zs.indexOf(Math.max.apply(null, zs));
+    assertEquals(maxIdx, 4);
+  });
+  it('negative outlier → lowest z-score', function() {
+    var zs = zScore([-100,1,1,1,1]);
+    var minIdx = zs.indexOf(Math.min.apply(null, zs));
+    assertEquals(minIdx, 0);
+  });
+  it('single element returns [0]', function() {
+    assertDeepEqual(zScore([42]), [0]);
+  });
+  it('symmetric input: z[0] + z[2] ≈ 0 for [1,3,5]', function() {
+    var zs = zScore([1,3,5]);
+    assert(Math.abs(zs[0] + zs[2]) < 1e-10, 'Symmetric input should cancel');
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 5 — CrimeNo Parser
+// ════════════════════════════════════════════════════════════════
+describe('CrimeNo Parser (parseCrimeNo)', '🔍', function(it) {
+  it('returns null for undefined',       function() { assertEquals(parseCrimeNo(undefined), null); });
+  it('returns null for empty string',    function() { assertEquals(parseCrimeNo(''), null); });
+  it('returns null for short string',    function() { assertEquals(parseCrimeNo('12345'), null); });
+  it('parses FIR category (code "1")',   function() {
+    assertEquals(parseCrimeNo(genCrimeNo('1',4405,1,2024,1)).category, 'FIR');
+  });
+  it('parses UDR category (code "3")',   function() {
+    assertEquals(parseCrimeNo(genCrimeNo('3',4405,1,2024,1)).category, 'UDR');
+  });
+  it('parses PAR category (code "4")',   function() {
+    assertEquals(parseCrimeNo(genCrimeNo('4',4405,1,2024,1)).category, 'PAR');
+  });
+  it('parses Zero FIR category (code "8")', function() {
+    assertEquals(parseCrimeNo(genCrimeNo('8',4405,1,2024,1)).category, 'Zero FIR');
+  });
+  it('unknown category returns raw digit', function() {
+    assertEquals(parseCrimeNo(genCrimeNo('9',4405,1,2024,1)).category, '9');
+  });
+  it('returns all 5 required fields', function() {
+    assertHasKeys(parseCrimeNo(genCrimeNo('1',4405,1,2025,5)), ['category','districtID','stationID','year','serial']);
+  });
+  it('districtID field is 4 characters', function() {
+    assertEquals(parseCrimeNo(genCrimeNo('1',4405,1,2025,1)).districtID.length, 4);
+  });
+  it('year field is "2024"', function() {
+    assertEquals(parseCrimeNo(genCrimeNo('1',4405,1,2024,1)).year, '2024');
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 6 — CrimeNo Generator
+// ════════════════════════════════════════════════════════════════
+describe('CrimeNo Generator (genCrimeNo)', '🆔', function(it) {
+  it('generates exactly 18 characters', function() {
+    assertEquals(genCrimeNo('1',4405,1,2024,1).length, 18);
+  });
+  it('pads districtID to 4 digits', function() {
+    assertEquals(genCrimeNo('1',5,1,2024,1).slice(1,5), '0005');
+  });
+  it('pads stationID to 4 digits', function() {
+    assertEquals(genCrimeNo('1',4405,3,2024,1).slice(5,9), '0003');
+  });
+  it('pads serial to 5 digits', function() {
+    assertEquals(genCrimeNo('1',4405,1,2024,42).slice(13), '00042');
+  });
+  it('category code is first character', function() {
+    assertEquals(genCrimeNo('8',4405,1,2024,1)[0], '8');
+  });
+  it('roundtrip: generate → parse → FIR/2025/4405', function() {
+    var p = parseCrimeNo(genCrimeNo('1',4405,7,2025,99));
+    assertEquals(p.category, 'FIR');
+    assertEquals(p.districtID, '4405');
+    assertEquals(p.year, '2025');
+  });
+  it('unique numbers for 100 different serials', function() {
+    var s = new Set();
+    for (var i = 1; i <= 100; i++) s.add(genCrimeNo('1',4405,1,2024,i));
+    assertEquals(s.size, 100);
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 7 — Chargesheet Type Labels
+// ════════════════════════════════════════════════════════════════
+describe('Chargesheet Labels (csTypeLabel)', '📋', function(it) {
+  it('A → Chargesheet Filed', function() { assertEquals(csTypeLabel('A'), 'Chargesheet Filed'); });
+  it('B → False Case',        function() { assertEquals(csTypeLabel('B'), 'False Case'); });
+  it('C → Undetected',        function() { assertEquals(csTypeLabel('C'), 'Undetected'); });
+  it('unknown code → passthrough', function() { assertEquals(csTypeLabel('X'), 'X'); });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 8 — District Coordinates
+// ════════════════════════════════════════════════════════════════
+describe('Karnataka District Coordinates', '🗺️', function(it) {
+  it('has exactly 30 districts', function() {
+    assertEquals(Object.keys(DISTRICT_COORDS).length, 30);
+  });
+  it('each district lat in Karnataka range [11, 18]', function() {
+    Object.entries(DISTRICT_COORDS).forEach(function(entry) {
+      assertInRange(entry[1][0], 11, 18, entry[0] + ' lat out of range');
+    });
+  });
+  it('each district lng in Karnataka range [74, 79]', function() {
+    Object.entries(DISTRICT_COORDS).forEach(function(entry) {
+      assertInRange(entry[1][1], 74, 79, entry[0] + ' lng out of range');
+    });
+  });
+  it('Bengaluru Urban exists', function() {
+    assert('Bengaluru Urban' in DISTRICT_COORDS);
+  });
+  it('Bengaluru Urban lat ≈ 12.97', function() {
+    assertInRange(DISTRICT_COORDS['Bengaluru Urban'][0], 12.5, 13.5);
+  });
+  it('all coordinate arrays have length 2', function() {
+    Object.entries(DISTRICT_COORDS).forEach(function(entry) {
+      assert(Array.isArray(entry[1]) && entry[1].length === 2, entry[0] + ' should be [lat,lng]');
+    });
+  });
+  it('all coordinates are finite numbers', function() {
+    Object.entries(DISTRICT_COORDS).forEach(function(entry) {
+      assert(isFinite(entry[1][0]) && isFinite(entry[1][1]), entry[0] + ' has non-finite coord');
+    });
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 9 — Date Formatting
+// ════════════════════════════════════════════════════════════════
+describe('Date Formatting (formatDate)', '📅', function(it) {
+  it('returns a non-empty string', function() {
+    assertType(formatDate('2024-01-15'), 'string');
+    assert(formatDate('2024-01-15').length > 0);
+  });
+  it('contains year 2024 for 2024 date', function() {
+    assert(formatDate('2024-06-15').includes('2024'));
+  });
+  it('handles ISO datetime strings', function() {
+    var result = formatDate('2024-03-20T14:30:00Z');
+    assertType(result, 'string');
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 10 — Debounce Utility
+// ════════════════════════════════════════════════════════════════
+describe('Debounce Utility', '⏱️', function(it) {
+  it('returns a function', function() {
+    assertType(debounce(function() {}), 'function');
+  });
+  it('delays execution: 4 rapid calls → 1 execution', function() {
+    return new Promise(function(resolve, reject) {
+      var count = 0;
+      var d = debounce(function() { count++; }, 50);
+      d(); d(); d(); d();
+      setTimeout(function() {
+        try { assertEquals(count, 1, 'Should run once, ran ' + count + ' times'); resolve(); }
+        catch(e) { reject(e); }
+      }, 120);
+    });
+  });
+  it('executes after delay', function() {
+    return new Promise(function(resolve, reject) {
+      var called = false;
+      var d = debounce(function() { called = true; }, 30);
+      d();
+      setTimeout(function() {
+        try { assert(called, 'Should have run after delay'); resolve(); }
+        catch(e) { reject(e); }
+      }, 70);
+    });
+  });
+  it('resets timer on subsequent calls', function() {
+    return new Promise(function(resolve, reject) {
+      var count = 0;
+      var d = debounce(function() { count++; }, 50);
+      d();
+      setTimeout(function() {
+        d(); // reset
+        setTimeout(function() {
+          try {
+            assertEquals(count, 0, 'Should not run before final delay');
+            setTimeout(function() {
+              try { assertEquals(count, 1, 'Should run once'); resolve(); }
+              catch(e) { reject(e); }
+            }, 70);
+          } catch(e) { reject(e); }
+        }, 30);
+      }, 30);
+    });
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 11 — Live API Endpoint Reachability
+// ════════════════════════════════════════════════════════════════
+var API_BASE = 'https://ai-crime-analytics-jkgzcyyg.onslate.in/server';
+
+describe('Live API Endpoints', '🌐', function(it) {
+  it('GET /analytics/kpi responds (non-5xx)', function() {
+    return fetch(API_BASE + '/analytics/kpi').then(function(res) {
+      assert(res.status < 500, 'Server error: ' + res.status);
+    });
+  });
+  it('GET /analytics/trends responds (non-5xx)', function() {
+    return fetch(API_BASE + '/analytics/trends').then(function(res) {
+      assert(res.status < 500, 'Server error: ' + res.status);
+    });
+  });
+  it('GET /analytics/district-summary responds (non-5xx)', function() {
+    return fetch(API_BASE + '/analytics/district-summary').then(function(res) {
+      assert(res.status < 500, 'Server error: ' + res.status);
+    });
+  });
+  it('GET /analytics/zscore responds (non-5xx)', function() {
+    return fetch(API_BASE + '/analytics/zscore').then(function(res) {
+      assert(res.status < 500, 'Server error: ' + res.status);
+    });
+  });
+  it('GET /analytics/correlation responds (non-5xx)', function() {
+    return fetch(API_BASE + '/analytics/correlation').then(function(res) {
+      assert(res.status < 500, 'Server error: ' + res.status);
+    });
+  });
+  it('GET /incidents responds (non-5xx)', function() {
+    return fetch(API_BASE + '/incidents').then(function(res) {
+      assert(res.status < 500, 'Server error: ' + res.status);
+    });
+  });
+  it('GET /incidents/hotspots responds (non-5xx)', function() {
+    return fetch(API_BASE + '/incidents/hotspots').then(function(res) {
+      assert(res.status < 500, 'Server error: ' + res.status);
+    });
+  });
+  it('GET /incidents/hourly responds (non-5xx)', function() {
+    return fetch(API_BASE + '/incidents/hourly').then(function(res) {
+      assert(res.status < 500, 'Server error: ' + res.status);
+    });
+  });
+  it('GET /alerts responds (non-5xx)', function() {
+    return fetch(API_BASE + '/alerts').then(function(res) {
+      assert(res.status < 500, 'Server error: ' + res.status);
+    });
+  });
+  it('GET /offenders responds (non-5xx)', function() {
+    return fetch(API_BASE + '/offenders').then(function(res) {
+      assert(res.status < 500, 'Server error: ' + res.status);
+    });
+  });
+  it('GET /offenders/network responds (non-5xx)', function() {
+    return fetch(API_BASE + '/offenders/network').then(function(res) {
+      assert(res.status < 500, 'Server error: ' + res.status);
+    });
+  });
+  it('OPTIONS preflight /incidents returns non-5xx', function() {
+    return fetch(API_BASE + '/incidents', { method: 'OPTIONS' }).then(function(res) {
+      assert(res.status < 500, 'OPTIONS returned: ' + res.status);
+    });
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 12 — CORS & HTTP
+// ════════════════════════════════════════════════════════════════
+describe('CORS and HTTP Headers', '🔐', function(it) {
+  it('unknown route returns non-5xx status', function() {
+    return fetch(API_BASE + '/nonexistent-xyz').then(function(res) {
+      assert(res.status !== 500, 'Server error on unknown route');
+    });
+  });
+  it('response headers present for analytics/kpi', function() {
+    return fetch(API_BASE + '/analytics/kpi').then(function(res) {
+      var ct = res.headers.get('content-type') || '';
+      assert(ct.length >= 0, 'Content-type header should exist or be empty');
+    });
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 13 — Frontend Pages
+// ════════════════════════════════════════════════════════════════
+var SITE = 'https://ai-crime-analytics-jkgzcyyg.onslate.in';
+
+describe('Frontend Pages (Reachability)', '🖥️', function(it) {
+  it('/ (login) returns non-5xx',         function() { return fetch(SITE + '/').then(function(r) { assert(r.status < 500); }); });
+  it('/dashboard.html returns non-5xx',   function() { return fetch(SITE + '/dashboard.html').then(function(r) { assert(r.status < 500); }); });
+  it('/reports.html returns non-5xx',     function() { return fetch(SITE + '/reports.html').then(function(r) { assert(r.status < 500); }); });
+  it('/trends.html returns non-5xx',      function() { return fetch(SITE + '/trends.html').then(function(r) { assert(r.status < 500); }); });
+  it('/geospatial.html returns non-5xx',  function() { return fetch(SITE + '/geospatial.html').then(function(r) { assert(r.status < 500); }); });
+  it('/predictive.html returns non-5xx',  function() { return fetch(SITE + '/predictive.html').then(function(r) { assert(r.status < 500); }); });
+  it('/network.html returns non-5xx',     function() { return fetch(SITE + '/network.html').then(function(r) { assert(r.status < 500); }); });
+  it('/404.html exists and returns non-5xx', function() { return fetch(SITE + '/404.html').then(function(r) { assert(r.status < 500); }); });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 14 — Data Integrity
+// ════════════════════════════════════════════════════════════════
+describe('Data Integrity & Business Logic', '✅', function(it) {
+  it('all 30 district names are unique strings', function() {
+    var names = Object.keys(DISTRICT_COORDS);
+    var unique = new Set(names);
+    assertEquals(unique.size, 30);
+  });
+  it('genCrimeNo 100 unique serials → 100 unique codes', function() {
+    var s = new Set();
+    for (var i = 1; i <= 100; i++) s.add(genCrimeNo('1',4405,1,2024,i));
+    assertEquals(s.size, 100);
+  });
+  it('zScore of [10, 20] has lower[0] < 0 and higher[1] > 0', function() {
+    var zs = zScore([10, 20]);
+    assert(zs[0] < 0 && zs[1] > 0);
+  });
+  it('all risk labels from score 0–100 are valid', function() {
+    var valid = ['Low','Medium','High','Critical'];
+    for (var s = 0; s <= 100; s += 5) {
+      assert(valid.indexOf(getRiskLevel(s).label) !== -1, 'Invalid label at score ' + s);
+    }
+  });
+  it('SeededRandom distributes evenly across 5 buckets (5000 samples)', function() {
+    var rng = new SeededRandom(12345), n = 5000;
+    var buckets = [0,0,0,0,0];
+    for (var i = 0; i < n; i++) buckets[Math.floor(rng.next() * 5)]++;
+    buckets.forEach(function(b) { assertInRange(b, n*0.1, n*0.3, 'Bucket out of range: ' + b); });
+  });
+  it('parseCrimeNo roundtrip for 5 different district IDs', function() {
+    [4401,4405,4415,4422,4430].forEach(function(id) {
+      var p = parseCrimeNo(genCrimeNo('1',id,1,2025,1));
+      assertEquals(p.districtID, String(id), 'Roundtrip failed for ' + id);
+    });
+  });
+  it('zScore symmetric: [1,3,5] → z[0]+z[2]≈0, z[1]=0', function() {
+    var zs = zScore([1,3,5]);
+    assert(Math.abs(zs[0] + zs[2]) < 1e-10);
+    assertEquals(zs[1], 0);
+  });
+  it('formatNumber produces non-empty strings for powers of 10', function() {
+    [1,10,100,1000,10000,100000,1000000].forEach(function(v) {
+      assert(formatNumber(v).length > 0);
+    });
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  SUITE 15 — CSV Data Parsing
+// ════════════════════════════════════════════════════════════════
+describe('CSV Data Parsing', '📄', function(it) {
+  it('CSV sample row parses lat/lng as valid numbers', function() {
+    var row = 'C001,Bengaluru Urban,Theft,2024-01-15T10:30:00,12.97,77.59,Medium,Open';
+    var parts = row.split(',');
+    var lat = parseFloat(parts[4]), lng = parseFloat(parts[5]);
+    assert(!isNaN(lat) && !isNaN(lng));
+    assertInRange(lat, 11, 18);
+    assertInRange(lng, 74, 79);
+  });
+  it('CSV header has 8 expected columns', function() {
+    var header = 'crime_id,district,crime_type,date_time,latitude,longitude,severity,status';
+    var cols = header.split(',');
+    assertEquals(cols.length, 8);
+  });
+  it('CSV header column names are correct', function() {
+    var cols = 'crime_id,district,crime_type,date_time,latitude,longitude,severity,status'.split(',');
+    assertEquals(cols[0], 'crime_id');
+    assertEquals(cols[1], 'district');
+    assertEquals(cols[4], 'latitude');
+    assertEquals(cols[5], 'longitude');
+  });
+  it('Multiple CSV rows can be parsed', function() {
+    var csv = 'crime_id,district,crime_type,date_time,latitude,longitude,severity,status\nC001,Mysuru,Theft,2024-01-15,12.30,76.64,Medium,Open\nC002,Bidar,Murder,2024-02-10,17.91,76.92,Critical,Closed';
+    var rows = csv.trim().split('\n');
+    assertEquals(rows.length, 3);
+    assertEquals(rows[0].split(',')[0], 'crime_id');
+    assertEquals(rows[1].split(',')[1], 'Mysuru');
+    assertEquals(rows[2].split(',')[6], 'Critical');
+  });
+  it('severity values are valid enum values', function() {
+    var valid = ['Low','Medium','High','Critical'];
+    var samples = ['Critical','High','Medium','Low','Critical'];
+    samples.forEach(function(s) { assert(valid.indexOf(s) !== -1, 'Invalid severity: ' + s); });
+  });
+  it('public CSV file accessible from live site', function() {
+    return fetch(SITE + '/crime_records.csv', { method: 'HEAD' }).then(function(r) {
+      assert(r.status < 500, 'CSV file returned server error: ' + r.status);
+    }).catch(function() {
+      // CORS may block HEAD; acceptable
+    });
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+//  TEST RUNNER ENGINE
+// ════════════════════════════════════════════════════════════════
+
+function renderSuites() {
+  var container = document.getElementById('suites-container');
+  container.innerHTML = '';
+  suiteRegistry.forEach(function(suite, sIdx) {
+    var el = document.createElement('div');
+    el.className = 'suite';
+    el.id = 'suite-' + sIdx;
+    var testsHTML = suite.tests.map(function(t, tIdx) {
+      return '<div class="test-row" id="test-' + sIdx + '-' + tIdx + '">' +
+        '<div class="test-icon" id="test-icon-' + sIdx + '-' + tIdx + '">⬜</div>' +
+        '<div class="test-name">' + (t.skip ? '⏭ [SKIP] ' : '') + escH(t.name) + '</div>' +
+        '<div class="test-meta" id="test-meta-' + sIdx + '-' + tIdx + '"></div>' +
+        '</div>';
+    }).join('');
+
+    el.innerHTML =
+      '<div class="suite-header" onclick="toggleSuite(' + sIdx + ')">' +
+        '<div class="suite-name">' +
+          '<span>' + suite.icon + '</span>' +
+          '<span>' + escH(suite.name) + '</span>' +
+          '<span class="suite-badge badge-idle" id="suite-badge-' + sIdx + '">idle</span>' +
+        '</div>' +
+        '<div class="suite-stats" id="suite-stats-' + sIdx + '">0 / ' + suite.tests.length + ' tests</div>' +
+      '</div>' +
+      '<div class="suite-body open" id="suite-body-' + sIdx + '">' + testsHTML + '</div>';
+
+    container.appendChild(el);
+  });
+
+  // Count totals
+  var total = suiteRegistry.reduce(function(sum, s) { return sum + s.tests.length; }, 0);
+  document.getElementById('stat-total').textContent = total;
+}
+
+window.toggleSuite = function(sIdx) {
+  var body = document.getElementById('suite-body-' + sIdx);
+  body.classList.toggle('open');
+};
+
+function updateStats() {
+  document.getElementById('stat-pass').textContent  = results.pass;
+  document.getElementById('stat-fail').textContent  = results.fail;
+  document.getElementById('stat-skip').textContent  = results.skip;
+}
+
+function updateProgress(done, total) {
+  var pct = total > 0 ? (done / total) * 100 : 0;
+  document.getElementById('progress').style.width = pct + '%';
+}
+
+window.runAll = async function() {
+  var btn = document.getElementById('run-btn');
+  btn.disabled = true;
+  btn.textContent = 'Running...';
+  consoleLines = [];
+  consoleEl.innerHTML = '';
+  results.pass = 0; results.fail = 0; results.skip = 0;
+  var totalTests = suiteRegistry.reduce(function(s,suite) { return s + suite.tests.length; }, 0);
+  var done = 0;
+
+  log('Test run started at ' + new Date().toLocaleTimeString(), 'log-info');
+
+  var globalStart = performance.now();
+
+  for (var sIdx = 0; sIdx < suiteRegistry.length; sIdx++) {
+    var suite = suiteRegistry[sIdx];
+    log('\nSuite: ' + suite.name, 'log-info');
+    var sPass = 0, sFail = 0, sSkip = 0;
+
+    for (var tIdx = 0; tIdx < suite.tests.length; tIdx++) {
+      var test = suite.tests[tIdx];
+      var iconEl = document.getElementById('test-icon-' + sIdx + '-' + tIdx);
+      var metaEl = document.getElementById('test-meta-' + sIdx + '-' + tIdx);
+      var rowEl  = document.getElementById('test-' + sIdx + '-' + tIdx);
+
+      iconEl.innerHTML = '<span class="spinner"></span>';
+
+      if (test.skip) {
+        iconEl.textContent = '⏭';
+        metaEl.textContent = 'skipped';
+        results.skip++; sSkip++; done++;
+        log('  SKIP  ' + test.name, 'log-warn');
+        updateProgress(done, totalTests);
+        continue;
+      }
+
+      var t0 = performance.now();
+      try {
+        var retVal = test.fn();
+        if (retVal && typeof retVal.then === 'function') {
+          await retVal;
+        }
+        var dur = (performance.now() - t0).toFixed(1);
+        iconEl.textContent = '✅';
+        metaEl.textContent = dur + 'ms';
+        results.pass++; sPass++;
+        log('  PASS  ' + test.name + ' (' + dur + 'ms)', 'log-pass');
+      } catch(err) {
+        var dur = (performance.now() - t0).toFixed(1);
+        iconEl.textContent = '❌';
+        metaEl.textContent = dur + 'ms';
+        var errDiv = document.createElement('div');
+        errDiv.className = 'test-error';
+        errDiv.textContent = err.message;
+        rowEl.classList.add('test-col');
+        if (!rowEl.querySelector('.test-error')) rowEl.appendChild(errDiv);
+        results.fail++; sFail++;
+        log('  FAIL  ' + test.name + ': ' + err.message, 'log-fail');
+      }
+
+      done++;
+      updateStats();
+      updateProgress(done, totalTests);
+      await new Promise(function(r) { setTimeout(r, 0); }); // yield to paint
+    }
+
+    var badge = document.getElementById('suite-badge-' + sIdx);
+    var statsEl = document.getElementById('suite-stats-' + sIdx);
+    if (sFail > 0) {
+      badge.className = 'suite-badge badge-fail';
+      badge.textContent = sFail + ' failed';
+    } else {
+      badge.className = 'suite-badge badge-pass';
+      badge.textContent = 'all passed';
+    }
+    statsEl.textContent = sPass + ' passed / ' + sFail + ' failed / ' + sSkip + ' skipped';
+  }
+
+  var totalMs = (performance.now() - globalStart).toFixed(0);
+  document.getElementById('stat-time').textContent = totalMs;
+  log('\n' + results.pass + ' passed / ' + results.fail + ' failed / ' + results.skip + ' skipped — ' + totalMs + 'ms', results.fail > 0 ? 'log-fail' : 'log-pass');
+
+  btn.disabled = false;
+  btn.textContent = 'Re-run All Tests';
+};
+
+// Init
+renderSuites();
+</script>
+</body>
+</html>

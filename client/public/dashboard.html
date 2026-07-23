@@ -452,7 +452,7 @@ async function loadIncidentsTable(search = '') {
   const tbody = $('#incidents-tbody');
   tbody.innerHTML = '<tr><td colspan="7"><div class="loading-spinner"><div class="spinner"></div>Querying ZCQL DataStore…</div></td></tr>';
 
-  allIncidents = await api.getIncidents({ limit: 100 });
+  allIncidents = await api.getIncidents({ limit: 600 });
   renderTable(allIncidents, search);
 }
 
@@ -477,7 +477,7 @@ function renderTable(incidents, search = '') {
   const severityClass = { Critical: 'badge-red', High: 'badge-amber', Medium: 'badge-blue', Low: 'badge-green' };
   const statusClass = { Open: 'badge-red', 'Under Investigation': 'badge-amber', Closed: 'badge-green', Chargesheeted: 'badge-blue' };
 
-  tbody.innerHTML = filtered.slice(0, 50).map(i => `
+  tbody.innerHTML = filtered.slice(0, 600).map(i => `
     <tr>
       <td><strong style="font-family:monospace;font-size:12px">${i.incident_id}</strong></td>
       <td>${i.district}</td>

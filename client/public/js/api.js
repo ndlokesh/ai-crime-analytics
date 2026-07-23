@@ -12,7 +12,7 @@ import { CRIME_RECORDS_DATA } from './crime_data.js';
 
 // ─── Config ──────────────────────────────────────────────────
 // Automatically use OnSlate backend URL when deployed, with fallback to simulation mode
-const CATALYST_BASE_URL = window.location.origin.includes('onslate.in')
+const CATALYST_BASE_URL = (typeof window !== 'undefined' && window.location && window.location.origin && window.location.origin.includes('onslate.in'))
   ? 'https://ai-crime-analytics-jkgzcyyg.onslate.in/server'
   : '';
 const DEMO_MODE = !CATALYST_BASE_URL;
@@ -24,12 +24,23 @@ async function request(path, params = {}) {
     Object.entries(params).forEach(([k, v]) => v !== undefined && url.searchParams.set(k, v));
     const res = await fetch(url.toString(), { headers: { 'Content-Type': 'application/json' }, credentials: 'include' });
     if (!res.ok) throw new Error(`API error: ${res.status}`);
-    return await res.json();
+    const json = await res.json();
+    const data = (json && json.data !== undefined) ? json.data : json;
+    if (!data) return null;
+    if (Array.isArray(data) && data.length === 0) return null;
+    if (typeof data === 'object' && !Array.isArray(data)) {
+      if (Object.keys(data).length === 0) return null;
+      if (data.nodes !== undefined && Array.isArray(data.nodes) && data.nodes.length === 0) return null;
+      if (data.total_incidents !== undefined && data.total_incidents === 0) return null;
+      if (data.total_cases !== undefined && data.total_cases === 0 && data.fir_count === 0) return null;
+    }
+    return data;
   } catch (err) {
-    console.warn(`[KSP API Client] Backend ${path} not reachable (${err.message}). Using local simulation fallback.`);
+    console.warn(`[KSP API Client] Backend ${path} not reachable or unseeded (${err.message}). Using local CSV dataset fallback.`);
     return null;
   }
 }
+
 
 // ═══════════════════════════════════════════════════════════════
 // REFERENCE DATA (matches ERD lookup tables)
@@ -578,7 +589,7 @@ export const api = {
 
   // ── Cases (CaseMaster) ────────────────────────────────────
   async getCases({ district, crimeHead, category, status, limit = 600 } = {}) {
-    if (!DEMO_MODE) { const res = await request('/cases-api/', { district, crimeHead, category, status, limit: 600 }); if (res !== null) return res; }
+    if (!DEMO_MODE) { const res = await request('/incidents-api/', { district, crimeHead, category, status, limit: 600 }); if (res !== null) return res; }
     initMockData();
     let result = _cases;
     if (district)   result = result.filter(c => c._DistrictName === district);
@@ -594,7 +605,7 @@ export const api = {
 
 
   async getHotspots() {
-    if (!DEMO_MODE) { const res = await request('/cases-api/hotspots'); if (res !== null) return res; }
+    if (!DEMO_MODE) { const res = await request('/incidents-api/hotspots'); if (res !== null) return res; }
     initMockData();
     return _cases.map(c => ({
       lat: c.latitude, lng: c.longitude,
@@ -603,7 +614,7 @@ export const api = {
   },
 
   async getHourlyDistribution() {
-    if (!DEMO_MODE) { const res = await request('/cases-api/hourly'); if (res !== null) return res; }
+    if (!DEMO_MODE) { const res = await request('/incidents-api/hourly'); if (res !== null) return res; }
     initMockData();
     return genHourly(_cases);
   },
@@ -669,7 +680,7 @@ export const api = {
 
   // ── Accused & Network ─────────────────────────────────────
   async getAccused({ search, district } = {}) {
-    if (!DEMO_MODE) { const res = await request('/accused-api/', { search, district }); if (res !== null) return res; }
+    if (!DEMO_MODE) { const res = await request('/offenders-api/', { search, district }); if (res !== null) return res; }
     initMockData();
     let result = _accused;
     if (district) result = result.filter(a => a._DistrictName === district);
@@ -678,7 +689,7 @@ export const api = {
   },
 
   async getNetwork() {
-    if (!DEMO_MODE) { const res = await request('/accused-api/network'); if (res !== null) return res; }
+    if (!DEMO_MODE) { const res = await request('/offenders-api/network'); if (res !== null) return res; }
     initMockData();
     return _network;
   },
